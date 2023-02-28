@@ -1,0 +1,73 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scripts_Scenes/PhoneScenes/PhoneControl/PhoneControl.gd" type="Script" id=1]
+[ext_resource path="res://Scripts_Scenes/PhoneScenes/AppSlates/DebugAppSlates/TestSlate/TestSlate.tscn" type="PackedScene" id=2]
+
+[node name="PhoneControl" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+appslate_path_dict = {
+0: NodePath("InactiveAppSlateControl/TestSlateControl"),
+1: NodePath("InactiveAppSlateControl/TestSlateControl2")
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 302.0
+margin_top = 493.0
+margin_right = 512.0
+margin_bottom = 525.0
+
+[node name="BackButton" type="Button" parent="HBoxContainer"]
+margin_right = 67.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="HBoxContainer/BackButton"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Back
+"
+
+[node name="HomeButton" type="Button" parent="HBoxContainer"]
+margin_left = 71.0
+margin_right = 138.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="HBoxContainer/HomeButton"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Home
+"
+
+[node name="OptsButton" type="Button" parent="HBoxContainer"]
+margin_left = 142.0
+margin_right = 210.0
+margin_bottom = 32.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="HBoxContainer/OptsButton"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Opts
+"
+
+[node name="ActiveAppSlateControl" type="Control" parent="."]
+
+[node name="InactiveAppSlateControl" type="Control" parent="."]
+anchor_left = -5.0
+anchor_top = -5.0
+anchor_right = -5.0
+anchor_bottom = -5.0
+
+[node name="TestSlateControl" parent="InactiveAppSlateControl" instance=ExtResource( 2 )]
+label_name = "SLATE 0"
+appslate_type_to_change_to = 1
+
+[node name="TestSlateControl2" parent="InactiveAppSlateControl" instance=ExtResource( 2 )]
+label_name = "SLATE 1"
+
+[connection signal="pressed" from="HBoxContainer/BackButton" to="." method="_on_BackButton_pressed"]
+[connection signal="pressed" from="HBoxContainer/HomeButton" to="." method="_on_HomeButton_pressed"]
+[connection signal="pressed" from="HBoxContainer/OptsButton" to="." method="_on_OptsButton_pressed"]

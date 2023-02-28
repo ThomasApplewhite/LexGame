@@ -1,0 +1,61 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Scripts_Scenes/UtilityScripts/ConversationJSONText.gd" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+json_text = "[
+	{
+		\"ConversationPartner\": \"Test\"
+	},
+	{
+		\"TriggerStoryBeat\": \"NONE\",
+		\"FirstPushTime\": 3.0,
+		\"PartnerMessageText\": \"First Message Text. How ya doin?\",
+		\"ContainsPrompt\": false,
+		\"PromptContents\": {}
+	},
+	{
+		\"TriggerStoryBeat\": \"NONE\",
+		\"FirstPushTime\": 3.0,
+		\"PartnerMessageText\": \"Second message text. Next one's gonna have a prompt!\",
+		\"ContainsPrompt\": false,
+		\"PromptContents\": {}
+	},
+	{
+		\"TriggerStoryBeat\": \"NONE\",
+		\"FirstPushTime\": 2.0,
+		\"PartnerMessageText\": \"Prompt Jumpscare!\",
+		\"ContainsPrompt\": true,
+		\"PromptContents\":
+		{
+			\"RepushTime\": 1,
+			\"PromptPhrases\":
+			[
+				{
+					\"PhraseString\": \"Oh I see\",
+					\"Rows\": 2,
+					\"PhraseTime\": 3.0
+				},
+				{
+					\"PhraseString\": \"This is fine\",
+					\"Rows\": 3,
+					\"PhraseTime\": 3.0
+				},
+				{
+					\"PhraseString\": \"I can do this\",
+					\"Rows\": 4,
+					\"PhraseTime\": 5.0
+				}
+			]
+		}
+	},
+	{
+		\"TriggerStoryBeat\": \"NONE\",
+		\"FirstPushTime\": 1.0,
+		\"PartnerMessageText\": \"Everything works (except waiting for story beats lol). Still good!\",
+		\"ContainsPrompt\": false,
+		\"PromptContents\": {}
+	},
+]
+"

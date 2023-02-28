@@ -1,0 +1,77 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Scripts_Scenes/PhoneScenes/AppSlates/DebugAppSlates/TestSlate/TestSlate.gd" type="Script" id=1]
+
+[node name="TestSlateControl" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+
+[node name="GridContainer" type="GridContainer" parent="."]
+margin_left = 270.0
+margin_top = 292.0
+margin_right = 521.0
+margin_bottom = 493.0
+columns = 2
+
+[node name="PushButton" type="Button" parent="GridContainer"]
+margin_right = 124.0
+margin_bottom = 99.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="GridContainer/PushButton"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Send Push Notif
+"
+
+[node name="ChangeButton" type="Button" parent="GridContainer"]
+margin_left = 128.0
+margin_right = 251.0
+margin_bottom = 99.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="GridContainer/ChangeButton"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Send Change Slate
+"
+
+[node name="StoryBeatButton" type="Button" parent="GridContainer"]
+margin_top = 103.0
+margin_right = 124.0
+margin_bottom = 201.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="GridContainer/StoryBeatButton"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Send StoryBeat"
+
+[node name="SlateTypeButton" type="Button" parent="GridContainer"]
+margin_left = 128.0
+margin_top = 103.0
+margin_right = 251.0
+margin_bottom = 201.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Label" type="Label" parent="GridContainer/SlateTypeButton"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Print SlateType"
+
+[node name="Label" type="Label" parent="."]
+margin_left = 332.0
+margin_top = 115.0
+margin_right = 447.0
+margin_bottom = 129.0
+text = "I am slate BLANK!"
+
+[connection signal="pressed" from="GridContainer/PushButton" to="." method="_on_PushButton_pressed"]
+[connection signal="pressed" from="GridContainer/ChangeButton" to="." method="_on_ChangeButton_pressed"]
+[connection signal="pressed" from="GridContainer/StoryBeatButton" to="." method="_on_StoryBeatButton_pressed"]
+[connection signal="pressed" from="GridContainer/SlateTypeButton" to="." method="_on_SlateTypeButton_pressed"]

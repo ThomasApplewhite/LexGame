@@ -1,0 +1,39 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Scripts_Scenes/TestScenes/ConversationPromptTester.gd" type="Script" id=1]
+[ext_resource path="res://TestAssets/TestConversationDatas/TestJSONResource_0.tres" type="Resource" id=2]
+
+[node name="ConversationPromptTesterControl" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+conversation_resource = ExtResource( 2 )
+
+[node name="FirstPushTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="RepushTimer" type="Timer" parent="."]
+
+[node name="ConversationDisplayControl" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ConversationDisplayControl"]
+margin_right = 341.0
+margin_bottom = 570.0
+
+[node name="PromptAnchorControl" type="Control" parent="ConversationDisplayControl"]
+margin_left = 409.0
+margin_top = 261.0
+margin_right = 449.0
+margin_bottom = 301.0
+
+[node name="PartnerLabel" type="Label" parent="."]
+margin_left = 393.0
+margin_top = 19.0
+margin_right = 450.0
+margin_bottom = 33.0
+text = "PARTNER"
+
+[connection signal="timeout" from="FirstPushTimer" to="." method="_on_FirstPushTimer_timeout"]
+[connection signal="timeout" from="RepushTimer" to="." method="_on_RepushTimer_timeout"]
