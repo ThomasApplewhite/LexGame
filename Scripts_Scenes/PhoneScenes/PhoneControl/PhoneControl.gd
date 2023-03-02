@@ -45,10 +45,8 @@ func initialize_appslates():
 	starting_appslate.rect_position = Vector2.ZERO
 	current_appslate = starting_appslate
 
-# new_appslate_type : GameEnums.AppSlateType
-func change_active_appslate(new_appslate_type):
+func change_active_appslate(new_appslate : Node):
 	var old_appslate = current_appslate
-	var new_appslate = appslate_dict[new_appslate_type]
 	
 	disconnect_appslate_signals(old_appslate, false)
 	connect_appslate_signals(new_appslate, false)
@@ -69,6 +67,10 @@ func change_active_appslate(new_appslate_type):
 	new_appslate.rect_position = Vector2.ZERO
 	
 	current_appslate = new_appslate
+	
+func change_active_appslate_by_type(new_appslate_type):
+	# new_appslate_type : GameEnums.AppSlateType
+	change_active_appslate(appslate_dict[new_appslate_type])
 
 func connect_appslate_signals(appslate : Node, connect_beat_and_notif : bool):
 	# Connect appslate's button signals
@@ -112,7 +114,7 @@ func disconnect_mandatory_signals(appslate):
 
 # appslate_type : GameEnums.AppSlateType
 func _on_appslate_change_requested(appslate_type):
-	change_active_appslate(appslate_type)
+	change_active_appslate_by_type(appslate_type)
 
 # appslate_type : GameEnums.AppSlateType
 func _on_phone_notification_triggered(appslate_type, notif : String):
