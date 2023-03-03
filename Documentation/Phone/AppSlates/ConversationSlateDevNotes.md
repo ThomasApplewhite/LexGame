@@ -46,3 +46,5 @@ You have a picture on your phone that details how all of these things should int
 The only _uncertain_ area now is how the notification signals should be handled. All of the data for them needs to end up on the ConversationEntryNode, but how should it stay consistent with itself? I mean, like, how should that data be stored?
 
 Eh. Whatever. I'll figure that out when I get there. The important part is is that _all_ notification related data should be pushed to the ConvoEntry.
+
+I do also need to start identifying specific chunks by some sort of identifier. So... maybe I just have the convo dicts include an index value now? Sure, that works. Lotta changes, tho. I'll do that as a seperate commit.
