@@ -5,6 +5,7 @@ extends Reference
 # We can also use these enums wherever this class is loaded, including in
 # the convo slates, so we use this for all accessing
 enum JSONFields {
+	CONVERSATIONINDEX,
 	CONVERSATIONPARTNER,
 	TRIGGERSTORYBEAT,
 	FIRSTPUSHTIME,
@@ -43,6 +44,8 @@ var ESA = {
 var json_file_resource : ConversationJSONText
 
 var conversation_chunks = []
+
+var working_index = 0
 
 var conversation_partner : String setget , _get_conversation_parter
 
@@ -152,6 +155,10 @@ func parse_json_item(convo_item) -> Dictionary:
 	# Save out prompt to convo_dict
 	convo_dict[JSONFields.PROMPTCONTENTS] = prompt_dict
 	
+	# Save index and return
+	convo_dict[JSONFields.CONVERSATIONINDEX] = working_index
+	working_index += 1
+	
 	return convo_dict
 	
 # The one time duck typing is useful! No need (or desire) to type this!
@@ -170,3 +177,15 @@ func get_next_conversation_chunck() -> Dictionary:
 		return { JSONFields.TRIGGERSTORYBEAT : GameEnums.GameStoryBeat.EOF }
 		
 	return conversation_chunks.pop_front()
+
+func get_conversation_subarray(convo_chunk_to_start_at : int) -> Array:
+	var subarray_end = convo_chunk_to_start_at - 1
+	
+	if(subarray_end >= conversation_chunks.size()):
+		push_error("ConversationEntryNode.get_conversation_subarray: subarray_end is too large, can't slice conversation_chunks")
+		return []
+	
+	var array_front = conversation_chunks.slice(0, subarray_end)
+	var array_back = conversation_chunks.slice(subarray_end + 1)
+	conversation_chunks = array_back
+	return array_front

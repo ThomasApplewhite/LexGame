@@ -48,3 +48,8 @@ The only _uncertain_ area now is how the notification signals should be handled.
 Eh. Whatever. I'll figure that out when I get there. The important part is is that _all_ notification related data should be pushed to the ConvoEntry.
 
 I do also need to start identifying specific chunks by some sort of identifier. So... maybe I just have the convo dicts include an index value now? Sure, that works. Lotta changes, tho. I'll do that as a seperate commit.
+
+Need to decide how I want to do indicies of prompt entries. I can probably just add an index value to each dictionary entry.
+yeah it's that easy  lol.lmao
+
+OKAY! ConversationAppSlate is written! Need to do convo entry and then I can doc and test!
