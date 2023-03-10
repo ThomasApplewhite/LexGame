@@ -4,3 +4,11 @@
 
 [node name="ConversationEntryNode" type="Node"]
 script = ExtResource( 1 )
+
+[node name="FirstPushTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="RePushTimer" type="Timer" parent="."]
+
+[connection signal="timeout" from="FirstPushTimer" to="." method="_on_FirstPushTimer_timeout"]
+[connection signal="timeout" from="RePushTimer" to="." method="_on_RePushTimer_timeout"]

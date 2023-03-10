@@ -119,7 +119,7 @@ func send_repush_timer_to_entry_node():
 func stop_timer_on_entry_node():
 	entry_parent.cancel_repush_timer(active_convo_index)
 
-func handle_next_convo_dict_sent():
+func handle_next_convo_dict() -> String:
 	# convo entry should handle determining when we should get the next
 	# convo dict
 	# I should probably document the difference between convo_dict and next_convo_dict
@@ -130,6 +130,8 @@ func handle_next_convo_dict_sent():
 		return
 	else:
 		display_next_convo_dict()
+		
+	return active_convo_dict[convo_type.JSONFields.PARTNERMESSAGETEXT]
 
 func handle_prompt_completed():
 	# Stop the repush timer
