@@ -93,7 +93,7 @@ func create_lex_prompt():
 	var prompt_content = active_convo_dict[convo_type.JSONFields.PROMPTCONTENTS]
 	var new_prompt_settings = prompt_content[convo_type.JSONFields.PROMPTSETTINGS]
 	active_prompt_control = prompt_control_scene.instance()
-	$ConversationDisplayControl/PromptAnchorControl.add_child(active_prompt_control)
+	$TextControl/PromptControl.add_child(active_prompt_control)
 	active_prompt_control.init_prompt_control(self, prompt_completed_receiver_name, new_prompt_settings)
 
 	# also start repush timer
@@ -102,16 +102,16 @@ func create_lex_prompt():
 	
 func send_first_timer_to_entry_node():
 	# Timers should really be the responsibility of the conversation entry
-	entry_parent.create_first_push_timer(active_convo_index)
+	entry_parent.create_first_push_timer(active_convo_index, active_convo_dict[convo_type.JSONFields.FIRSTPUSHTIME])
 
 	# $FirstPushTimer.set_wait_time(next_convo_dict[convo_type.JSONFields.FIRSTPUSHTIME])
-	# print(next_convo_dict[convo_type.JSONFields.FIRSTPUSHTIME])
+	# print(active_convo_dict[convo_type.JSONFields.FIRSTPUSHTIME])
 	# $FirstPushTimer.start()
 	
 	
 func send_repush_timer_to_entry_node():
 	# Timers should really be the responsibility of the conversation entry
-	entry_parent.create_repush_push_timer(active_convo_index)
+	entry_parent.create_repush_push_timer(active_convo_index, active_convo_dict[convo_type.JSONFields.REPUSHTIME])
 	
 	# $RepushTimer.set_wait_time(prompt_content[convo_type.JSONFields.REPUSHTIME])
 	# $RepushTimer.start()
@@ -127,7 +127,6 @@ func handle_next_convo_dict() -> String:
 	# is there a prompt?
 	if(active_convo_dict[convo_type.JSONFields.CONTAINSPROMPT]):
 		create_lex_prompt()
-		return
 	else:
 		display_next_convo_dict()
 		
@@ -143,19 +142,3 @@ func handle_prompt_completed():
 		
 	# Print out the last of the message text
 	display_next_convo_dict()
-
-
-"""
-func _on_FirstPushTimer_timeout():
-	handle_next_convo_dict_sent()
-
-
-func _on_RepushTimer_timeout():
-	# This would normally send the repush notif, but I'm just gonna
-	# send a notification
-	print("Repush notification!")
-	
-	
-func _on_PromptControl_completed():
-	handle_prompt_completed()
-	"""
