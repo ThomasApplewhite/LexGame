@@ -21,10 +21,6 @@ var convo_slate_is_active : bool
 var last_displayed_chunk_text : String
 var last_displayed_chunk_index : int
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
 func create_conversation_slate():
 	convo_slate = convo_slate_scene.instance(conversation_resource, self, last_displayed_chunk_index)
 	convo_slate.start_convo_slate()

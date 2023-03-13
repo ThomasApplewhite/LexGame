@@ -1,89 +1,63 @@
+# ConversationEntry
 extends Node
 
-enum DisplayCondition {
-	FIRSTTIMER,
-	STORYBEAT
-}
+ConversationEntry nodes are non-graphical parents between the TextMessageAppSlate and a specific ConversationAppSlate. ConversationEntries handle all non-graphical functionality of a ConversationAppSlate that needs to persist while the ConversationAppSlate isn't focused (as, right now, ConversationAppSlates are free'd when not being focused on). This primarily involves keeping track of the ConversationAppSlate's timers and last active conversation piece, so that the state of the conversation can be restored when reopened.
 
-# STILL NEEDS STORY BEAT HANDLING
+ConversationEntries are Nodes, not Controls, because they have no UI-related functionality ore responsibility. But if that makes ConversationAppSlates hard to position, they should be turned into Controls.
 
-# needs to hold convo asset and convo slate type and convo slate itself
-export var conversation_resource : Resource
-var convo_slate_scene = preload("res://Scripts_Scenes/PhoneScenes/AppSlates/GameplayAppSlates/TextMessenger/ConversationAppSlate.tscn")
-var convo_slate : Node
+btw, _fields_ and _child nodes_ are _italics_, while **functions** and **signals** are **bold**.
 
-# Convo-Slate State Variables
-var do_next_convo = {
-	DisplayCondition.FIRSTTIMER : false,
-	DisplayCondition.STORYBEAT : false
-}
-var convo_slate_is_active : bool
-var last_displayed_chunk_text : String
-var last_displayed_chunk_index : int
+### Fields
+enum DisplayCondition: Represents which of the two conditions that a conversation dict needs to meet (FIRSTTIMER: its first notification was sent and STORYBEAT: its associated GameStoryBeat has occured) before its displayed onscreen. This can be represented by a bool right now, but an enum felt cleaner.
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+export conversation_resource: Resource file of the ConversationJSONData this conversation uses. This is where the final JSONDatas are set; other Nodes (like the ConversationAppSlate) get the JSONData from here.
 
-func create_conversation_slate():
-	convo_slate = convo_slate_scene.instance(conversation_resource, self, last_displayed_chunk_index)
-	convo_slate.start_convo_slate()
-	add_child(convo_slate)
+convo_slate_scene: Resource path for the ConversationAppSlate
+
+convo_slate: Reference to the ConversationAppSlate, once it gets instanced.
+
+do_next_convo: A dictionary representing the multiple conditions required to 'do the next' (display on screen and parse the next piece of) conversation. A smarter man could make this a bitmask, but I have it as a dict of enums for right now. Who knows, maybe it will be a bitmask one day.
+
+convo_slate_is_active: Is the ConversationAppSlate currently instanced or not. This controls certain notifications which don't occur if the Conversation is already being displayed.
+
+last_displayed_chunk_text: The most recent conversation partner message from this conversation. This is displayed as part of most notifications for right now.
+
+last_displayed_chunk_index: The index of most recent conversation partner message from this conversation. This is used to 'fast forward' the ConversationAppSlate to the last displayed conversation piece whenever it gets opened.
+
+### Child Nodes
+FirstPushTimer: Pre-generated one-shot timer for the first notification a conversation piece always sends.
+
+RePushTimer: Pre-generated repeat timer for repeated notifications pushed by messages that contain Prompts that must be completed.
+
+## func create_conversation_slate():
+Instances the ConversationAppSlate into _convo_slate_, starts it, and adds it to the node tree. Other setup that needs to happen with the _convo_slate_ should be done here. Oh, and this is the method to call when the _convo_slate_ should be shown.
 	
-func remove_conversation_slate():
-	last_displayed_chunk_index = convo_slate.end_convo_slate()
-	
-	convo_slate.queue_free()
+## func remove_conversation_slate():
+Calls **convo_slate.end_convo_slate()** to get the index of the most recent conversation dict and save it to _last_displayed_chunk_index_. **end_convo_slate()** also does _convo_slate_'s internal shutdown/teardown logic. Once that's done, the _convo_slate_ is freed.
 
-# --- TIMER HANDLING ---
+## func cancel_and_restart_timer(timer : Node, wait_time : float):
+Generic timer-restarting method. Stops the provided _timer_, sets its _timer.wait_time_ to _wait_time_, and starts it back up again. Since each ConversationEntry handles multiple timers, it's good to centralize how all the timers are started and stopped.
+	
+## func send_notification_to_phone():
+Emits the ConversationEntry's parent's Notification signal (or, rather, makes the parent emit that signal). This method checks to see if the _convo_slate_is_active_ before emitting the signal, AND assumes that ConversationEntry's parent is an AppSlate. If it is, the actual logic of the signal is handled by AppSlate itself, with the signal name being the parent's _notification_signal_name_.
 
-func cancel_and_restart_timer(timer : Node, wait_time : float):
-	timer.stop()
-	timer.wait_time = wait_time
-	timer.start()
-	
-func send_notification_to_phone():
-	# Only send notifications for this conversation if they aren't being looked at right now
-	if(convo_slate_is_active):
-		return
-		
-	# ConversationEntry is only ever a child of TextMessangerAppSlate, so...
-	var app_parent = get_parent()
-	var app_parent_notif = app_parent.notification_signal_name
-	# Emit the notif signal, and we're good to go!
-	app_parent.emit(app_parent_notif, last_displayed_chunk_text)
+## func handle_display_appslate(display_condition : int):
+_display_condition_ is actually a DisplayCondition enum.
+Takes the incoming display condition and adds it to _do_next_convo_ as 'True'. If that makes both conditions of _do_next_convo_ true, then tell the _convo_slate_ to **handle_next_convo_dict()**, which will take care of displaying the actual conversation. Also sends a notification with **send_notification_to_phone()** and resets the _do_next_convo_ conditional dict.
 
-func handle_display_appslate(display_condition : int):
-	do_next_convo[display_condition] = true
-	var ready = do_next_convo[DisplayCondition.FIRSTTIMER] && do_next_convo[DisplayCondition.STORYBEAT]
-	
-	# if it's not time to display the next part of the conversation, don't.
-	if(!ready):
-		return
-	
-	# If we are ready, display the text (or prompt), send a notif, and reset the display conditions
-	last_displayed_chunk_text = convo_slate.handle_next_convo_dict()
-	
-	send_notification_to_phone()
-	
-	do_next_convo = {
-		DisplayCondition.FIRSTTIMER : false,
-		DisplayCondition.STORYBEAT : false
-	}
-
-func create_first_push_timer(timer_index : int, wait_time : float):
-	cancel_and_restart_timer($FirstPushTimer, wait_time)
+## func create_first_push_timer(timer_index : int, wait_time : float):
+Calls **cancel_and_restart_timer(FirstPushTimer, wait_time)**. Called 'create' because it originally created the timer, and takes an index for reasons I don't remember. Maybe I should change that...
 
 	
-func create_repush_push_timer(timer_index : int, wait_time : float):
-	cancel_and_restart_timer($RePushTimer, wait_time)
+## func create_repush_push_timer(timer_index : int, wait_time : float):
+Calls **cancel_and_restart_timer(RePushTimer, wait_time)**. Called 'create' because it originally created the timer, and takes an index for reasons I don't remember. Maybe I should change that...
 
-func cancel_repush_timer(timer_index : int):
-	$RePushTimer.stop()
+## func cancel_repush_timer(timer_index : int):
+Tells _RePushTimer_ specifically to stop.
 
 
-func _on_FirstPushTimer_timeout():
-	handle_display_appslate(DisplayCondition.FIRSTTIMER)
+## func _on_FirstPushTimer_timeout():
+Timeout handler for _FirstPushTimer_. Calls **handle_display_appslate(DisplayCondition.FIRSTTIMER)** to display the next conversation piece, if the correct story beat has happened.
 
-func _on_RePushTimer_timeout():
-	send_notification_to_phone()
+## func _on_RePushTimer_timeout():
+Timeout handler for _RePushTimer_. Calls **send_notification_to_phone()** to send repeat notifications for prompts.
