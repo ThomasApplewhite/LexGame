@@ -181,11 +181,18 @@ func get_next_conversation_chunck() -> Dictionary:
 func get_conversation_subarray(convo_chunk_to_start_at : int) -> Array:
 	var subarray_end = convo_chunk_to_start_at - 1
 	
+	# Error if the subarray we want is too large
 	if(subarray_end >= conversation_chunks.size()):
 		push_error("ConversationEntryNode.get_conversation_subarray: subarray_end is too large, can't slice conversation_chunks")
 		return []
+		
+	# Skip slicing if subarray we want is 0
+	if(subarray_end == 0):
+		return []
 	
-	var array_front = conversation_chunks.slice(0, subarray_end)
-	var array_back = conversation_chunks.slice(subarray_end + 1)
+	# Slice needs to go 1 farther than you'd think, because its range is
+	# [inclusive, exclusive)
+	var array_front = conversation_chunks.slice(0, subarray_end + 1)
+	var array_back = conversation_chunks.slice(subarray_end + 1, conversation_chunks.size())
 	conversation_chunks = array_back
 	return array_front

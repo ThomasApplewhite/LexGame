@@ -15,14 +15,15 @@ var convo_slate : Node
 # Convo-Slate State Variables
 var do_next_convo = {
 	DisplayCondition.FIRSTTIMER : false,
-	DisplayCondition.STORYBEAT : false
+	DisplayCondition.STORYBEAT : true # this should be false
 }
-var convo_slate_is_active : bool
+var convo_slate_is_active : bool setget , _get_convo_slate_is_active
 var last_displayed_chunk_text : String
 var last_displayed_chunk_index : int
 
 func create_conversation_slate():
-	convo_slate = convo_slate_scene.instance(conversation_resource, self, last_displayed_chunk_index)
+	convo_slate = convo_slate_scene.instance()
+	convo_slate.initialize_convo_slate(conversation_resource, self, last_displayed_chunk_index)
 	convo_slate.start_convo_slate()
 	add_child(convo_slate)
 	
@@ -30,6 +31,9 @@ func remove_conversation_slate():
 	last_displayed_chunk_index = convo_slate.end_convo_slate()
 	
 	convo_slate.queue_free()
+	
+func _get_convo_slate_is_active() -> bool:
+	return convo_slate_is_active
 
 # --- TIMER HANDLING ---
 
@@ -64,7 +68,7 @@ func handle_display_appslate(display_condition : int):
 	
 	do_next_convo = {
 		DisplayCondition.FIRSTTIMER : false,
-		DisplayCondition.STORYBEAT : false
+		DisplayCondition.STORYBEAT : true # this should be false
 	}
 
 func create_first_push_timer(timer_index : int, wait_time : float):

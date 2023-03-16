@@ -15,7 +15,7 @@ var active_prompt_control #PromptControl
 var starting_convo_index : int
 
 # should save new convo resource and probably also starting index for parse-ahead
-func _init(new_convoJSON_resource : Resource, new_entry_node : Node, new_starting_index : int = 0):
+func initialize_convo_slate(new_convoJSON_resource : Resource, new_entry_node : Node, new_starting_index : int = 0):
 	convoJSON_resource = new_convoJSON_resource
 	entry_parent = new_entry_node
 	starting_convo_index = new_starting_index
@@ -65,7 +65,7 @@ func pop_process_convo_dict():
 
 func display_pregenerated_data():
 	# for right now, just update the Mock Partner Label
-	$HeaderControl/MockPartnerLabel.bbtext = convo_parser.conversation_partner
+	$HeaderControl/MockPartnerLabel.text = convo_parser.conversation_partner
 	
 	# Fast-forward the conversation to the current index
 	for convo_dict in convo_parser.get_conversation_subarray(starting_convo_index):
@@ -78,14 +78,14 @@ func display_next_convo_dict():
 func create_static_message_text(convo_dict):
 	# This probably needs additional formatting, but I'll get that later
 	var partner_message = RichTextLabel.new()
-	partner_message.bbtext = convo_dict[convo_type.JSONFields.PARTNERMESSAGETEXT]
+	partner_message.append_bbcode(convo_dict[convo_type.JSONFields.PARTNERMESSAGETEXT])
 	$TextControl/ScrollContainer/VBoxContainer.add_child(partner_message)
 	
 	if(convo_dict[convo_type.JSONFields.CONTAINSPROMPT]):
 		var lex_message = RichTextLabel.new()
 		var lex_text = convo_dict[convo_type.JSONFields.PROMPTCONTENTS][convo_type.JSONFields.LEXMESSAGETEXT]
 		lex_text = "[right]" + lex_text + "[/right]"
-		lex_message.bbtext = lex_text
+		lex_message.append_bbcode(lex_text)
 		$TextControl/ScrollContainer/VBoxContainer.add_child(lex_message)
 
 func create_lex_prompt():

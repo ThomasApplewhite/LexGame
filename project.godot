@@ -45,7 +45,7 @@ _global_script_class_icons={
 [application]
 
 config/name="Lex Game"
-run/main_scene="res://Scripts_Scenes/TestScenes/PromptTester.tscn"
+run/main_scene="res://Scripts_Scenes/TestScenes/ConversationEntryTester.tscn"
 config/icon="res://icon.png"
 
 [display]
