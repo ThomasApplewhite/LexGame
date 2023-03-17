@@ -5,6 +5,11 @@ enum DisplayCondition {
 	STORYBEAT
 }
 
+var default_display_conditions = {
+	DisplayCondition.FIRSTTIMER : false,
+	DisplayCondition.STORYBEAT : true # this should be false
+}
+
 # STILL NEEDS STORY BEAT HANDLING
 
 # needs to hold convo asset and convo slate type and convo slate itself
@@ -13,10 +18,7 @@ var convo_slate_scene = preload("res://Scripts_Scenes/PhoneScenes/AppSlates/Game
 var convo_slate : Node
 
 # Convo-Slate State Variables
-var do_next_convo = {
-	DisplayCondition.FIRSTTIMER : false,
-	DisplayCondition.STORYBEAT : true # this should be false
-}
+var do_next_convo = default_display_conditions
 var convo_slate_is_active : bool setget , _get_convo_slate_is_active
 var last_displayed_chunk_text : String
 var last_displayed_chunk_index : int
@@ -51,7 +53,7 @@ func send_notification_to_phone():
 	var app_parent = get_parent()
 	var app_parent_notif = app_parent.notification_signal_name
 	# Emit the notif signal, and we're good to go!
-	app_parent.emit(app_parent_notif, last_displayed_chunk_text)
+	app_parent.emit_signal(app_parent_notif, GameEnums.AppSlateType.TEXT, last_displayed_chunk_text)
 
 func handle_display_appslate(display_condition : int):
 	do_next_convo[display_condition] = true
@@ -66,10 +68,7 @@ func handle_display_appslate(display_condition : int):
 	
 	send_notification_to_phone()
 	
-	do_next_convo = {
-		DisplayCondition.FIRSTTIMER : false,
-		DisplayCondition.STORYBEAT : true # this should be false
-	}
+	do_next_convo = default_display_conditions
 
 func create_first_push_timer(timer_index : int, wait_time : float):
 	cancel_and_restart_timer($FirstPushTimer, wait_time)

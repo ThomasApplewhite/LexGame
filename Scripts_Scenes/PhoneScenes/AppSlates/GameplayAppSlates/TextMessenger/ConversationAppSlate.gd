@@ -78,14 +78,16 @@ func display_next_convo_dict():
 func create_static_message_text(convo_dict):
 	# This probably needs additional formatting, but I'll get that later
 	var partner_message = RichTextLabel.new()
-	partner_message.append_bbcode(convo_dict[convo_type.JSONFields.PARTNERMESSAGETEXT])
+	partner_message.bbcode_enabled = true
+	partner_message.bbcode_text = convo_dict[convo_type.JSONFields.PARTNERMESSAGETEXT]
 	$TextControl/ScrollContainer/VBoxContainer.add_child(partner_message)
 	
 	if(convo_dict[convo_type.JSONFields.CONTAINSPROMPT]):
 		var lex_message = RichTextLabel.new()
 		var lex_text = convo_dict[convo_type.JSONFields.PROMPTCONTENTS][convo_type.JSONFields.LEXMESSAGETEXT]
 		lex_text = "[right]" + lex_text + "[/right]"
-		lex_message.append_bbcode(lex_text)
+		lex_message.bbcode_enabled = true
+		lex_message.bbcode_text = lex_text
 		$TextControl/ScrollContainer/VBoxContainer.add_child(lex_message)
 
 func create_lex_prompt():
