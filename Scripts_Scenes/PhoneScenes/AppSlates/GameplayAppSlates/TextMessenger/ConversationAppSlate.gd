@@ -5,6 +5,9 @@ var convo_type = preload("res://Scripts_Scenes/PhoneScenes/ConversationParsing/C
 
 var prompt_completed_receiver_name = "_on_PromptControl_completed"
 
+onready var text_parent_control = $VBoxContainer/TextControl/TextVBoxContainer/ScrollContainer/MessageVBoxContainer
+onready var prompt_parent_control = $VBoxContainer/TextControl/TextVBoxContainer/PromptControl
+
 var convoJSON_resource : Resource
 var convo_parser #ConversationParser
 var entry_parent : Node
@@ -69,7 +72,7 @@ func pop_process_convo_dict():
 
 func display_pregenerated_data():
 	# for right now, just update the Mock Partner Label
-	$HeaderControl/MockPartnerLabel.text = convo_parser.conversation_partner
+	$VBoxContainer/HeaderControl/Panel/MockPartnerLabel.text = convo_parser.conversation_partner
 	
 	# If the starting_convo_index is invalid, don't display anything
 	if(starting_convo_index < 0):
@@ -85,14 +88,14 @@ func display_next_convo_dict():
 	
 func create_static_message_text(convo_dict):
 	var partner_message = make_static_message_label(convo_dict[convo_type.JSONFields.PARTNERMESSAGETEXT]) 
-	$TextControl/ScrollContainer/VBoxContainer.add_child(partner_message)
+	text_parent_control.add_child(partner_message)
 	
 	if(convo_dict[convo_type.JSONFields.CONTAINSPROMPT]):
 		var lex_message
 		var lex_text = convo_dict[convo_type.JSONFields.PROMPTCONTENTS][convo_type.JSONFields.LEXMESSAGETEXT]
 		lex_text = "[right]" + lex_text + "[/right]"
 		lex_message = make_static_message_label(lex_text)
-		$TextControl/ScrollContainer/VBoxContainer.add_child(lex_message)
+		text_parent_control.add_child(lex_message)
 
 func make_static_message_label(bb_text : String) -> RichTextLabel:
 	var rtl = RichTextLabel.new()
@@ -106,7 +109,7 @@ func create_lex_prompt():
 	var prompt_content = active_convo_dict[convo_type.JSONFields.PROMPTCONTENTS]
 	var new_prompt_settings = prompt_content[convo_type.JSONFields.PROMPTSETTINGS]
 	active_prompt_control = prompt_control_scene.instance()
-	$TextControl/PromptControl.add_child(active_prompt_control)
+	prompt_parent_control.add_child(active_prompt_control)
 	active_prompt_control.init_prompt_control(self, prompt_completed_receiver_name, new_prompt_settings)
 
 	# also start repush timer
