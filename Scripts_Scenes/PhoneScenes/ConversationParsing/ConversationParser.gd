@@ -116,6 +116,8 @@ func parse_json_item(convo_item) -> Dictionary:
 	convo_dict[JSONFields.FIRSTPUSHTIME] = convo_item[ESA[JSONFields.FIRSTPUSHTIME]]
 	convo_dict[JSONFields.PARTNERMESSAGETEXT] = convo_item[ESA[JSONFields.PARTNERMESSAGETEXT]]
 	convo_dict[JSONFields.CONTAINSPROMPT] = convo_item[ESA[JSONFields.CONTAINSPROMPT]]
+	convo_dict[JSONFields.CONVERSATIONINDEX] = working_index
+	working_index += 1
 	
 	# If there's no prompt involved, we don't actually need to do any parsing. We can just
 	# return the dict and be done.
@@ -154,10 +156,6 @@ func parse_json_item(convo_item) -> Dictionary:
 	
 	# Save out prompt to convo_dict
 	convo_dict[JSONFields.PROMPTCONTENTS] = prompt_dict
-	
-	# Save index and return
-	convo_dict[JSONFields.CONVERSATIONINDEX] = working_index
-	working_index += 1
 	
 	return convo_dict
 	

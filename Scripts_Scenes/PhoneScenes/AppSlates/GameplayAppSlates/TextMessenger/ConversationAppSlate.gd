@@ -49,6 +49,10 @@ func process_convo_dict(convo_dict):
 		print("We're out of conversations!")
 		return
 	
+	# ---- DEBUG ----
+	print("Handling Dict Index: {0}".format({0: convo_dict[convo_type.JSONFields.CONVERSATIONINDEX]}))
+	# ---- DEGUG ----
+	
 	# Save out the incoming dict as the next piece of the game to print out
 	active_convo_dict = convo_dict
 	active_convo_index = convo_type.JSONFields.CONVERSATIONINDEX
@@ -67,6 +71,10 @@ func display_pregenerated_data():
 	# for right now, just update the Mock Partner Label
 	$HeaderControl/MockPartnerLabel.text = convo_parser.conversation_partner
 	
+	# If the starting_convo_index is invalid, don't display anything
+	if(starting_convo_index < 0):
+		return
+	
 	# Fast-forward the conversation to the current index
 	for convo_dict in convo_parser.get_conversation_subarray(starting_convo_index):
 		create_static_message_text(convo_dict)
@@ -76,19 +84,22 @@ func display_next_convo_dict():
 	pop_process_convo_dict()
 	
 func create_static_message_text(convo_dict):
-	# This probably needs additional formatting, but I'll get that later
-	var partner_message = RichTextLabel.new()
-	partner_message.bbcode_enabled = true
-	partner_message.bbcode_text = convo_dict[convo_type.JSONFields.PARTNERMESSAGETEXT]
+	var partner_message = make_static_message_label(convo_dict[convo_type.JSONFields.PARTNERMESSAGETEXT]) 
 	$TextControl/ScrollContainer/VBoxContainer.add_child(partner_message)
 	
 	if(convo_dict[convo_type.JSONFields.CONTAINSPROMPT]):
-		var lex_message = RichTextLabel.new()
+		var lex_message
 		var lex_text = convo_dict[convo_type.JSONFields.PROMPTCONTENTS][convo_type.JSONFields.LEXMESSAGETEXT]
 		lex_text = "[right]" + lex_text + "[/right]"
-		lex_message.bbcode_enabled = true
-		lex_message.bbcode_text = lex_text
+		lex_message = make_static_message_label(lex_text)
 		$TextControl/ScrollContainer/VBoxContainer.add_child(lex_message)
+
+func make_static_message_label(bb_text : String) -> RichTextLabel:
+	var rtl = RichTextLabel.new()
+	rtl.bbcode_enabled = true
+	rtl.fit_content_height = true
+	rtl.bbcode_text = bb_text
+	return rtl
 
 func create_lex_prompt():
 	# create and init prompt settings
@@ -113,7 +124,9 @@ func send_first_timer_to_entry_node():
 	
 func send_repush_timer_to_entry_node():
 	# Timers should really be the responsibility of the conversation entry
-	entry_parent.create_repush_push_timer(active_convo_index, active_convo_dict[convo_type.JSONFields.REPUSHTIME])
+	# repush isn't in the convo dict, it's in the prompt content!
+	var prompt_content = active_convo_dict[convo_type.JSONFields.PROMPTCONTENTS]
+	entry_parent.create_repush_push_timer(active_convo_index, prompt_content[convo_type.JSONFields.REPUSHTIME])
 	
 	# $RepushTimer.set_wait_time(prompt_content[convo_type.JSONFields.REPUSHTIME])
 	# $RepushTimer.start()
@@ -144,3 +157,6 @@ func handle_prompt_completed():
 		
 	# Print out the last of the message text
 	display_next_convo_dict()
+
+func _on_PromptControl_completed():
+	handle_prompt_completed()

@@ -20,19 +20,22 @@ var convo_slate : Node
 # Convo-Slate State Variables
 var do_next_convo = default_display_conditions
 var convo_slate_is_active : bool setget , _get_convo_slate_is_active
-var last_displayed_chunk_text : String
-var last_displayed_chunk_index : int
+var last_displayed_chunk_text : String = ""
+var last_displayed_chunk_index : int = -1
 
 func create_conversation_slate():
 	convo_slate = convo_slate_scene.instance()
 	convo_slate.initialize_convo_slate(conversation_resource, self, last_displayed_chunk_index)
 	convo_slate.start_convo_slate()
 	add_child(convo_slate)
+	convo_slate_is_active = true
 	
 func remove_conversation_slate():
 	last_displayed_chunk_index = convo_slate.end_convo_slate()
 	
 	convo_slate.queue_free()
+	
+	convo_slate_is_active = false
 	
 func _get_convo_slate_is_active() -> bool:
 	return convo_slate_is_active
@@ -61,6 +64,11 @@ func handle_display_appslate(display_condition : int):
 	
 	# if it's not time to display the next part of the conversation, don't.
 	if(!ready):
+		return
+	
+	# if the convo slate isn't active, just advance the current convo index and don't display anything
+	if(!convo_slate_is_active):
+		last_displayed_chunk_index += 1
 		return
 	
 	# If we are ready, display the text (or prompt), send a notif, and reset the display conditions

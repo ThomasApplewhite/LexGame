@@ -1,0 +1,134 @@
+[gd_scene format=2]
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ScrollContainer"]
+margin_right = 788.0
+margin_bottom = 956.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ScrollContainer/VBoxContainer"]
+margin_right = 788.0
+margin_bottom = 60.0
+text = "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
+fit_content_height = true
+scroll_active = false
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="ScrollContainer/VBoxContainer"]
+margin_top = 64.0
+margin_right = 788.0
+margin_bottom = 124.0
+text = "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
+fit_content_height = true
+scroll_active = false
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="ScrollContainer/VBoxContainer"]
+margin_top = 128.0
+margin_right = 788.0
+margin_bottom = 188.0
+text = "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
+fit_content_height = true
+scroll_active = false
+
+[node name="RichTextLabel4" type="RichTextLabel" parent="ScrollContainer/VBoxContainer"]
+margin_top = 192.0
+margin_right = 788.0
+margin_bottom = 252.0
+text = "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
+fit_content_height = true
+scroll_active = false
+
+[node name="RichTextLabel5" type="RichTextLabel" parent="ScrollContainer/VBoxContainer"]
+margin_top = 256.0
+margin_right = 788.0
+margin_bottom = 316.0
+text = "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
+fit_content_height = true
+scroll_active = false
+
+[node name="RichTextLabel6" type="RichTextLabel" parent="ScrollContainer/VBoxContainer"]
+margin_top = 320.0
+margin_right = 788.0
+margin_bottom = 380.0
+text = "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
+fit_content_height = true
+scroll_active = false
+
+[node name="RichTextLabel7" type="RichTextLabel" parent="ScrollContainer/VBoxContainer"]
+margin_top = 384.0
+margin_right = 788.0
+margin_bottom = 444.0
+text = "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
+fit_content_height = true
+scroll_active = false
+
+[node name="RichTextLabel8" type="RichTextLabel" parent="ScrollContainer/VBoxContainer"]
+margin_top = 448.0
+margin_right = 788.0
+margin_bottom = 508.0
+text = "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
+fit_content_height = true
+scroll_active = false
+
+[node name="RichTextLabel9" type="RichTextLabel" parent="ScrollContainer/VBoxContainer"]
+margin_top = 512.0
+margin_right = 788.0
+margin_bottom = 572.0
+text = "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
+fit_content_height = true
+scroll_active = false
+
+[node name="RichTextLabel10" type="RichTextLabel" parent="ScrollContainer/VBoxContainer"]
+margin_top = 576.0
+margin_right = 788.0
+margin_bottom = 636.0
+text = "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
+fit_content_height = true
+scroll_active = false
+
+[node name="RichTextLabel11" type="RichTextLabel" parent="ScrollContainer/VBoxContainer"]
+margin_top = 640.0
+margin_right = 788.0
+margin_bottom = 700.0
+text = "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
+fit_content_height = true
+scroll_active = false
+
+[node name="RichTextLabel12" type="RichTextLabel" parent="ScrollContainer/VBoxContainer"]
+margin_top = 704.0
+margin_right = 788.0
+margin_bottom = 764.0
+text = "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
+fit_content_height = true
+scroll_active = false
+
+[node name="RichTextLabel13" type="RichTextLabel" parent="ScrollContainer/VBoxContainer"]
+margin_top = 768.0
+margin_right = 788.0
+margin_bottom = 828.0
+text = "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
+fit_content_height = true
+scroll_active = false
+
+[node name="RichTextLabel14" type="RichTextLabel" parent="ScrollContainer/VBoxContainer"]
+margin_top = 832.0
+margin_right = 788.0
+margin_bottom = 892.0
+text = "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
+fit_content_height = true
+scroll_active = false
+
+[node name="RichTextLabel15" type="RichTextLabel" parent="ScrollContainer/VBoxContainer"]
+margin_top = 896.0
+margin_right = 788.0
+margin_bottom = 956.0
+text = "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\""
+fit_content_height = true
+scroll_active = false

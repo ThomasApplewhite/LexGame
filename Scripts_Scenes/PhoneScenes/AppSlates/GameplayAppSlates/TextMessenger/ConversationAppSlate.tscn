@@ -3,8 +3,8 @@
 [ext_resource path="res://Scripts_Scenes/PhoneScenes/AppSlates/GameplayAppSlates/TextMessenger/ConversationAppSlate.gd" type="Script" id=1]
 
 [node name="ConversationAppSlateControl" type="Control"]
-anchor_right = 1.0
 anchor_bottom = 1.0
+margin_right = 354.0
 script = ExtResource( 1 )
 
 [node name="HeaderControl" type="Control" parent="."]
@@ -16,8 +16,10 @@ margin_right = 40.0
 margin_bottom = 14.0
 
 [node name="TextControl" type="Control" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
+margin_left = 1.0
+margin_top = 74.0
+margin_right = 41.0
+margin_bottom = 114.0
 
 [node name="ScrollContainer" type="ScrollContainer" parent="TextControl"]
 margin_right = 250.0
