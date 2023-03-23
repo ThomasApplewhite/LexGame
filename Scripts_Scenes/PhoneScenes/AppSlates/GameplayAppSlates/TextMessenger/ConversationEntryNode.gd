@@ -26,8 +26,8 @@ var last_displayed_chunk_index : int = -1
 func create_conversation_slate():
 	convo_slate = convo_slate_scene.instance()
 	convo_slate.initialize_convo_slate(conversation_resource, self, last_displayed_chunk_index)
-	convo_slate.start_convo_slate()
 	add_child(convo_slate)
+	convo_slate.start_convo_slate()
 	convo_slate_is_active = true
 	
 func remove_conversation_slate():

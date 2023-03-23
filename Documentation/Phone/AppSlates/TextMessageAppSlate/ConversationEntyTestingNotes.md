@@ -18,3 +18,5 @@ Bugs that have been picked up:
 The ConversationAppSlate should really be tested in isolation without the ConversationEntryNode before I move forward. 
 
 Also, did I intend the ConversationAppSlate to explicitly use the phone's make_active_appslate method?
+
+Fixed a bug where ConvoAppSlate wasn't ready to start because it was started before it was added to the scene tree. I fixed it by making sure it was added to the scene tree before starting. But now there's a new bug where the active convo dict isn't updated correctly after the first entry. One of those things that needs to be fixed by data-driven indicies of things, not by raw variables.
