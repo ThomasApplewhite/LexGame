@@ -28,17 +28,19 @@ func create_conversation_slate():
 	convo_slate.initialize_convo_slate(conversation_resource, self, last_displayed_chunk_index)
 	add_child(convo_slate)
 	convo_slate.start_convo_slate()
-	convo_slate_is_active = true
 	
 func remove_conversation_slate():
 	last_displayed_chunk_index = convo_slate.end_convo_slate()
-	
 	convo_slate.queue_free()
-	
-	convo_slate_is_active = false
-	
+	convo_slate = null
+
+# the conditional here is expanded because it appear that Godot doesn't have
+# short-circuit logical comparisons	
 func _get_convo_slate_is_active() -> bool:
-	return convo_slate_is_active
+	if !convo_slate:
+		return false
+	
+	return convo_slate.is_inside_tree()
 
 # --- TIMER HANDLING ---
 
@@ -67,7 +69,7 @@ func handle_display_appslate(display_condition : int):
 		return
 	
 	# if the convo slate isn't active, just advance the current convo index and don't display anything
-	if(!convo_slate_is_active):
+	if(!_get_convo_slate_is_active()):
 		last_displayed_chunk_index += 1
 		return
 	
