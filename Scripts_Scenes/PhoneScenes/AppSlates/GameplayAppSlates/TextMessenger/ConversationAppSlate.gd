@@ -13,7 +13,7 @@ var convo_parser #ConversationParser
 var entry_parent : Node
 
 var active_convo_dict : Dictionary
-var active_convo_index : int
+var active_convo_index : int setget , _get_active_convo_index
 var active_prompt_control #PromptControl
 var starting_convo_index : int
 
@@ -30,7 +30,7 @@ func _ready():
 	
 func end_convo_slate() -> int:
 	# any other breakdown we need, do it now
-	return active_convo_index
+	return _get_active_convo_index()
 	
 func start_convo_slate():
 	# Step -1: Make sure we have the right kind of resource:
@@ -46,9 +46,6 @@ func start_convo_slate():
 	
 	# Step 2: Setup conversation partner/header data
 	display_pregenerated_data()
-	
-	# Step 2.5: Update the 'latest' index to match what we've recieved from initialization
-	active_convo_index = starting_convo_index
 
 	# Step 3: Start popping and parsing convo pieces!
 	pop_process_convo_dict()
@@ -77,14 +74,13 @@ func process_convo_dict(convo_dict):
 	if(convo_dict[convo_type.JSONFields.TRIGGERSTORYBEAT] == GameEnums.GameStoryBeat.EOF):
 		print("We're out of conversations!")
 		return
-	
-	# ---- DEBUG ----
-	print("Handling Dict Index: {0}".format({0: convo_dict[convo_type.JSONFields.CONVERSATIONINDEX]}))
-	# ---- DEGUG ----
-	
+		
 	# Save out the incoming dict as the next piece of the game to print out
 	active_convo_dict = convo_dict
-	active_convo_index = convo_dict[convo_type.JSONFields.CONVERSATIONINDEX]
+	
+	# ---- DEBUG ----
+	print("Handling Dict Index: {0}".format({0: _get_active_convo_index()}))
+	# ---- DEGUG ----
 	
 	# Setup timer and activate it
 	send_first_timer_to_entry_node()
@@ -125,7 +121,7 @@ func create_lex_prompt():
 	
 func send_first_timer_to_entry_node():
 	# Timers should really be the responsibility of the conversation entry
-	entry_parent.create_first_push_timer(active_convo_index, active_convo_dict[convo_type.JSONFields.FIRSTPUSHTIME])
+	entry_parent.create_first_push_timer(_get_active_convo_index(), active_convo_dict[convo_type.JSONFields.FIRSTPUSHTIME])
 
 	# $FirstPushTimer.set_wait_time(next_convo_dict[convo_type.JSONFields.FIRSTPUSHTIME])
 	# print(active_convo_dict[convo_type.JSONFields.FIRSTPUSHTIME])
@@ -136,13 +132,13 @@ func send_repush_timer_to_entry_node():
 	# Timers should really be the responsibility of the conversation entry
 	# repush isn't in the convo dict, it's in the prompt content!
 	var prompt_content = active_convo_dict[convo_type.JSONFields.PROMPTCONTENTS]
-	entry_parent.create_repush_push_timer(active_convo_index, prompt_content[convo_type.JSONFields.REPUSHTIME])
+	entry_parent.create_repush_push_timer(_get_active_convo_index(), prompt_content[convo_type.JSONFields.REPUSHTIME])
 	
 	# $RepushTimer.set_wait_time(prompt_content[convo_type.JSONFields.REPUSHTIME])
 	# $RepushTimer.start()
 	
 func stop_timer_on_entry_node():
-	entry_parent.cancel_repush_timer(active_convo_index)
+	entry_parent.cancel_repush_timer(_get_active_convo_index())
 
 func handle_next_convo_dict() -> String:
 	# convo entry should handle determining when we should get the next
@@ -167,6 +163,12 @@ func handle_prompt_completed():
 		
 	# Print out the last of the message text
 	display_next_convo_dict()
+
+func _get_active_convo_index() -> int:
+	if(active_convo_dict):
+		return active_convo_dict[convo_type.JSONFields.CONVERSATIONINDEX]
+	
+	return starting_convo_index 
 
 func _on_PromptControl_completed():
 	handle_prompt_completed()
