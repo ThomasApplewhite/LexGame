@@ -70,6 +70,7 @@ func handle_display_appslate(display_condition : int):
 	
 	# if the convo slate isn't active, just advance the current convo index and don't display anything
 	if(!_get_convo_slate_is_active()):
+		print("Advancing Undisplayed Dict Index: {0}".format({0: last_displayed_chunk_index}))
 		last_displayed_chunk_index += 1
 		return
 	

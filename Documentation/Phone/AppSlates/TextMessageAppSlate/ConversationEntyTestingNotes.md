@@ -20,3 +20,11 @@ The ConversationAppSlate should really be tested in isolation without the Conver
 Also, did I intend the ConversationAppSlate to explicitly use the phone's make_active_appslate method?
 
 Fixed a bug where ConvoAppSlate wasn't ready to start because it was started before it was added to the scene tree. I fixed it by making sure it was added to the scene tree before starting. But now there's a new bug where the active convo dict isn't updated correctly after the first entry. One of those things that needs to be fixed by data-driven indicies of things, not by raw variables.
+
+Okay! I've removed subarray splitting entirely and just pop the pre-done dicts manually, and the other index bugs seem to be fixed by making the active_convo_index a data-based get. So mostly its good!
+
+Only remaining bugs is that the last message in the conversation and prompts in the conversation have their first timers reset on reload. For prompts, that makes sense. The "incoming text" when the slate is closed has to be recreated, and prompts count as "incoming" (active but not displayed) while they are playing. Perhaps a specific edge case exception will be made for that. I'm not sure why it happens with the last item in the conversation
+
+I am also unsure of how the entry will handle first push timers expiring while the slate is off. How long should it wait to advance the next index if a first push fires while the slate is off? Do the indicies in the entry even fire correctly? I should check.
+
+But, for right now, I'm not going to fix this. These bugs are not super serious, and I think there are more important features to do right now. I'm going to update the tested conversation doc, condense down the notes I have on ConversationAppSlate and its related stuff, and then move on to GameDaemon. But I'll make sure to make a note somewhere to fix this. Or maybe I'll just notice again. I should put this stuff into spreadsheets sometimes. I'm basically reinventing basic dev practices for small teams before cloud production was a thing!
