@@ -28,6 +28,10 @@ func _ready():
 	# do we want to put start_convo_slate here?
 	pass
 	
+func end_convo_slate() -> int:
+	# any other breakdown we need, do it now
+	return active_convo_index
+	
 func start_convo_slate():
 	# Step -1: Make sure we have the right kind of resource:
 	if !convoJSON_resource.is_type("ConversationJSONText"):
@@ -42,9 +46,31 @@ func start_convo_slate():
 	
 	# Step 2: Setup conversation partner/header data
 	display_pregenerated_data()
+	
+	# Step 2.5: Update the 'latest' index to match what we've recieved from initialization
+	active_convo_index = starting_convo_index
 
 	# Step 3: Start popping and parsing convo pieces!
 	pop_process_convo_dict()
+	
+func display_pregenerated_data():
+	# for right now, just update the Mock Partner Label
+	$VBoxContainer/HeaderControl/Panel/MockPartnerLabel.text = convo_parser.conversation_partner
+	
+	# If the starting_convo_index is invalid, don't display anything
+	if(starting_convo_index < 0):
+		return
+	
+	# Fast-forward the conversation to the current index
+	# for convo_dict in convo_parser.get_conversation_subarray(starting_convo_index):
+	# 	create_static_message_text(convo_dict)
+	# We don't want to display starting_convo_index, which is why we stop the exclusive range there
+	for index in range(starting_convo_index):
+		var pre_dict = convo_parser.get_next_conversation_chunck()
+		create_static_message_text(pre_dict)
+	
+func pop_process_convo_dict():
+	process_convo_dict(convo_parser.get_next_conversation_chunck())
 
 func process_convo_dict(convo_dict):
 	# do we have a chunk to even send?
@@ -58,29 +84,10 @@ func process_convo_dict(convo_dict):
 	
 	# Save out the incoming dict as the next piece of the game to print out
 	active_convo_dict = convo_dict
-	active_convo_index = convo_type.JSONFields.CONVERSATIONINDEX
+	active_convo_index = convo_dict[convo_type.JSONFields.CONVERSATIONINDEX]
 	
 	# Setup timer and activate it
 	send_first_timer_to_entry_node()
-
-func end_convo_slate() -> int:
-	# any other breakdown we need, do it now
-	return active_convo_index
-
-func pop_process_convo_dict():
-	process_convo_dict(convo_parser.get_next_conversation_chunck())
-
-func display_pregenerated_data():
-	# for right now, just update the Mock Partner Label
-	$VBoxContainer/HeaderControl/Panel/MockPartnerLabel.text = convo_parser.conversation_partner
-	
-	# If the starting_convo_index is invalid, don't display anything
-	if(starting_convo_index < 0):
-		return
-	
-	# Fast-forward the conversation to the current index
-	for convo_dict in convo_parser.get_conversation_subarray(starting_convo_index):
-		create_static_message_text(convo_dict)
 
 func display_next_convo_dict():
 	create_static_message_text(active_convo_dict)
