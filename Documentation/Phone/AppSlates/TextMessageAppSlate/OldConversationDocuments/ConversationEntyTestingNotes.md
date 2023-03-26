@@ -3,6 +3,8 @@ The following files will need a documentation refresh once ConversationEntry tes
 - ConversationAppSlate
 - ConversationParser
 
+Update: This refresh is complete!
+
 ConversationEntry isn't working right off the bat in testing. These are my notes on that, mostly from my whiteboard.
 
 First, as soon as ConvoEntry is done, GameDaemon needs to be made, not the TextMessageAppSlate. I've skipped over storybeat checking too much and tbh I should just make the GameDaemon instead of mocking it out.

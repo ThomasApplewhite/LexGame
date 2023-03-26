@@ -58,6 +58,7 @@ The primary algorithm of the parser. This is where the JSON string data is saved
 	- FIRSTPUSHTIME
 	- PARTNERMESSAGETEXT
 	- CONTAINSPROMPT
+	- CONVERSATIONINDEX
 3. If there's no Prompt associated with this text message (CONTAINSPROMPT is false), the algorithm is finished and the _convo_dict_ is returned. If not, continue.
 4. Process each individual phrase of the Prompt associated with the text message. A secondary _prompt_dict_ is created to hold prompt-specific data inside the _convo_dict_, as well as a _lex_response_ to hold Lex's message and _lex_phrase_settings_ to hold PromptPhrases once the prompt is over. The prompt-specific Prompt Contents of _convo_item_ is stored in _convo_prompt_contents_ for easier access.
 5. Each phrase is processed in a separate loop:
@@ -86,6 +87,3 @@ return _conversation_partner_
 
 ## func get_next_conversation_chunck() -> Dictionary:
 Pops a conversation dict off of the front of _conversation_chunks_ and returns it. If there are no _conversation_chunks_ left, an empty dict will be return. The only field with data will be TRIGGERSTORYBEAT, which will read EOF.
-
-## func get_conversation_subarray(convo_chunk_to_start_at : int) -> Array:
-Splits _conversation_chunks_ into two arrays, _array_front_ and _array_back_, along _subarray_end_ (front includes 0 to subarray_end, back includes subarray_end+1 to end). This method returns _array_front_ and saves _array_back_ to _conversation_chunks_, essentially skipping the conversation ahead to _subarray_end_ + 1.

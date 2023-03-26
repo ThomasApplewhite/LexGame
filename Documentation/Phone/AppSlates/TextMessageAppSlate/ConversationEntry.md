@@ -10,6 +10,8 @@ btw, _fields_ and _child nodes_ are _italics_, while **functions** and **signals
 ### Fields
 enum DisplayCondition: Represents which of the two conditions that a conversation dict needs to meet (FIRSTTIMER: its first notification was sent and STORYBEAT: its associated GameStoryBeat has occured) before its displayed onscreen. This can be represented by a bool right now, but an enum felt cleaner.
 
+default_display_conditions: A dict to hold what the "waiting for everything" state of do_next_convo is, see below.
+
 export conversation_resource: Resource file of the ConversationJSONData this conversation uses. This is where the final JSONDatas are set; other Nodes (like the ConversationAppSlate) get the JSONData from here.
 
 convo_slate_scene: Resource path for the ConversationAppSlate
@@ -30,10 +32,13 @@ FirstPushTimer: Pre-generated one-shot timer for the first notification a conver
 RePushTimer: Pre-generated repeat timer for repeated notifications pushed by messages that contain Prompts that must be completed.
 
 ## func create_conversation_slate():
-Instances the ConversationAppSlate into _convo_slate_, starts it, and adds it to the node tree. Other setup that needs to happen with the _convo_slate_ should be done here. Oh, and this is the method to call when the _convo_slate_ should be shown.
-	
+Instances the ConversationAppSlate into _convo_slate_, adds it to the node tree, and starts it. Other setup that needs to happen with the _convo_slate_ should be done here. Oh, and this is the method to call when the _convo_slate_ should be shown. Keep in mind that _convo_slate_ needs to be added to the tree first, before its initialized, to make sure all of its subnodes initialize
+ 	
 ## func remove_conversation_slate():
-Calls **convo_slate.end_convo_slate()** to get the index of the most recent conversation dict and save it to _last_displayed_chunk_index_. **end_convo_slate()** also does _convo_slate_'s internal shutdown/teardown logic. Once that's done, the _convo_slate_ is freed.
+Calls **convo_slate.end_convo_slate()** to get the index of the most recent conversation dict and save it to _last_displayed_chunk_index_. **end_convo_slate()** also does _convo_slate_'s internal shutdown/teardown logic. Once that's done, the _convo_slate_ is freed and set to null.
+
+## func _get_convo_slate_is_active() -> bool:
+Getter funcion for _convo_slate_is_active_. Returns true if _convo_slate_ is not null and **convo_slate.is_inside_tree()** is true.
 
 ## func cancel_and_restart_timer(timer : Node, wait_time : float):
 Generic timer-restarting method. Stops the provided _timer_, sets its _timer.wait_time_ to _wait_time_, and starts it back up again. Since each ConversationEntry handles multiple timers, it's good to centralize how all the timers are started and stopped.
@@ -43,7 +48,7 @@ Emits the ConversationEntry's parent's Notification signal (or, rather, makes th
 
 ## func handle_display_appslate(display_condition : int):
 _display_condition_ is actually a DisplayCondition enum.
-Takes the incoming display condition and adds it to _do_next_convo_ as 'True'. If that makes both conditions of _do_next_convo_ true, then tell the _convo_slate_ to **handle_next_convo_dict()**, which will take care of displaying the actual conversation. Also sends a notification with **send_notification_to_phone()** and resets the _do_next_convo_ conditional dict.
+Takes the incoming display condition and adds it to _do_next_convo_ as 'True'. If that makes both conditions of _do_next_convo_ true, then tell the _convo_slate_ to **handle_next_convo_dict()**, which will take care of displaying the actual conversation. Also sends a notification with **send_notification_to_phone()** and resets the _do_next_convo_ conditional dict. If both conditions of _do_next_convo_ are true, but the _convo_slate_ isn't active, this method will increment _last_displayed_chunk_index_ by 1 instead.
 
 ## func create_first_push_timer(timer_index : int, wait_time : float):
 Calls **cancel_and_restart_timer(FirstPushTimer, wait_time)**. Called 'create' because it originally created the timer, and takes an index for reasons I don't remember. Maybe I should change that...
