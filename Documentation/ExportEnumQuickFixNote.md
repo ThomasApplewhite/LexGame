@@ -1,0 +1,1 @@
+WOAH Just found out you CAN export enums! You can't just us them as type hints. I should go check around and fix that! Because enums are really useful and stuff!
