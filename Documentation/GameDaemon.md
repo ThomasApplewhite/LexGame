@@ -12,22 +12,42 @@ One thing the GameDaemon _might_ want to do in the future is use the current Gam
 btw, _fields_ and _child nodes_ are _italics_, while **functions** and **signals** are **bold**.
 
 ### Fields
-messanger_appslate: the appslate that sends text messages. The GameDaemon will need to send game-progression-relevant texts, so it maintains a reference to the messanger appslate to do so.
+export gsb_list_resource: GameStoryBeatList used to define the game order that the GameDaemon is going to follow.
+
+onready phone_control: Stores a reference to _PhoneControl_
+
+messanger_appslate: The appslate that sends text messages. The GameDaemon will need to send game-progression-relevant texts, so it maintains a reference to the messanger appslate to do so.
+
+required_gsb_index: The index of the GameStoryBeat in the _gsb_list_resource_ that the GameDaemon is expecting. The index is stored, rather than the actual GSB, so that we don't need to specifically parse the GameStoryBeatList. It's just not necessary.
 
 ### Child Nodes
 PhoneControl: the PhoneControl that the GameDaemon is using to produce GameStoryBeats.
 
 ## func _ready():
-Calls **get_messanger_appslate()**.
+Checks to make sure that _gsb_list_resource_ is, in fact, a GameStoryBeatList, then sets _messanger_appslate_ to whatever the result of **get_messanger_appslate()** is.
 	
-## func get_messanger_appslate():
-Assigned _messanger_appslate_. Currently, this is done by pulling whatever _PhoneControl_ has under GameEnums.AppSlateType.TEXT in the _PhoneControl.appslate_dict_ dictionary.
+## func get_messanger_appslate() -> Node:
+Actually returns an Appslate, but that can't be used as a type hint
 
+Returns _phone_control.appslate_dict[GameEnums.AppSlateType.TEXT]_, to access the _phone_control's_ current TextMessageAppslate
+
+## func get_required_gsb() -> int:
+Actually returns a GameStoryBeat, but that can't be used as a type hint.
+
+Returns **gsb_list_resource.get_game_story_beat_at_index(required_gsb_index)**, to get the actual GameStoryBeat the GameDaemon needs. GameDaemon only stores the current index, _gsb_list_resource_ is what determines the actual GameStoryBeat.
+
+## func advance_required_story_beat():
+Increments _required_gsb_index_ by 1. If that new index is beyond the GameStoryBeatList's length (by checking if that index returns an EOF from **get_required_gsb()**), calls **end_game()**
+
+## func end_game():
+Currently does nothing. Will be used to move on to the end-game scene when that gets developed.
+
+## func evaluate_game_story_beat(story_beat):
+Checks if _story_beat_ is the same as the GameStoryBeat in **get_required_gsb()**. If they're the same, calls **advance_game_story_beat()**.
 
 ## func _on_game_story_beat_triggered(story_beat):
 story_beat is type GameEnums.GameStoryBeat, but can't be typed that way. See GameEnums.md for more info on why.
 
-This will evaluate story beats later on, but it does nothing for now.
-
+Signal Receiver. Calls **evaluate_game_story_beat(story_beat)** whenever an attached signal activates.
 
 
