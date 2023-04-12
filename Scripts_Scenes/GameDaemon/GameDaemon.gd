@@ -6,6 +6,7 @@ onready var phone_control = $PhoneControl
 var messanger_appslate 
 
 var required_gsb_index : int = 0
+var recieved_gsb_dict = {}
 
 func _ready():
 	# Make sure we have the right kind of resource:
@@ -22,6 +23,9 @@ func get_messanger_appslate() -> Node:
 func get_required_gsb() -> int:
 	return gsb_list_resource.get_game_story_beat_at_index(required_gsb_index)
 
+func get_recieved_game_story_beat_frequency(story_beat) -> int:
+	var has_gsb = recieved_gsb_dict.has(story_beat)
+	return recieved_gsb_dict[story_beat] if has_gsb else 0
 	
 func advance_required_story_beat():
 	required_gsb_index += 1
@@ -36,6 +40,8 @@ func end_game():
 # currently required. If something else should happen from the GSB, it should
 # be determined and started here
 func evaluate_game_story_beat(story_beat):
+	recieved_gsb_dict[story_beat] += 1
+	
 	if(story_beat == get_required_gsb()):
 		advance_required_story_beat()
 
