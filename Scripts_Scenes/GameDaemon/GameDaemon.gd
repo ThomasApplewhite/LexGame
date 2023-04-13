@@ -8,6 +8,9 @@ var messanger_appslate
 var required_gsb_index : int = 0
 var recieved_gsb_dict = {}
 
+signal GameStorBeatAdvanced(story_beat, frequency)
+var gsb_advanced_signal_name = "GameStorBeatAdvanced" # setget , _get_gsb_advanced_signal_name
+
 func _ready():
 	# Make sure we have the right kind of resource:
 	if !gsb_list_resource.is_type("GameStoryBeatList"):
@@ -15,6 +18,8 @@ func _ready():
 		return
 	
 	messanger_appslate = get_messanger_appslate()
+	var gsb_reciever_method = messanger_appslate.gsb_advanced_reciever_name
+	messanger_appslate.connect(gsb_advanced_signal_name)
 	
 # Appslate, but custom types can't be hints
 func get_messanger_appslate() -> Node:
@@ -31,6 +36,9 @@ func advance_required_story_beat():
 	required_gsb_index += 1
 	if(get_required_gsb() == GameEnums.GameStoryBeat.EOF):
 		end_game()
+	else:
+		var new_gsb = get_required_gsb()
+		emit_signal(gsb_advanced_signal_name, new_gsb, recieved_gsb_dict[new_gsb])
 
 # Move the game to the end-game scene. Just not right now, its not ready yet.
 func end_game():
