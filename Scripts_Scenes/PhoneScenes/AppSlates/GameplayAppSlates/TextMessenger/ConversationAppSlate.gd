@@ -118,6 +118,13 @@ func create_lex_prompt():
 	# also start repush timer
 	send_repush_timer_to_entry_node()
 
+func init_entry_node_display_conditions():
+	# send the required GameStoryBeat and frequency to the EntryNode
+	# Add frequency to this later!
+	entry_parent.create_game_story_beat_requirements(active_convo_dict[convo_type.JSONFields.TRIGGERSTORYBEAT], 0)
+	
+	# send the FirstPush timer to the entry_node
+	send_first_timer_to_entry_node()
 	
 func send_first_timer_to_entry_node():
 	# Timers should really be the responsibility of the conversation entry
