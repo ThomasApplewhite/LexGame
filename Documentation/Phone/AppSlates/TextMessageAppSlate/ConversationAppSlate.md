@@ -91,7 +91,7 @@ Calls **process_convo_dict(convo_parser.get_next_conversation_chunck())**. Just 
 ## func process_convo_dict(convo_dict):
 Takes the incoming convo_dict and decides what to do with it.
 
-This method primarly just checks to make sure this convo_dict isn't EOF. If it isn't, it is saved as the _active_convo_dict_ and its index as the _active_convo_index_. The initial delay timer to display its contents is then started with **send_first_timer_to_entry_node()**.
+This method primarly just checks to make sure this convo_dict isn't EOF. If it isn't, it is saved as the _active_convo_dict_ and its index as the _active_convo_index_. The display requirement information need to show the conversation is then passed to _entry_parent_ by calling **init_entry_node_display_conditions()**.
 
 ## func display_next_convo_dict():
 Calls **create_static_message_text(active_convo_dict)** (which displays the actual text of the _active_convo_dict_), then **pop_process_convo_dict()** to generate the next one.
@@ -108,6 +108,12 @@ Creates a RichTextLabel called rt. rtl has its _bbcode_enabled_ and _fit_content
 Uses the _active_convo_dict[convo_type.JSONFields.PROMPTCONTENTS]_ to generate and init a PromptControl from _prompt_control_scene_ and child it to _prompt_parent_control_.
 
 Also starts the repeat notification timer with **send_repush_timer_to_entry_node()** so that the player remembers to do the prompt.
+
+## func init_entry_node_display_conditions():
+Sets up the _entry_node_ display conditions (the things that need to happen before the message is sent) by doing two things:
+
+1. Calling **entry_parent.create_game_story_beat_requirements(active_convo_dict[convo_type.JSONFields.TRIGGERSTORYBEAT], 0)** to inform the _entry_parent_ of which story beat to wait for (_active_convo_dict[convo_type.JSONFields.TRIGGERSTORYBEAT]_ and how frequently it needs to have occurred (currently 0, as GSB freqeuncy measuring hasn't been implemented yet).
+2. Starting the initial delay timer to display contents with **send_first_timer_to_entry_node()**.
 	
 ## func send_first_timer_to_entry_node():
 Calls **entry_parent.create_first_push_timer(active_convo_index, active_convo_dict[convo_type.JSONFields.FIRSTPUSHTIME])**, and does any other Slate-specific timer set up that is required.

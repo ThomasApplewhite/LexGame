@@ -82,8 +82,8 @@ func process_convo_dict(convo_dict):
 	print("Handling Dict Index: {0}".format({0: _get_active_convo_index()}))
 	# ---- DEGUG ----
 	
-	# Setup timer and activate it
-	send_first_timer_to_entry_node()
+	# Tell entry node that the convo slate is ready
+	init_entry_node_display_conditions()
 
 func display_next_convo_dict():
 	create_static_message_text(active_convo_dict)
@@ -124,6 +124,7 @@ func init_entry_node_display_conditions():
 	entry_parent.create_game_story_beat_requirements(active_convo_dict[convo_type.JSONFields.TRIGGERSTORYBEAT], 0)
 	
 	# send the FirstPush timer to the entry_node
+	# Setup timer and activate it
 	send_first_timer_to_entry_node()
 	
 func send_first_timer_to_entry_node():
