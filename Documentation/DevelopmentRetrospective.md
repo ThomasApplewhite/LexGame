@@ -4,3 +4,4 @@
 - Try to keep important names short. Class names, public methods, and important concepts all need to be short to save on line space. File names can only be so long, and if names get too long you'll end up having super over-length lines that do nothing. That's a bit of a pain.
 - Data driven assets! Use and use them well! Great way to abstract out information into containers that don't have to be nodes. Godot 4 even lets you export resource types! They're like Unity Scriptable Objects in that way.
 - Learn how to spell 'Receive'. It's spelled "Recieve" in 90% of the game.
+- Figure out a better documentation methodology. Having a markdown compatible doc scheme is a good idea, but setting up your docs to easily turn into a GitHub wiki would be better! Also something that is easier to do automatically. idk just make it a bit easier on yourself.
