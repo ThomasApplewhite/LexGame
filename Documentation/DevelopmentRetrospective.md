@@ -1,0 +1,6 @@
+- Do documentation as you write classes. Flowing out an entire class _feels_ nice, but if you need to do 3 or 4 or 5 classes at once, you'll fall behind real quickly
+- Diagram out engineering needs before hand. Don't stub out things and get to it later. Not only does this create tech debt, it can create massive amounts of tech debt out of nowhere.
+- If you anticipate a lot of classes having interdependency, try to eliminate them, or at least organize the interdependencies linearly. Obviously not creating them is easier.
+- Try to keep important names short. Class names, public methods, and important concepts all need to be short to save on line space. File names can only be so long, and if names get too long you'll end up having super over-length lines that do nothing. That's a bit of a pain.
+- Data driven assets! Use and use them well! Great way to abstract out information into containers that don't have to be nodes. Godot 4 even lets you export resource types! They're like Unity Scriptable Objects in that way.
+- Learn how to spell 'Receive'. It's spelled "Recieve" in 90% of the game.
