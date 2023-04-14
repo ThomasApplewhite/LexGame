@@ -20,11 +20,20 @@ messanger_appslate: The appslate that sends text messages. The GameDaemon will n
 
 required_gsb_index: The index of the GameStoryBeat in the _gsb_list_resource_ that the GameDaemon is expecting. The index is stored, rather than the actual GSB, so that we don't need to specifically parse the GameStoryBeatList. It's just not necessary.
 
+recieved_gsb_dict: Keys a GameStoryBeat to the number of times its been recieved by the GameDaemon. Stores how many times a GameStoryBeat has occurred.
+
+gsb_advanced_signal_name: Holds the name of the signal that should be emitted whenever the required GameStoryBeat changes.
+
 ### Child Nodes
 PhoneControl: the PhoneControl that the GameDaemon is using to produce GameStoryBeats.
 
+## signal GameStoryBeatAdvanced(story_beat, frequency)
+_story_beat_ is a GameStoryBeat, and _frequency_ is an int.
+
+Emitted whenever the required GameStoryBeat is updated, sending along the **new** GSB and its current frequency, **NOT** whatever the GSB just was.
+
 ## func _ready():
-Checks to make sure that _gsb_list_resource_ is, in fact, a GameStoryBeatList, then sets _messanger_appslate_ to whatever the result of **get_messanger_appslate()** is.
+Checks to make sure that _gsb_list_resource_ is, in fact, a GameStoryBeatList, then sets _messanger_appslate_ to whatever the result of **get_messanger_appslate()** is. Finally, connects the **GameStoryBeatAdvanced** signal to the _messanger_appslate_ using _messanger_applsate.gsb_advanced_reciever_name_ as the reciever.
 	
 ## func get_messanger_appslate() -> Node:
 Actually returns an Appslate, but that can't be used as a type hint
@@ -36,8 +45,13 @@ Actually returns a GameStoryBeat, but that can't be used as a type hint.
 
 Returns **gsb_list_resource.get_game_story_beat_at_index(required_gsb_index)**, to get the actual GameStoryBeat the GameDaemon needs. GameDaemon only stores the current index, _gsb_list_resource_ is what determines the actual GameStoryBeat.
 
+## func get_recieved_game_story_beat_frequency(story_beat) -> int:
+_story_beat_ is a GameStoryBeat
+
+Returns _recieved_gsb_dict[story_beat]_ is _story_beat_ is a valid index for the dict. Otherwise, returns 0.
+
 ## func advance_required_story_beat():
-Increments _required_gsb_index_ by 1. If that new index is beyond the GameStoryBeatList's length (by checking if that index returns an EOF from **get_required_gsb()**), calls **end_game()**
+Increments _required_gsb_index_ by 1. If that new index is beyond the GameStoryBeatList's length (by checking if that index returns an EOF from **get_required_gsb()**), calls **end_game()**. If it isn't, the signal stored in _gsb_advanced_signal_name_  will emit with the new required game story beat and its frequency is _recieved_gsb_dict_.
 
 ## func end_game():
 Currently does nothing. Will be used to move on to the end-game scene when that gets developed.

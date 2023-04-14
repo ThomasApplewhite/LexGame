@@ -8,8 +8,8 @@ var messanger_appslate
 var required_gsb_index : int = 0
 var recieved_gsb_dict = {}
 
-signal GameStorBeatAdvanced(story_beat, frequency)
-var gsb_advanced_signal_name = "GameStorBeatAdvanced" # setget , _get_gsb_advanced_signal_name
+signal GameStoryBeatAdvanced(story_beat, frequency)
+var gsb_advanced_signal_name = "GameStoryBeatAdvanced" # setget , _get_gsb_advanced_signal_name
 
 func _ready():
 	# Make sure we have the right kind of resource:
