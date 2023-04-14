@@ -15,6 +15,8 @@ var default_display_conditions = {
 	DisplayCondition.STORYBEAT : true # this should be false
 }
 
+var default_gsb_requirements = {}
+
 # STILL NEEDS STORY BEAT HANDLING
 # Whether or not this needs to be a setet acccess (and whether or not TextMessageAppSlate needs to set up signas for us) isn't settled yet.
 # I haven't decided if Entries will exist on startup in the scene tree of f they'll be instanced as we go. But don't worry about it for right now.
@@ -27,7 +29,7 @@ var convo_slate : Node
 
 # Convo-Slate State Variables
 var do_next_convo = default_display_conditions
-var game_story_beat_requirements = {}
+var game_story_beat_requirements = default_gsb_requirements
 var convo_slate_is_active : bool setget , _get_convo_slate_is_active
 var last_displayed_chunk_text : String = ""
 var last_displayed_chunk_index : int = -1
@@ -89,6 +91,7 @@ func handle_display_appslate(display_condition : int):
 	send_notification_to_phone()
 	
 	do_next_convo = default_display_conditions
+	game_story_beat_requirements = default_gsb_requirements
 
 func create_game_story_beat_requirements(required_gsb, required_frequency : int):
 	# TODO: Has the required GSB frequency already happened? find that out!
@@ -102,7 +105,7 @@ func create_game_story_beat_requirements(required_gsb, required_frequency : int)
 		GSBRequirement.FREQ : required_frequency
 	}
 	
-func evaluate_game_story_beat_requirements(story_beat, story_beat_frequency):
+func evaluate_game_story_beat_requirements(story_beat, story_beat_frequency : int):
 	#  No story beats required? Ignore.
 	if(game_story_beat_requirements.empty()):
 		return

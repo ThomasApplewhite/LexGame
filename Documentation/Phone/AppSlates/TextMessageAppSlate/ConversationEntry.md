@@ -10,7 +10,13 @@ btw, _fields_ and _child nodes_ are _italics_, while **functions** and **signals
 ### Fields
 enum DisplayCondition: Represents which of the two conditions that a conversation dict needs to meet (FIRSTTIMER: its first notification was sent and STORYBEAT: its associated GameStoryBeat has occured) before its displayed onscreen. This can be represented by a bool right now, but an enum felt cleaner.
 
+enum GSBRequirement: Represents which GameStoryBeat needs to be occur (and how many times it needs to occur) before the upcoming conversation chunk can be displayed.
+
 default_display_conditions: A dict to hold what the "waiting for everything" state of do_next_convo is, see below.
+
+default_gsb_requirements: A dict to hold what the "we have no requirements right now" state of game_story_beat_requirements is, see below.
+
+gsb_advanced_reciever_name: Holds the name of the method that will recieve GameStoryBeatAdvanced signals from other classes. Comes with a getter for easy out-of-class access.
 
 export conversation_resource: Resource file of the ConversationJSONData this conversation uses. This is where the final JSONDatas are set; other Nodes (like the ConversationAppSlate) get the JSONData from here.
 
@@ -19,6 +25,8 @@ convo_slate_scene: Resource path for the ConversationAppSlate
 convo_slate: Reference to the ConversationAppSlate, once it gets instanced.
 
 do_next_convo: A dictionary representing the multiple conditions required to 'do the next' (display on screen and parse the next piece of) conversation. A smarter man could make this a bitmask, but I have it as a dict of enums for right now. Who knows, maybe it will be a bitmask one day.
+
+game_story_beat_requirements: A dictionary that holds the GameStoryBeat and frequency of that story beat that needs to be recieved before the currently held convo_slate can be displayed.
 
 convo_slate_is_active: Is the ConversationAppSlate currently instanced or not. This controls certain notifications which don't occur if the Conversation is already being displayed.
 
@@ -50,9 +58,22 @@ Emits the ConversationEntry's parent's Notification signal (or, rather, makes th
 _display_condition_ is actually a DisplayCondition enum.
 Takes the incoming display condition and adds it to _do_next_convo_ as 'True'. If that makes both conditions of _do_next_convo_ true, then tell the _convo_slate_ to **handle_next_convo_dict()**, which will take care of displaying the actual conversation. Also sends a notification with **send_notification_to_phone()** and resets the _do_next_convo_ conditional dict. If both conditions of _do_next_convo_ are true, but the _convo_slate_ isn't active, this method will increment _last_displayed_chunk_index_ by 1 instead.
 
+Once the notification to the phone has been sent, this method resets _do_next_convo_ and _game_story_beat_requirements_ to their default dictionaries (_default_display_conditions_ and _default_gsb_requirements_, respectively).
+
+## func create_game_story_beat_requirements(required_gsb, required_frequency : int):
+_required_gsb_ is a GameStoryBeat.
+
+If _required_gsb_ has already occurred at _required_frequency_ (which is always false right now, as determining that hasn't been implemented yet), sets _do_next_convo[DisplayCondition.STORYBEAT]_ to "true" and returns.
+
+If it hasn't, _game_story_beat_requirements_ is populated with that information to be checked later against incoming GSB signals.
+
+## func evaluate_game_story_beat_requirements(story_beat, story_beat_frequency : int):
+_story_beat_ is a GameStoryBeat.
+
+Checks the incoming _story_beat_ and _story_beat_frequency_ against the GSB and frequency held in _game_story_beat_requirements_. If both match, calls **handle_display_appslate(DisplayCondition.STORYBEAT)** to inform the ConversationEntry that the StoryBeat part of the display requirements is fulfilled.
+
 ## func create_first_push_timer(timer_index : int, wait_time : float):
 Calls **cancel_and_restart_timer(FirstPushTimer, wait_time)**. Called 'create' because it originally created the timer, and takes an index for reasons I don't remember. Maybe I should change that...
-
 	
 ## func create_repush_push_timer(timer_index : int, wait_time : float):
 Calls **cancel_and_restart_timer(RePushTimer, wait_time)**. Called 'create' because it originally created the timer, and takes an index for reasons I don't remember. Maybe I should change that...
@@ -60,9 +81,11 @@ Calls **cancel_and_restart_timer(RePushTimer, wait_time)**. Called 'create' beca
 ## func cancel_repush_timer(timer_index : int):
 Tells _RePushTimer_ specifically to stop.
 
-
 ## func _on_FirstPushTimer_timeout():
 Timeout handler for _FirstPushTimer_. Calls **handle_display_appslate(DisplayCondition.FIRSTTIMER)** to display the next conversation piece, if the correct story beat has happened.
 
 ## func _on_RePushTimer_timeout():
 Timeout handler for _RePushTimer_. Calls **send_notification_to_phone()** to send repeat notifications for prompts.
+
+## func _on_game_story_beat_advanced(story_beat, story_beat_frequency):
+Signal reciever for GSB-update-related signals. Calls **evaluate_game_story_beat_requirements(story_beat, story_beat_frequency)** to see if the incoming _story_beat_ and _story_beat_frequency_ will fulfill any display conditions.
