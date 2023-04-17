@@ -6,3 +6,5 @@
 - Learn how to spell 'Receive'. It's spelled "Recieve" in 90% of the game.
 - Figure out a better documentation methodology. Having a markdown compatible doc scheme is a good idea, but setting up your docs to easily turn into a GitHub wiki would be better! Also something that is easier to do automatically. idk just make it a bit easier on yourself.
 - Careful with signals! Just, like, in general. Changing them can be a pain!
+- Make sure that your "server" repository is origin! Makes things easier that way!
+- Devise a more efficient way to do file handling/documentation outside of Godot. The editor doesn't seem to be equipped for that out-of-the-box. Maybe there can be an extension for that? Or, at least, you can figure out something better than just mark-down files and the folder viewer. Maybe some scripts would help. You know bash, you could do it.
