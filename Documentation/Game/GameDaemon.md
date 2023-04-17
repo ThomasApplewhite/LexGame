@@ -20,17 +20,17 @@ messanger_appslate: The appslate that sends text messages. The GameDaemon will n
 
 required_gsb_index: The index of the GameStoryBeat in the _gsb_list_resource_ that the GameDaemon is expecting. The index is stored, rather than the actual GSB, so that we don't need to specifically parse the GameStoryBeatList. It's just not necessary.
 
-recieved_gsb_dict: Keys a GameStoryBeat to the number of times its been recieved by the GameDaemon. Stores how many times a GameStoryBeat has occurred.
+recieved_gsb_dict: Keys a GameStoryBeat to the number of times its been recieved by the GameDaemon. Stores how many times a GameStoryBeat has occurred. Starts with a value of -1 for 'EOF' and 'NONE' to prevent bad reads from the dict whenever an invalid GSB is indexed.
 
 gsb_advanced_signal_name: Holds the name of the signal that should be emitted whenever the required GameStoryBeat changes.
 
 ### Child Nodes
 PhoneControl: the PhoneControl that the GameDaemon is using to produce GameStoryBeats.
 
-## signal GameStoryBeatAdvanced(story_beat, frequency)
-_story_beat_ is a GameStoryBeat, and _frequency_ is an int.
+## signal GameStoryBeatAdvanced(old_story_beat, old_frequency, new_story_beat, new_frequency)
+The story beat arguments are GameStoryBeat, and frequencies are ints.
 
-Emitted whenever the required GameStoryBeat is updated, sending along the **new** GSB and its current frequency, **NOT** whatever the GSB just was.
+Emitted whenever the required GameStoryBeat is updated, sending along the former required GSB, its freqeuncy, the new required GSB, and its frequency.
 
 ## func _ready():
 Checks to make sure that _gsb_list_resource_ is, in fact, a GameStoryBeatList, then sets _messanger_appslate_ to whatever the result of **get_messanger_appslate()** is. Finally, connects the **GameStoryBeatAdvanced** signal to the _messanger_appslate_ using _messanger_applsate.gsb_advanced_reciever_name_ as the reciever.
@@ -51,7 +51,7 @@ _story_beat_ is a GameStoryBeat
 Returns _recieved_gsb_dict[story_beat]_ is _story_beat_ is a valid index for the dict. Otherwise, returns 0.
 
 ## func advance_required_story_beat():
-Increments _required_gsb_index_ by 1. If that new index is beyond the GameStoryBeatList's length (by checking if that index returns an EOF from **get_required_gsb()**), calls **end_game()**. If it isn't, the signal stored in _gsb_advanced_signal_name_  will emit with the new required game story beat and its frequency is _recieved_gsb_dict_.
+Increments _required_gsb_index_ by 1. If that new index is beyond the GameStoryBeatList's length (by checking if that index returns an EOF from **get_required_gsb()**), calls **end_game()**. If it isn't, the signal stored in _gsb_advanced_signal_name_  will emit with the old and new required game story beats and their frequencies in _recieved_gsb_dict_.
 
 ## func end_game():
 Currently does nothing. Will be used to move on to the end-game scene when that gets developed.

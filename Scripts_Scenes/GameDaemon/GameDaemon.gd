@@ -6,9 +6,12 @@ onready var phone_control = $PhoneControl
 var messanger_appslate 
 
 var required_gsb_index : int = 0
-var recieved_gsb_dict = {}
+var recieved_gsb_dict = {
+	GameEnums.GameStoryBeat.NONE : -1, 
+	GameEnums.GameStoryBeat.EOF : -1 
+}
 
-signal GameStoryBeatAdvanced(story_beat, frequency)
+signal GameStoryBeatAdvanced(old_story_beat, old_frequency, new_story_beat, new_frequency)
 var gsb_advanced_signal_name = "GameStoryBeatAdvanced" # setget , _get_gsb_advanced_signal_name
 
 func _ready():
@@ -27,18 +30,25 @@ func get_messanger_appslate() -> Node:
 	
 func get_required_gsb() -> int:
 	return gsb_list_resource.get_game_story_beat_at_index(required_gsb_index)
+	
+func get_gsb_at_index(gsb_index : int) -> int:
+	return gsb_list_resource.get_game_story_beat_at_index(gsb_index)
 
 func get_recieved_game_story_beat_frequency(story_beat) -> int:
 	var has_gsb = recieved_gsb_dict.has(story_beat)
 	return recieved_gsb_dict[story_beat] if has_gsb else 0
 	
 func advance_required_story_beat():
+	var old_gsb = get_gsb_at_index(required_gsb_index)
+	var new_gsb = get_gsb_at_index(required_gsb_index + 1)
+	
 	required_gsb_index += 1
+	
 	if(get_required_gsb() == GameEnums.GameStoryBeat.EOF):
 		end_game()
 	else:
-		var new_gsb = get_required_gsb()
-		emit_signal(gsb_advanced_signal_name, new_gsb, recieved_gsb_dict[new_gsb])
+		
+		emit_signal(gsb_advanced_signal_name, old_gsb, recieved_gsb_dict[old_gsb], new_gsb, recieved_gsb_dict[new_gsb])
 
 # Move the game to the end-game scene. Just not right now, its not ready yet.
 func end_game():
