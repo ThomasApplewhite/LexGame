@@ -16,13 +16,13 @@ gsb_advanced_signal_name: Holds the name of the signal to emit whenever the requ
 
 gsb_advanced_reciever_name: Holds the name of the method used to respond to signals regardng the GameStoryBeat advancing (but not this class' signal. This is mostly to respond to GameDaemon's GameStoryBeatAdvanced signal).
 
-## signal GameStoryBeatAdvanced(story_beat, frequency)
-_story_beat_ is a GameStoryBeat, _frequency_ is an int.
+## signal GameStoryBeatAdvanced(old_story_beat, old_frequency, new_story_beat, new_frequency)
+story_beats are GameStoryBeats, frequencies are ints.
 
 Emitted whenever the TextMessageAppSlate has been informed that the required GameStoryBeat has been updated.
 
 ## func _get_gsb_advanced_reciever_name() -> String:
 Getter method for _gsb_advanced_reciever_name_. Returns _gsb_advanced_reciever_name_.
 
-## func _on_game_story_beat_advanced(story_beat, story_beat_frequency: int):
-Signal reciever for GameStoryBeat advancement signals. Emits TextMessageAppSlate's own GSB advancment signal (whichever one is held in _gsb_advanced_signal_name_) with _story_beat_ and _story_beat_frequency_ as arguments. Yes, this method just passes the signal along. Nothing is done with it.
+## func _on_game_story_beat_advanced(old_story_beat, old_frequency : int, new_story_beat, new_frequency : int):
+Signal reciever for GameStoryBeat advancement signals. Emits TextMessageAppSlate's own GSB advancment signal (whichever one is held in _gsb_advanced_signal_name_) with _old_story_beat_, _old_frequency_, _new_story_beat_, and _new_frequency_ as arguments. Yes, this method just passes the signal along. Nothing is done with it.
