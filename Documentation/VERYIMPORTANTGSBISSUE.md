@@ -1,3 +1,5 @@
 VERY IMPORTANT!!!! 
 
 CONVERSATIONENTRYNODE WORKS AS IF THE GSB ADVANCEMENT SIGNAL SENDS THE GSB THAT JUST ARRIVED, NOT THE NEW ONE THAT IS REQUIRED!!!! **FIX THAT SOON!!!!**
+
+The solution is to push along both the old and new GSB in the signal. Use it for both. Simple!

@@ -5,3 +5,4 @@
 - Data driven assets! Use and use them well! Great way to abstract out information into containers that don't have to be nodes. Godot 4 even lets you export resource types! They're like Unity Scriptable Objects in that way.
 - Learn how to spell 'Receive'. It's spelled "Recieve" in 90% of the game.
 - Figure out a better documentation methodology. Having a markdown compatible doc scheme is a good idea, but setting up your docs to easily turn into a GitHub wiki would be better! Also something that is easier to do automatically. idk just make it a bit easier on yourself.
+- Careful with signals! Just, like, in general. Changing them can be a pain!
