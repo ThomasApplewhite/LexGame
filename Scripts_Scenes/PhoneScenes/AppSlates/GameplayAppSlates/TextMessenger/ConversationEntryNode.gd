@@ -133,8 +133,10 @@ func _on_FirstPushTimer_timeout():
 func _on_RePushTimer_timeout():
 	send_notification_to_phone()
 	
-func _on_game_story_beat_advanced(story_beat, story_beat_frequency):
-	evaluate_game_story_beat_requirements(story_beat, story_beat_frequency)
+func _on_game_story_beat_advanced(old_story_beat, old_frequency, new_story_beat, new_frequency):
+	# ConversationEntryNode only cares about the story beat that was just resolved, not the new one
+	# that the GameDaemon is looking for.
+	evaluate_game_story_beat_requirements(old_story_beat, old_frequency)
 	
 
 # var app_parent = get_parent()

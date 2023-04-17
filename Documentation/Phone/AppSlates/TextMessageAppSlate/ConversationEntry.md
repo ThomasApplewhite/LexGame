@@ -87,5 +87,5 @@ Timeout handler for _FirstPushTimer_. Calls **handle_display_appslate(DisplayCon
 ## func _on_RePushTimer_timeout():
 Timeout handler for _RePushTimer_. Calls **send_notification_to_phone()** to send repeat notifications for prompts.
 
-## func _on_game_story_beat_advanced(story_beat, story_beat_frequency):
-Signal reciever for GSB-update-related signals. Calls **evaluate_game_story_beat_requirements(story_beat, story_beat_frequency)** to see if the incoming _story_beat_ and _story_beat_frequency_ will fulfill any display conditions.
+## func _on_game_story_beat_advanced(old_story_beat, old_frequency, new_story_beat, new_frequency):
+Signal reciever for GSB-update-related signals. Calls **evaluate_game_story_beat_requirements(old_story_beat, old_sfrequency)** to see if the newly recieved _old_story_beat_ and _old_frequency_ will fulfill any display conditions.
