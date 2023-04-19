@@ -112,7 +112,7 @@ func evaluate_game_story_beat_requirements(story_beat, story_beat_frequency : in
 		
 	# If there are requirements, check if the incoming signals match them
 	var beat_match = game_story_beat_requirements[GSBRequirement.BEAT] == story_beat
-	var freq_match = game_story_beat_requirements[GSBRequirement.FREQ] == story_beat_frequency
+	var freq_match = game_story_beat_requirements[GSBRequirement.FREQ] <= story_beat_frequency
 	
 	if(beat_match & freq_match):
 		handle_display_appslate(DisplayCondition.STORYBEAT)
