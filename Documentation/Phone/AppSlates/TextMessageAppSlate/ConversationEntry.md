@@ -18,6 +18,8 @@ default_gsb_requirements: A dict to hold what the "we have no requirements right
 
 notif_with_text_signal_name: Holds the name of the signal to be emitted when the ConversationEntry wants to cause a phone notification.
 
+request_frequency_signal_name = Holds the name of the signal to be emitted when the ConversationEntry wants to know how many time a GameStoryBeat has already occurred.
+
 gsb_advanced_reciever_name: Holds the name of the method that will recieve GameStoryBeatAdvanced signals from other classes. Comes with a getter for easy out-of-class access.
 
 export conversation_resource: Resource file of the ConversationJSONData this conversation uses. This is where the final JSONDatas are set; other Nodes (like the ConversationAppSlate) get the JSONData from here.
@@ -42,9 +44,14 @@ FirstPushTimer: Pre-generated one-shot timer for the first notification a conver
 RePushTimer: Pre-generated repeat timer for repeated notifications pushed by messages that contain Prompts that must be completed.
 
 ## signal RequestNotificationWithText(notification_text):
-notification_text is a String.
+_notification_text_ is a String.
 
 Emitted whenever a ConversationEntry wants the TextMessageAppSlate to send a notification, usually recieved by the textMessageAppSlate itself. Because the TextMessageAppSlate handles the actual notification signal (since it's an Appslate) the only thing the ConversationEntry needs to provide is the text of the notification.
+
+## signal RequestGSBFrequencyInfo(requesting_convo_entry, story_beat):
+_requesting_convo_entry_ is a Node, _story_beat_ is a GameStoryBeat.
+
+Emitted whenever a new required GameStoryBeat is set and the ConversationEntry needs to know how many times it has already happened. The reciever (which will be a TextMessageAppSlate) will call **evaluate_game_story_beat_requirements(story_beat, [whatever the frequency is])** to inform the ConversationEntry of what the frequency is.
 
 ## func create_conversation_slate():
 Instances the ConversationAppSlate into _convo_slate_, adds it to the node tree, and starts it. Other setup that needs to happen with the _convo_slate_ should be done here. Oh, and this is the method to call when the _convo_slate_ should be shown. Keep in mind that _convo_slate_ needs to be added to the tree first, before its initialized, to make sure all of its subnodes initialize

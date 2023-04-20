@@ -25,6 +25,8 @@ var convo_slate : Node
 # Signal-Related Variables
 signal RequestNotificationWithText(notification_text)
 var notif_with_text_signal_name = "RequestNotificationWithText"
+signal RequestGSBFrequencyInfo(requesting_convo_entry, story_beat)
+var request_frequency_signal_name = "RequestGSBFrequencyInfo"
 var gsb_advanced_reciever_name = "_on_game_story_beat_advanced"
 
 # Convo-Slate State Variables
@@ -88,9 +90,9 @@ func handle_display_appslate(display_condition : int):
 	game_story_beat_requirements = default_gsb_requirements
 
 func create_game_story_beat_requirements(required_gsb, required_frequency : int):
-	# TODO: Has the required GSB frequency already happened? find that out!
-	if(false):
-		do_next_convo[DisplayCondition.STORYBEAT] = true
+	# No GSB required? Just update the display conditions and move on!
+	if(required_gsb == GameEnums.GameStoryBeat.NONE):
+		handle_display_appslate(DisplayCondition.STORYBEAT)
 		return
 	
 	# if not, save the information for later signals, just in case
@@ -98,6 +100,9 @@ func create_game_story_beat_requirements(required_gsb, required_frequency : int)
 		GSBRequirement.BEAT : required_gsb,
 		GSBRequirement.FREQ : required_frequency
 	}
+	
+	#Ask TextMessageAppSlate for frequency information
+	emit_signal(request_frequency_signal_name, self, required_gsb)
 	
 func evaluate_game_story_beat_requirements(story_beat, story_beat_frequency : int):
 	#  No story beats required? Ignore.

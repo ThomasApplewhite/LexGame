@@ -14,6 +14,9 @@ script = ExtResource( 1 )
 
 [node name="TommyConversationEntryNode" parent="." instance=ExtResource( 2 )]
 
+[connection signal="RequestGSBFrequencyInfo" from="DadConversationEntryNode" to="." method="_on_gsb_frequency_info_request"]
 [connection signal="RequestNotificationWithText" from="DadConversationEntryNode" to="." method="_on_notification_request_from_convo_entry"]
+[connection signal="RequestGSBFrequencyInfo" from="MomConversationEntryNode" to="." method="_on_gsb_frequency_info_request"]
 [connection signal="RequestNotificationWithText" from="MomConversationEntryNode" to="." method="_on_notification_request_from_convo_entry"]
+[connection signal="RequestGSBFrequencyInfo" from="TommyConversationEntryNode" to="." method="_on_gsb_frequency_info_request"]
 [connection signal="RequestNotificationWithText" from="TommyConversationEntryNode" to="." method="_on_notification_request_from_convo_entry"]

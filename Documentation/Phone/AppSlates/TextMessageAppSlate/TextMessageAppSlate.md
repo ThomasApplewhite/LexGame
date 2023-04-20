@@ -36,3 +36,10 @@ Signal reciever for GameStoryBeat advancement signals. Emits TextMessageAppSlate
 
 ## func _on_notification_request_from_convo_entry(notification_text : String):
 Reciever for the ConversationEntry's "RequestNotifcationWithText" signal. Immediately forwards the signal to the Phone using the _AppSlate. notificationSignalName_ signal. GameEnums.AppSlateType.TEXT is used for the AppSlateType and _notification_text_ is used for the text.
+
+## func _on_gsb_frequency_info_request(requesting_node :  Node, story_beat):
+_story_beat_ is a GameStoryBeat.
+
+Obtains the number of times _story_beat_ has already occurred (as _gsb_frequency_), and sends that information to _requesting_node_ using **requesting_node.evaluate_game_story_beat_requirements(story_beat, gsb_frequency)**.
+
+However, TextMessangerAppSlate having access to that information isn't implemented yet, so for right now _gsb_frequency_ is always 0.

@@ -16,6 +16,7 @@ Also lay out that mf node order! TIME FOR ANOTHER TODO!
 	- DONE! Although this one was kinda cheating, since PhoneControl essentially _is_ GameDaemon's node heirarchy, and that's already set up. So, uh... good to go!
 3. Create a Signal Loop for TextMessageAppSlate and ConversationEntryNode. ConversationEntryNode signals for frequency information, and TextMessageAppSlate calls evaluate_game_story_beat with whatever the current frequency from the signal'd story beat is.
 	- I'm calling a "Signal Loop" a thing where a child node gets data from its parent by sending a signal and then the parent calls a method on the child to update the needed data.
+	- DONE!
 4. Create a Signal Loop for GameDaemon and TextMessageAppSlate. TextMessageAppSlate signals for frequency information, and GameDaemon calls... some method that provides it.
 	- How will TextMessageAppSlate know which entries get with frequency informations? I don't know! But I'll figure it out later!
 5. Don't forget to doc along the way!
