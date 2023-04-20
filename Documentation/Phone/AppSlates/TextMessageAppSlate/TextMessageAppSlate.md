@@ -16,6 +16,13 @@ gsb_advanced_signal_name: Holds the name of the signal to emit whenever the requ
 
 gsb_advanced_reciever_name: Holds the name of the method used to respond to signals regardng the GameStoryBeat advancing (but not this class' signal. This is mostly to respond to GameDaemon's GameStoryBeatAdvanced signal).
 
+### Child Nodes
+DadConversatonEntry: ConversationEntryNode that handles texts with Dad.
+
+MomConversatonEntry: ConversationEntryNode that handles texts with Mom.
+
+TommyConversatonEntry: ConversationEntryNode that handles texts with Tommy. Hey, that's me!
+
 ## signal GameStoryBeatAdvanced(old_story_beat, old_frequency, new_story_beat, new_frequency)
 story_beats are GameStoryBeats, frequencies are ints.
 
