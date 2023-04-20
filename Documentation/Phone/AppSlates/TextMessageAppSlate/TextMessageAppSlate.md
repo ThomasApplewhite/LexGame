@@ -33,3 +33,6 @@ Getter method for _gsb_advanced_reciever_name_. Returns _gsb_advanced_reciever_n
 
 ## func _on_game_story_beat_advanced(old_story_beat, old_frequency : int, new_story_beat, new_frequency : int):
 Signal reciever for GameStoryBeat advancement signals. Emits TextMessageAppSlate's own GSB advancment signal (whichever one is held in _gsb_advanced_signal_name_) with _old_story_beat_, _old_frequency_, _new_story_beat_, and _new_frequency_ as arguments. Yes, this method just passes the signal along. Nothing is done with it.
+
+## func _on_notification_request_from_convo_entry(notification_text : String):
+Reciever for the ConversationEntry's "RequestNotifcationWithText" signal. Immediately forwards the signal to the Phone using the _AppSlate. notificationSignalName_ signal. GameEnums.AppSlateType.TEXT is used for the AppSlateType and _notification_text_ is used for the text.

@@ -16,6 +16,8 @@ default_display_conditions: A dict to hold what the "waiting for everything" sta
 
 default_gsb_requirements: A dict to hold what the "we have no requirements right now" state of game_story_beat_requirements is, see below.
 
+notif_with_text_signal_name: Holds the name of the signal to be emitted when the ConversationEntry wants to cause a phone notification.
+
 gsb_advanced_reciever_name: Holds the name of the method that will recieve GameStoryBeatAdvanced signals from other classes. Comes with a getter for easy out-of-class access.
 
 export conversation_resource: Resource file of the ConversationJSONData this conversation uses. This is where the final JSONDatas are set; other Nodes (like the ConversationAppSlate) get the JSONData from here.
@@ -39,6 +41,11 @@ FirstPushTimer: Pre-generated one-shot timer for the first notification a conver
 
 RePushTimer: Pre-generated repeat timer for repeated notifications pushed by messages that contain Prompts that must be completed.
 
+## signal RequestNotificationWithText(notification_text):
+notification_text is a String.
+
+Emitted whenever a ConversationEntry wants the TextMessageAppSlate to send a notification, usually recieved by the textMessageAppSlate itself. Because the TextMessageAppSlate handles the actual notification signal (since it's an Appslate) the only thing the ConversationEntry needs to provide is the text of the notification.
+
 ## func create_conversation_slate():
 Instances the ConversationAppSlate into _convo_slate_, adds it to the node tree, and starts it. Other setup that needs to happen with the _convo_slate_ should be done here. Oh, and this is the method to call when the _convo_slate_ should be shown. Keep in mind that _convo_slate_ needs to be added to the tree first, before its initialized, to make sure all of its subnodes initialize
  	
@@ -52,7 +59,7 @@ Getter funcion for _convo_slate_is_active_. Returns true if _convo_slate_ is not
 Generic timer-restarting method. Stops the provided _timer_, sets its _timer.wait_time_ to _wait_time_, and starts it back up again. Since each ConversationEntry handles multiple timers, it's good to centralize how all the timers are started and stopped.
 	
 ## func send_notification_to_phone():
-Emits the ConversationEntry's parent's Notification signal (or, rather, makes the parent emit that signal). This method checks to see if the _convo_slate_is_active_ before emitting the signal, AND assumes that ConversationEntry's parent is an AppSlate. If it is, the actual logic of the signal is handled by AppSlate itself, with the signal name being the parent's _notification_signal_name_.
+If _convo_slate_is_active_ is false, emits the signal held in var _notif_with_text_signal_name_ with _last_displayed_chunk_text_ as the argument.
 
 ## func handle_display_appslate(display_condition : int):
 _display_condition_ is actually a DisplayCondition enum.

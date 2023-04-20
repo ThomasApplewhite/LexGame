@@ -17,15 +17,15 @@ var default_display_conditions = {
 
 var default_gsb_requirements = {}
 
-# STILL NEEDS STORY BEAT HANDLING
-# Whether or not this needs to be a setet acccess (and whether or not TextMessageAppSlate needs to set up signas for us) isn't settled yet.
-# I haven't decided if Entries will exist on startup in the scene tree of f they'll be instanced as we go. But don't worry about it for right now.
-var gsb_advanced_reciever_name = "_on_game_story_beat_advanced" # setget , _get_gsb_advanced_reciever_name
-
 # needs to hold convo asset and convo slate type and convo slate itself
 export var conversation_resource : Resource
 var convo_slate_scene = preload("res://Scripts_Scenes/PhoneScenes/AppSlates/GameplayAppSlates/TextMessenger/ConversationAppSlate.tscn")
 var convo_slate : Node
+
+# Signal-Related Variables
+signal RequestNotificationWithText(notification_text)
+var notif_with_text_signal_name = "RequestNotificationWithText"
+var gsb_advanced_reciever_name = "_on_game_story_beat_advanced"
 
 # Convo-Slate State Variables
 var do_next_convo = default_display_conditions
@@ -62,14 +62,8 @@ func cancel_and_restart_timer(timer : Node, wait_time : float):
 	
 func send_notification_to_phone():
 	# Only send notifications for this conversation if they aren't being looked at right now
-	if(convo_slate_is_active):
-		return
-		
-	# ConversationEntry is only ever a child of TextMessangerAppSlate, so...
-	var app_parent = get_parent()
-	var app_parent_notif = app_parent.notification_signal_name
-	# Emit the notif signal, and we're good to go!
-	app_parent.emit_signal(app_parent_notif, GameEnums.AppSlateType.TEXT, last_displayed_chunk_text)
+	if(!convo_slate_is_active):
+		emit_signal(notif_with_text_signal_name, last_displayed_chunk_text)
 
 func handle_display_appslate(display_condition : int):
 	do_next_convo[display_condition] = true

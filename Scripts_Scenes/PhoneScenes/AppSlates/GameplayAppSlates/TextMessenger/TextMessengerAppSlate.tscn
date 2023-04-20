@@ -12,4 +12,8 @@ script = ExtResource( 1 )
 
 [node name="MomConversationEntryNode" parent="." instance=ExtResource( 2 )]
 
-[node name="TommyConversationEntryNode3" parent="." instance=ExtResource( 2 )]
+[node name="TommyConversationEntryNode" parent="." instance=ExtResource( 2 )]
+
+[connection signal="RequestNotificationWithText" from="DadConversationEntryNode" to="." method="_on_notification_request_from_convo_entry"]
+[connection signal="RequestNotificationWithText" from="MomConversationEntryNode" to="." method="_on_notification_request_from_convo_entry"]
+[connection signal="RequestNotificationWithText" from="TommyConversationEntryNode" to="." method="_on_notification_request_from_convo_entry"]
