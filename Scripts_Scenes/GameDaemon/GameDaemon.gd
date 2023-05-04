@@ -28,10 +28,8 @@ func _ready():
 	# The signal below is connected wrong, fix that!
 	# What was it even for?
 	messanger_appslate = get_messanger_appslate()
-	var gsb_reciever_method = messanger_appslate.gsb_advanced_reciever_name
-	messanger_appslate.connect(gsb_advanced_signal_name)
-	
-	connect(messanger_appslate._get_gsb_frequency_signal_name(), self, gsb_frequency_reciever_name)
+	connect(gsb_advanced_signal_name, messanger_appslate,messanger_appslate.gsb_advanced_reciever_name)
+	messanger_appslate.connect(messanger_appslate._get_gsb_frequency_signal_name(), self, gsb_frequency_reciever_name)
 	
 # Appslate, but custom types can't be hints
 func get_messanger_appslate() -> Node:
