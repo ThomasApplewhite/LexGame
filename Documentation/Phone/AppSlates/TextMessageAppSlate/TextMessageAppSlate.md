@@ -16,6 +16,9 @@ gsb_advanced_signal_name: Holds the name of the signal to emit whenever the requ
 
 gsb_advanced_reciever_name: Holds the name of the method used to respond to signals regardng the GameStoryBeat advancing (but not this class' signal. This is mostly to respond to GameDaemon's GameStoryBeatAdvanced signal).
 
+gsb_frequency_signal_name: Holds the name of the signal used to obtain GameStoryBeat frequency information from outside nodes.
+
+
 ### Child Nodes
 DadConversatonEntry: ConversationEntryNode that handles texts with Dad.
 
@@ -28,8 +31,16 @@ story_beats are GameStoryBeats, frequencies are ints.
 
 Emitted whenever the TextMessageAppSlate has been informed that the required GameStoryBeat has been updated.
 
+## signal RequestGameStoryBeatFrequency(story_beat, requesting_entry)
+story_beat is a GameStoryBeat, requesting_entry is a Node.
+
+Emitte whenever the TextMessageAppSlate needs gsb_frequency info from a parent node (particularly, from GameDaemon).
+
 ## func _get_gsb_advanced_reciever_name() -> String:
 Getter method for _gsb_advanced_reciever_name_. Returns _gsb_advanced_reciever_name_.
+
+## func _get_gsb_frequency_signal_name() -> String:
+Getter method for _gsb_frequency_signal_name_. Returns _sb_frequency_signal_name_.
 
 ## func _on_game_story_beat_advanced(old_story_beat, old_frequency : int, new_story_beat, new_frequency : int):
 Signal reciever for GameStoryBeat advancement signals. Emits TextMessageAppSlate's own GSB advancment signal (whichever one is held in _gsb_advanced_signal_name_) with _old_story_beat_, _old_frequency_, _new_story_beat_, and _new_frequency_ as arguments. Yes, this method just passes the signal along. Nothing is done with it.
@@ -40,6 +51,4 @@ Reciever for the ConversationEntry's "RequestNotifcationWithText" signal. Immedi
 ## func _on_gsb_frequency_info_request(requesting_node :  Node, story_beat):
 _story_beat_ is a GameStoryBeat.
 
-Obtains the number of times _story_beat_ has already occurred (as _gsb_frequency_), and sends that information to _requesting_node_ using **requesting_node.evaluate_game_story_beat_requirements(story_beat, gsb_frequency)**.
-
-However, TextMessangerAppSlate having access to that information isn't implemented yet, so for right now _gsb_frequency_ is always 0.
+Emits the _gsb_frequency_signal_name_ signal, which will signal other nodes (namely, GameDaemon) to send the frequeny of _story_beat_ to _requesting_node_.

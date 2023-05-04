@@ -19,8 +19,15 @@ Also lay out that mf node order! TIME FOR ANOTHER TODO!
 	- DONE!
 4. Create a Signal Loop for GameDaemon and TextMessageAppSlate. TextMessageAppSlate signals for frequency information, and GameDaemon calls... some method that provides it.
 	- How will TextMessageAppSlate know which entries get with frequency informations? I don't know! But I'll figure it out later!
+	- When text message appslate ask for info, it sends along which entry needs it, so that the return method also includes that info!
+	- Even better, don't even loop! Just have GameDaemon tell the entry! Easy!
+	- DONE	
 5. Don't forget to doc along the way!
 7. Add the TriggerStoryBeatFrequency to convo_dicts, whatever that ends up looking like.
 8. Make it so that conversations actually trigger story beats lol.
 8. TEST!
 9. TextMessageAppSlate might actually be done!
+
+
+WRITE DOWN THE FULL FUNCTIONALITY CHAIN FOR CHECKING STORY BEATS BEBCAUSE i WILL FORGET!
+ACTUALLY WRITE EVERYTHING OUT FOR HOW STORY BEATS PROGRESS BEFFORE TESTING AGAIN! YEAH!

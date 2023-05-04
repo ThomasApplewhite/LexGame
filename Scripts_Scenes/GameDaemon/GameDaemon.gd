@@ -14,15 +14,24 @@ var recieved_gsb_dict = {
 signal GameStoryBeatAdvanced(old_story_beat, old_frequency, new_story_beat, new_frequency)
 var gsb_advanced_signal_name = "GameStoryBeatAdvanced" # setget , _get_gsb_advanced_signal_name
 
+var gsb_frequency_reciever_name = "_on_gsb_frequency_requested"
+
 func _ready():
 	# Make sure we have the right kind of resource:
 	if !gsb_list_resource.is_type("GameStoryBeatList"):
 		push_error("Wrong resource type lol!")
 		return
 	
+	# how do I connect the signal
+	# sender_object.connect(signal_name, target_object, handller_method)
+	
+	# The signal below is connected wrong, fix that!
+	# What was it even for?
 	messanger_appslate = get_messanger_appslate()
 	var gsb_reciever_method = messanger_appslate.gsb_advanced_reciever_name
 	messanger_appslate.connect(gsb_advanced_signal_name)
+	
+	connect(messanger_appslate._get_gsb_frequency_signal_name(), self, gsb_frequency_reciever_name)
 	
 # Appslate, but custom types can't be hints
 func get_messanger_appslate() -> Node:
@@ -66,4 +75,8 @@ func evaluate_game_story_beat(story_beat):
 # Recieves game story beats from appslates
 func _on_game_story_beat_triggered(story_beat):
 	evaluate_game_story_beat(story_beat)
+	
+func _on_gsb_frequency_requested(story_beat, requesting_node : Node):
+	var gsb_frequency = get_recieved_game_story_beat_frequency(story_beat)
+	requesting_node.evaluate_game_story_beat_requirements(story_beat, gsb_frequency)
 

@@ -24,6 +24,8 @@ recieved_gsb_dict: Keys a GameStoryBeat to the number of times its been recieved
 
 gsb_advanced_signal_name: Holds the name of the signal that should be emitted whenever the required GameStoryBeat changes.
 
+gsb_frequency_reciever_name:  Holds the name of the method that handles GameStoryBeat frequency info signals.
+
 ### Child Nodes
 PhoneControl: the PhoneControl that the GameDaemon is using to produce GameStoryBeats.
 
@@ -33,7 +35,7 @@ The story beat arguments are GameStoryBeat, and frequencies are ints.
 Emitted whenever the required GameStoryBeat is updated, sending along the former required GSB, its freqeuncy, the new required GSB, and its frequency.
 
 ## func _ready():
-Checks to make sure that _gsb_list_resource_ is, in fact, a GameStoryBeatList, then sets _messanger_appslate_ to whatever the result of **get_messanger_appslate()** is. Finally, connects the **GameStoryBeatAdvanced** signal to the _messanger_appslate_ using _messanger_applsate.gsb_advanced_reciever_name_ as the reciever.
+Checks to make sure that _gsb_list_resource_ is, in fact, a GameStoryBeatList, then sets _messanger_appslate_ to whatever the result of **get_messanger_appslate()** is. Finally, connects the **GameStoryBeatAdvanced** signal to the _messanger_appslate_ using _messanger_applsate.gsb_advanced_reciever_name_ as the reciever and connects the _messangers_appslate.gsb_frequency_signal_name_  signal to the GameDaemon with _gsb_frequency_reciever_name_ as the reciever.
 	
 ## func get_messanger_appslate() -> Node:
 Actually returns an Appslate, but that can't be used as a type hint
@@ -64,4 +66,8 @@ story_beat is type GameEnums.GameStoryBeat, but can't be typed that way. See Gam
 
 Signal Receiver. Calls **evaluate_game_story_beat(story_beat)** whenever an attached signal activates.
 
+## func _on_gsb_frequency_requested(story_beat, requesting_node : Node):
+story_beat is type GameEnums.GameStoryBeat, but can't be typed that way. See GameEnums.md for more info on why.
+
+Signal Receiver. Calls **requesting_node.evaluate_game_story_beat_requirements(story_beat, gsb_frequency)** whenever an attached signal activates. _gsb_frequency_ is a local variable that holds _story_beat_'s frequency from **get_recieved_game_story_beat_frequency(story_beat)**.
 
