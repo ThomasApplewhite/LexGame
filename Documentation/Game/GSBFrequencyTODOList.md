@@ -23,7 +23,21 @@ Also lay out that mf node order! TIME FOR ANOTHER TODO!
 	- Even better, don't even loop! Just have GameDaemon tell the entry! Easy!
 	- DONE	
 5. Don't forget to doc along the way!
+	- Potentially needs doc updates:
+	1. GameDaemon
+	2. ConversationAppSlate
+	3. ConversationEntryNode
+	4. ConversationParser
+	5. TextMessageAppSlatge
+	- DONE
 7. Add the TriggerStoryBeatFrequency to convo_dicts, whatever that ends up looking like.
+	- Okay, here's the plan: Each message requires a TriggerStoryBeat. That really isn't necessary, only some messages need Triggers. Most have a "NONE". So, here's the plan, for real:
+		1. Replace the TriggerStoryBeat field with a dict that holds GSB -> Freq pairs. (OPTIONAL)
+		2. Add a field to ConversationJSONText that specifies with GSB to send when the message is completed
+		3. Change ConversationParser to parse the new dictionary
+		4. Change ConversationParser to parse the new JSONText
+		5. Change ConversationEntryNode to support multiple required GSBs (OPTIONAL)
+		6. Change ConversationEntryNode to send the update GSB signal.
 8. Make it so that conversations actually trigger story beats lol.
 8. TEST!
 9. TextMessageAppSlate might actually be done!
