@@ -10,3 +10,5 @@
 - Devise a more efficient way to do file handling/documentation outside of Godot. The editor doesn't seem to be equipped for that out-of-the-box. Maybe there can be an extension for that? Or, at least, you can figure out something better than just mark-down files and the folder viewer. Maybe some scripts would help. You know bash, you could do it.
 - Become more familiar with Godot's "Call Down, Signal Up" idea. It sounds nice for making sure coupling between nodes doesn't get really annoying!
 - Don't put scenes and their respective scripts in the same folder. Mixing them together is lowkey really annoying.
+- Use a more intelligent editor for documentation. Markdown is cool because it's git compatible, but not being able to automate this process is really annoying.
+- Figure out some way to do code-enforced mass signal connection with editor-connected signals. Maybe use groups? Is that a thing?
