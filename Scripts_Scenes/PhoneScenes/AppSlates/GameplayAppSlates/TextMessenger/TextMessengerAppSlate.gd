@@ -25,3 +25,6 @@ func _on_notification_request_from_convo_entry(notification_text : String):
 func _on_gsb_frequency_info_request(requesting_node :  Node, story_beat):
 	# Emit the info request signal. GameDaemon will send the needed info
 	emit_signal(gsb_frequency_signal_name, story_beat, requesting_node)
+
+func _on_game_story_beat_triggered(story_beat : int):
+	emit_signal(story_beat_signal_name, story_beat)

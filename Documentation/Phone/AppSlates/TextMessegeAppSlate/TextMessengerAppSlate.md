@@ -26,6 +26,8 @@ MomConversatonEntry: ConversationEntryNode that handles texts with Mom.
 
 TommyConversatonEntry: ConversationEntryNode that handles texts with Tommy. Hey, that's me!
 
+All of these children have their ConversationEntryNodes connected to the matching receiver method in-editor.
+
 ## signal GameStoryBeatAdvanced(old_story_beat, old_frequency, new_story_beat, new_frequency)
 story_beats are GameStoryBeats, frequencies are ints.
 
@@ -52,3 +54,8 @@ Reciever for the ConversationEntry's "RequestNotifcationWithText" signal. Immedi
 _story_beat_ is a GameStoryBeat.
 
 Emits the _gsb_frequency_signal_name_ signal, which will signal other nodes (namely, GameDaemon) to send the frequeny of _story_beat_ to _requesting_node_.
+
+## func _on_game_story_beat_triggered(story_beat : int):
+_story_beat_ is a GameStoryBeat
+
+Emits the inherited AppSlate _story_beat_signal_name_ with _story_beat_ as the argument, to pass the GameStoryBeat up to the phone.

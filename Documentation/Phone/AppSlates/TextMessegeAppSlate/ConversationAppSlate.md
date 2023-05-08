@@ -136,6 +136,9 @@ Stops the repush timer with **stop_timer_on_entry_node**, frees the _active_prom
 
 Again, **display_next_convo_dict()** pops the next conversation chunk into _active_convo_dict_ once the text of the _active_convo_dict_ is displayed.
 
+## func get_current_convo_dict_send_story_beat() -> int:
+Returns _active_convo_dict[convo_type.JSONFields.SENDSTORYBEAT]_
+
 ## func _get_active_convo_index() -> int:
 Getter for _active_convo_index_. If there is an _active_convo_dict_, returns that convo_dict's CONVERSATIONINDEX. If there isn't an _active_convo_dict_, returns _starting_convo_index_ instead.
 

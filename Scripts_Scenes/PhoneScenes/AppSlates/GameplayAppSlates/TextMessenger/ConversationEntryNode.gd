@@ -27,6 +27,9 @@ signal RequestNotificationWithText(notification_text)
 var notif_with_text_signal_name = "RequestNotificationWithText"
 signal RequestGSBFrequencyInfo(requesting_convo_entry, story_beat)
 var request_frequency_signal_name = "RequestGSBFrequencyInfo"
+signal GameStoryBeatTriggered(story_beat)
+var story_beat_signal_name = "GameStoryBeatTriggered" # setget , _get_story_beat_signal_name
+
 var gsb_advanced_reciever_name = "_on_game_story_beat_advanced"
 
 # Convo-Slate State Variables
@@ -74,6 +77,12 @@ func handle_display_appslate(display_condition : int):
 	# if it's not time to display the next part of the conversation, don't.
 	if(!ready):
 		return
+		
+	# if it is time, do everything in the rest of the function!
+	
+	# Regardless of slate activity, send the relevant sent GameStoryBeat to the TextMessangerAppSlate
+	var triggered_story_beat = convo_slate.get_current_convo_dict_send_story_beat()
+	emit_signal(story_beat_signal_name, triggered_story_beat)
 	
 	# if the convo slate isn't active, just advance the current convo index and don't display anything
 	if(!_get_convo_slate_is_active()):

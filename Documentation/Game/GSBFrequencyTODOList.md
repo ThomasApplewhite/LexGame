@@ -34,8 +34,10 @@ Also lay out that mf node order! TIME FOR ANOTHER TODO!
 	- Okay, here's the plan: Each message requires a TriggerStoryBeat. That really isn't necessary, only some messages need Triggers. Most have a "NONE". So, here's the plan, for real:
 		1. Replace the TriggerStoryBeat field with a dict that holds GSB -> Freq pairs. (OPTIONAL)
 		2. Add a field to ConversationJSONText that specifies with GSB to send when the message is completed
-		3. Change ConversationParser to parse the new dictionary
+		- DONE
+		3. Change ConversationParser to parse the new dictionary (OPTIONAL)
 		4. Change ConversationParser to parse the new JSONText
+		- DONE
 		5. Change ConversationEntryNode to support multiple required GSBs (OPTIONAL)
 		6. Change ConversationEntryNode to send the update GSB signal.
 8. Make it so that conversations actually trigger story beats lol.

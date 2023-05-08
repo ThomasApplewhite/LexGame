@@ -34,6 +34,8 @@ ConversationPartner: String. The person Lex is texting/messaging. This is the sa
 
 TriggerStoryBeat: String (converted to GameStoryBeat). The GameStoryBeat that the TextMessangerAppSlate should wait to receive before starting this message's 'sending time'. Mark as "NONE" to not wait for a GameStoryBeat and mark as "EOF" to flag that there are no more messages to send.
 
+SendStoryBeat: String (converted to GameStoryBeat). The GameStoryBeat that the ConversationEntryNode will send when once the message has been sent. Mark as "NONE" if the message doesn't send any GameStoryBeats.
+
 FirstPushTime: Float. The amount of time the TextMessangerAppSlate should wait before actually sending the text. The timer should start after the GameStoryBeat in TriggerStoryBeat is received.
 
 PartnerMessageText: String. The actual message that the conversation partner will diplay.
@@ -59,6 +61,7 @@ PhraseTime: Float. The amount of time the player has to complete the phrase befo
 	},
 	{
 		"TriggerStoryBeat": ===,
+		"SendStoryBeat": ===,
 		"FirstPushTime": ===,
 		"PartnerMessageText": ===,
 		"ContainsPrompt": ===,
@@ -87,6 +90,7 @@ PhraseTime: Float. The amount of time the player has to complete the phrase befo
 	},
 	{
 		"TriggerStoryBeat": ===,
+		"SendStoryBeat": ===,
 		"FirstPushTime": ===,
 		"PartnerMessageText": ===,
 		"ContainsPrompt": ===,
@@ -115,6 +119,7 @@ PhraseTime: Float. The amount of time the player has to complete the phrase befo
 	},
 	{
 		"TriggerStoryBeat": ===,
+		"SendStoryBeat": ===,
 		"FirstPushTime": ===,
 		"PartnerMessageText": ===,
 		"ContainsPrompt": ===,

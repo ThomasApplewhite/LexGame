@@ -27,7 +27,7 @@ gsb_advanced_signal_name: Holds the name of the signal that should be emitted wh
 gsb_frequency_reciever_name:  Holds the name of the method that handles GameStoryBeat frequency info signals.
 
 ### Child Nodes
-PhoneControl: the PhoneControl that the GameDaemon is using to produce GameStoryBeats.
+PhoneControl: the PhoneControl that the GameDaemon is using to produce GameStoryBeats. Its StoryBeatTriggered signal is connected to GameDaemon in the editor.
 
 ## signal GameStoryBeatAdvanced(old_story_beat, old_frequency, new_story_beat, new_frequency)
 The story beat arguments are GameStoryBeat, and frequencies are ints.
@@ -64,7 +64,7 @@ Currently does nothing. Will be used to move on to the end-game scene when that 
 ## func evaluate_game_story_beat(story_beat):
 Checks if _story_beat_ is the same as the GameStoryBeat in **get_required_gsb()**. If they're the same, calls **advance_game_story_beat()**.
 
-## func _on_game_story_beat_triggered(story_beat):
+## func _on_PhoneControl_StoryBeatTriggered(story_beat):
 story_beat is type GameEnums.GameStoryBeat, but can't be typed that way. See GameEnums.md for more info on why.
 
 Signal Receiver. Calls **evaluate_game_story_beat(story_beat)** whenever an attached signal activates.

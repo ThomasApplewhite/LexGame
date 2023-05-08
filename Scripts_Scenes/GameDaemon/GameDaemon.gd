@@ -71,10 +71,13 @@ func evaluate_game_story_beat(story_beat):
 		advance_required_story_beat()
 
 # Recieves game story beats from appslates
-func _on_game_story_beat_triggered(story_beat):
+func _on_PhoneControl_StoryBeatTriggered(story_beat):
 	evaluate_game_story_beat(story_beat)
 	
 func _on_gsb_frequency_requested(story_beat, requesting_node : Node):
 	var gsb_frequency = get_recieved_game_story_beat_frequency(story_beat)
 	requesting_node.evaluate_game_story_beat_requirements(story_beat, gsb_frequency)
+
+
+
 

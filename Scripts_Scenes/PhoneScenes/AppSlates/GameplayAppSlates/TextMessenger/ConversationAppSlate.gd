@@ -171,6 +171,9 @@ func handle_prompt_completed():
 		
 	# Print out the last of the message text
 	display_next_convo_dict()
+	
+func get_current_convo_dict_send_story_beat() -> int:
+	return active_convo_dict[convo_type.JSONFields.SENDSTORYBEAT]
 
 func _get_active_convo_index() -> int:
 	if(active_convo_dict):

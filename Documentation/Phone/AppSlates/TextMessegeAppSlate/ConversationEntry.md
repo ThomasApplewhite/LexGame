@@ -24,7 +24,9 @@ convo_slate: Reference to the ConversationAppSlate, once it gets instanced.
 
 notif_with_text_signal_name: Holds the name of the signal to be emitted when the ConversationEntry wants to cause a phone notification.
 
-request_frequency_signal_name = Holds the name of the signal to be emitted when the ConversationEntry wants to know how many time a GameStoryBeat has already occurred.
+request_frequency_signal_name: Holds the name of the signal to be emitted when the ConversationEntry wants to know how many time a GameStoryBeat has already occurred.
+
+story_beat_signal_name: Holds the name of the signal to be emitted when the ConversationEntry wants to tell other Nodes that its conversation has sent a GameStoryBeat (so that the number of GSB occurances can be increased).
 
 gsb_advanced_reciever_name: Holds the name of the method that will recieve GameStoryBeatAdvanced signals from other classes. Comes with a getter for easy out-of-class access.
 
@@ -70,7 +72,13 @@ If _convo_slate_is_active_ is false, emits the signal held in var _notif_with_te
 
 ## func handle_display_appslate(display_condition : int):
 _display_condition_ is actually a DisplayCondition enum.
-Takes the incoming display condition and adds it to _do_next_convo_ as 'True'. If that makes both conditions of _do_next_convo_ true, then tell the _convo_slate_ to **handle_next_convo_dict()**, which will take care of displaying the actual conversation. Also sends a notification with **send_notification_to_phone()** and resets the _do_next_convo_ conditional dict. If both conditions of _do_next_convo_ are true, but the _convo_slate_ isn't active, this method will increment _last_displayed_chunk_index_ by 1 instead.
+
+Takes the incoming display condition and adds it to _do_next_convo_ as 'True'. If that makes both conditions of _do_next_convo_ true, then the following things occur:
+	1. The ConversationEntry will emit the signal in _story_beat_signal_name_ with **convo_slate.get_current_convo_dict_send_story_beat()** as the argument. This informs the rest of the game of the GSB that just occured from this conversation chunk completing. 
+	2. Tell the _convo_slate_ to **handle_next_convo_dict()**, which will take care of displaying the actual conversation. 
+	3. Sends a notification with **send_notification_to_phone()**.
+
+If both conditions of _do_next_convo_ are true, but the _convo_slate_ isn't active, this method will increment _last_displayed_chunk_index_ by 1 instead of doing steps 2 and 3.
 
 Once the notification to the phone has been sent, this method resets _do_next_convo_ and _game_story_beat_requirements_ to their default dictionaries (_default_display_conditions_ and _default_gsb_requirements_, respectively).
 

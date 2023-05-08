@@ -6,6 +6,7 @@ ConversationParser is a utility class designed to parse ConversationData JSON te
 The dictionaries that the ConversationParser returns are _not_ explicit data structures, just duck-typed String->(probably) String dictionaries. They're referred to as Conversation Chunks or convo_dicts within code. They contain the following information with the following JSONFields enum keys (the JSONFields enum is documented under **Fields**):
 
 TRIGGERSTORYBEAT: The GameEnums.GameStoryBeat that the TextMessengerAppSlate should wait to receive before sending this message.
+SENDSTORYBEAT: The GameEnums.GameStoryBeat that the TextMessengerAppSlate will recieve when this message is sent.
 FIRSTPUSHTIME: The amount of time the TextMessengerAppSlate should wait before sending this message and its push notification
 PARTNERMESSAGETEXT: The text of the message that Lex recieves from the conversation partner
 CONTAINSPROMPT: Whether or not this message comes with a Prompt that Lex needs to complete to advance the conversation
@@ -55,6 +56,7 @@ The primary algorithm of the parser. This is where the JSON string data is saved
 1. Check to see if _convo_item_ is empty/null. If it is, then there was a parsing error. An error is pushed and an empty dict is returned. If not, continue.
 2. Read out the 'guaranteed' data of the JSON file: all of the information in the JSON dict that each conversation_chunk will have. The following is always saved to the final _convo_dict_:
 	- TRIGGERSTORYBEAT
+	- SENDSTORYBEAT
 	- FIRSTPUSHTIME
 	- PARTNERMESSAGETEXT
 	- CONTAINSPROMPT

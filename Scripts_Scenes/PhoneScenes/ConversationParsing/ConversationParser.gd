@@ -8,6 +8,7 @@ enum JSONFields {
 	CONVERSATIONINDEX,
 	CONVERSATIONPARTNER,
 	TRIGGERSTORYBEAT,
+	SENDSTORYBEAT,
 	FIRSTPUSHTIME,
 	PARTNERMESSAGETEXT,
 	CONTAINSPROMPT,
@@ -29,6 +30,7 @@ enum JSONFields {
 var ESA = {
 	JSONFields.CONVERSATIONPARTNER 	: "ConversationPartner",
 	JSONFields.TRIGGERSTORYBEAT 	: "TriggerStoryBeat",
+	JSONFields.SENDSTORYBEAT		: "SendStoryBeat",
 	JSONFields.FIRSTPUSHTIME 		: "FirstPushTime",
 	JSONFields.PARTNERMESSAGETEXT 	: "PartnerMessageText",
 	JSONFields.CONTAINSPROMPT 		: "ContainsPrompt",
@@ -112,11 +114,12 @@ func parse_json_item(convo_item) -> Dictionary:
 	
 	# Save the guartuneed fields into the dict.
 	var gsb_data = convo_item[ESA[JSONFields.TRIGGERSTORYBEAT]]
-	convo_dict[JSONFields.TRIGGERSTORYBEAT] = GameEnums.string_to_gamestorybeat(gsb_data)
-	convo_dict[JSONFields.FIRSTPUSHTIME] = convo_item[ESA[JSONFields.FIRSTPUSHTIME]]
-	convo_dict[JSONFields.PARTNERMESSAGETEXT] = convo_item[ESA[JSONFields.PARTNERMESSAGETEXT]]
-	convo_dict[JSONFields.CONTAINSPROMPT] = convo_item[ESA[JSONFields.CONTAINSPROMPT]]
-	convo_dict[JSONFields.CONVERSATIONINDEX] = working_index
+	convo_dict[JSONFields.TRIGGERSTORYBEAT]		= GameEnums.string_to_gamestorybeat(gsb_data)
+	convo_dict[JSONFields.SENDSTORYBEAT]		= GameEnums.string_to_gamestorybeat(gsb_data)
+	convo_dict[JSONFields.FIRSTPUSHTIME]		= convo_item[ESA[JSONFields.FIRSTPUSHTIME]]
+	convo_dict[JSONFields.PARTNERMESSAGETEXT]	= convo_item[ESA[JSONFields.PARTNERMESSAGETEXT]]
+	convo_dict[JSONFields.CONTAINSPROMPT]		= convo_item[ESA[JSONFields.CONTAINSPROMPT]]
+	convo_dict[JSONFields.CONVERSATIONINDEX]	= working_index
 	working_index += 1
 	
 	# If there's no prompt involved, we don't actually need to do any parsing. We can just
@@ -150,9 +153,9 @@ func parse_json_item(convo_item) -> Dictionary:
 	
 	# Now that all the PromptPhrases are done, we can create the actual prompt
 	var lex_prompt = PromptSettings.new(convo_dict[JSONFields.PARTNERMESSAGETEXT], lex_phrase_settings)
-	prompt_dict[JSONFields.REPUSHTIME] = convo_prompt_contents[ESA[JSONFields.REPUSHTIME]]
-	prompt_dict[JSONFields.LEXMESSAGETEXT] = lex_response
-	prompt_dict[JSONFields.PROMPTSETTINGS] = lex_prompt
+	prompt_dict[JSONFields.REPUSHTIME]		 = convo_prompt_contents[ESA[JSONFields.REPUSHTIME]]
+	prompt_dict[JSONFields.LEXMESSAGETEXT]	 = lex_response
+	prompt_dict[JSONFields.PROMPTSETTINGS]	 = lex_prompt
 	
 	# Save out prompt to convo_dict
 	convo_dict[JSONFields.PROMPTCONTENTS] = prompt_dict
