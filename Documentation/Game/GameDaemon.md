@@ -47,6 +47,9 @@ Actually returns a GameStoryBeat, but that can't be used as a type hint.
 
 Returns **gsb_list_resource.get_game_story_beat_at_index(required_gsb_index)**, to get the actual GameStoryBeat the GameDaemon needs. GameDaemon only stores the current index, _gsb_list_resource_ is what determines the actual GameStoryBeat.
 
+## func get_gsb_at_index(gsb_index : int) -> int:
+Returns **gsb_list_resource.get_game_story_beat_at_index(gsb_index)**
+
 ## func get_recieved_game_story_beat_frequency(story_beat) -> int:
 _story_beat_ is a GameStoryBeat
 

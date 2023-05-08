@@ -16,17 +16,17 @@ default_display_conditions: A dict to hold what the "waiting for everything" sta
 
 default_gsb_requirements: A dict to hold what the "we have no requirements right now" state of game_story_beat_requirements is, see below.
 
-notif_with_text_signal_name: Holds the name of the signal to be emitted when the ConversationEntry wants to cause a phone notification.
-
-request_frequency_signal_name = Holds the name of the signal to be emitted when the ConversationEntry wants to know how many time a GameStoryBeat has already occurred.
-
-gsb_advanced_reciever_name: Holds the name of the method that will recieve GameStoryBeatAdvanced signals from other classes. Comes with a getter for easy out-of-class access.
-
 export conversation_resource: Resource file of the ConversationJSONData this conversation uses. This is where the final JSONDatas are set; other Nodes (like the ConversationAppSlate) get the JSONData from here.
 
 convo_slate_scene: Resource path for the ConversationAppSlate
 
 convo_slate: Reference to the ConversationAppSlate, once it gets instanced.
+
+notif_with_text_signal_name: Holds the name of the signal to be emitted when the ConversationEntry wants to cause a phone notification.
+
+request_frequency_signal_name = Holds the name of the signal to be emitted when the ConversationEntry wants to know how many time a GameStoryBeat has already occurred.
+
+gsb_advanced_reciever_name: Holds the name of the method that will recieve GameStoryBeatAdvanced signals from other classes. Comes with a getter for easy out-of-class access.
 
 do_next_convo: A dictionary representing the multiple conditions required to 'do the next' (display on screen and parse the next piece of) conversation. A smarter man could make this a bitmask, but I have it as a dict of enums for right now. Who knows, maybe it will be a bitmask one day.
 
