@@ -62,7 +62,9 @@ Increments _required_gsb_index_ by 1. If that new index is beyond the GameStoryB
 Currently does nothing. Will be used to move on to the end-game scene when that gets developed.
 
 ## func evaluate_game_story_beat(story_beat):
-Checks if _story_beat_ is the same as the GameStoryBeat in **get_required_gsb()**. If they're the same, calls **advance_game_story_beat()**.
+Increments _recieverd_gsb_dict[story_beat]_ by one, then checks if _story_beat_ is the same as the GameStoryBeat in **get_required_gsb()**. If they're the same, calls **advance_game_story_beat()**.
+
+Will automatically return of _story_beat_ is NONE or EOF. Neither of those beats have meaningful frequencies or are respected as part of game progression.
 
 ## func _on_PhoneControl_StoryBeatTriggered(story_beat):
 story_beat is type GameEnums.GameStoryBeat, but can't be typed that way. See GameEnums.md for more info on why.

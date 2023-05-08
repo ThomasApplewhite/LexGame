@@ -65,6 +65,9 @@ func end_game():
 # currently required. If something else should happen from the GSB, it should
 # be determined and started here
 func evaluate_game_story_beat(story_beat):
+	if (story_beat == GameEnums.GameStoryBeat.NONE || story_beat == GameEnums.GameStoryBeat.EOF):
+		return
+	
 	recieved_gsb_dict[story_beat] += 1
 	
 	if(story_beat == get_required_gsb()):
