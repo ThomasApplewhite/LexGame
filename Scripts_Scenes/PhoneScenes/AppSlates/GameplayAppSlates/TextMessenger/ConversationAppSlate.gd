@@ -79,7 +79,7 @@ func process_convo_dict(convo_dict):
 	active_convo_dict = convo_dict
 	
 	# ---- DEBUG ----
-	print("Handling Dict Index: {0}".format({0: _get_active_convo_index()}))
+	print("ConversationAppSlate.process_convo_dict: Handling Dict Index: {0}".format({0: _get_active_convo_index()}))
 	# ---- DEGUG ----
 	
 	# Tell entry node that the convo slate is ready
@@ -119,13 +119,13 @@ func create_lex_prompt():
 	send_repush_timer_to_entry_node()
 
 func init_entry_node_display_conditions():
-	# send the required GameStoryBeat and frequency to the EntryNode
-	# Add frequency to this later!
-	entry_parent.create_game_story_beat_requirements(active_convo_dict[convo_type.JSONFields.TRIGGERSTORYBEAT], 0)
-	
 	# send the FirstPush timer to the entry_node
 	# Setup timer and activate it
 	send_first_timer_to_entry_node()
+	
+	# send the required GameStoryBeat and frequency to the EntryNode
+	# Add frequency to this later!
+	entry_parent.create_game_story_beat_requirements(active_convo_dict[convo_type.JSONFields.TRIGGERSTORYBEAT], 0)
 	
 func send_first_timer_to_entry_node():
 	# Timers should really be the responsibility of the conversation entry

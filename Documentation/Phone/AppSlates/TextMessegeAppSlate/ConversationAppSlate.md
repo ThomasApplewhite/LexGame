@@ -112,8 +112,8 @@ Also starts the repeat notification timer with **send_repush_timer_to_entry_node
 ## func init_entry_node_display_conditions():
 Sets up the _entry_node_ display conditions (the things that need to happen before the message is sent) by doing two things:
 
-1. Calling **entry_parent.create_game_story_beat_requirements(active_convo_dict[convo_type.JSONFields.TRIGGERSTORYBEAT], 0)** to inform the _entry_parent_ of which story beat to wait for (_active_convo_dict[convo_type.JSONFields.TRIGGERSTORYBEAT]_ and how frequently it needs to have occurred (currently 0, as GSB freqeuncy measuring hasn't been implemented yet).
-2. Starting the initial delay timer to display contents with **send_first_timer_to_entry_node()**.
+1. Starting the initial delay timer to display contents with **send_first_timer_to_entry_node()**.
+2. Calling **entry_parent.create_game_story_beat_requirements(active_convo_dict[convo_type.JSONFields.TRIGGERSTORYBEAT], 0)** to inform the _entry_parent_ of which story beat to wait for (_active_convo_dict[convo_type.JSONFields.TRIGGERSTORYBEAT]_ and how frequently it needs to have occurred (currently 0, as GSB freqeuncy measuring hasn't been implemented yet).
 	
 ## func send_first_timer_to_entry_node():
 Calls **entry_parent.create_first_push_timer(active_convo_index, active_convo_dict[convo_type.JSONFields.FIRSTPUSHTIME])**, and does any other Slate-specific timer set up that is required.
