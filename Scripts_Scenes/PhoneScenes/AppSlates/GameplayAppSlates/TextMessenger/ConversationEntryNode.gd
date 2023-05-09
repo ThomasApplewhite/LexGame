@@ -10,12 +10,12 @@ enum GSBRequirement {
 	FREQ
 }
 
-var default_display_conditions = {
+const default_display_conditions = {
 	DisplayCondition.FIRSTTIMER : false,
 	DisplayCondition.STORYBEAT : true # this should be false
 }
 
-var default_gsb_requirements = {}
+const default_gsb_requirements = {}
 
 # needs to hold convo asset and convo slate type and convo slate itself
 export var conversation_resource : Resource
@@ -33,8 +33,8 @@ var story_beat_signal_name = "GameStoryBeatTriggered" # setget , _get_story_beat
 var gsb_advanced_reciever_name = "_on_game_story_beat_advanced"
 
 # Convo-Slate State Variables
-var do_next_convo = default_display_conditions
-var game_story_beat_requirements = default_gsb_requirements
+var do_next_convo = default_display_conditions.duplicate()
+var game_story_beat_requirements = default_gsb_requirements.duplicate()
 var convo_slate_is_active : bool setget , _get_convo_slate_is_active
 var last_displayed_chunk_text : String = ""
 var last_displayed_chunk_index : int = -1
@@ -84,19 +84,19 @@ func handle_display_appslate(display_condition : int):
 	var triggered_story_beat = convo_slate.get_current_convo_dict_send_story_beat()
 	emit_signal(story_beat_signal_name, triggered_story_beat)
 	
+	# And reset the display conditions
+	reset_default_dicts()
+	
 	# if the convo slate isn't active, just advance the current convo index and don't display anything
 	if(!_get_convo_slate_is_active()):
 		print("Advancing Undisplayed Dict Index: {0}".format({0: last_displayed_chunk_index}))
 		last_displayed_chunk_index += 1
-		return
+	else:
+		# If we are ready, display the text (or prompt),
+		last_displayed_chunk_text = convo_slate.handle_next_convo_dict()
 	
-	# If we are ready, display the text (or prompt), send a notif, and reset the display conditions
-	last_displayed_chunk_text = convo_slate.handle_next_convo_dict()
-	
+	# And send a notif to the phone
 	send_notification_to_phone()
-	
-	do_next_convo = default_display_conditions
-	game_story_beat_requirements = default_gsb_requirements
 
 func create_game_story_beat_requirements(required_gsb, required_frequency : int):
 	# No GSB required? Just update the display conditions and move on!
@@ -124,6 +124,11 @@ func evaluate_game_story_beat_requirements(story_beat, story_beat_frequency : in
 	
 	if(beat_match & freq_match):
 		handle_display_appslate(DisplayCondition.STORYBEAT)
+		
+func reset_default_dicts():
+	# We want fresh versions of the default dicts, so they must all be duplicated
+	do_next_convo = default_display_conditions.duplicate()
+	game_story_beat_requirements = default_gsb_requirements.duplicate()
 
 func create_first_push_timer(timer_index : int, wait_time : float):
 	cancel_and_restart_timer($FirstPushTimer, wait_time)
