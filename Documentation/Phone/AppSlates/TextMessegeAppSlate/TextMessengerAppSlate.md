@@ -26,7 +26,7 @@ MomConversatonEntry: ConversationEntryNode that handles texts with Mom.
 
 TommyConversatonEntry: ConversationEntryNode that handles texts with Tommy. Hey, that's me!
 
-All of these children have their ConversationEntryNodes connected to the matching receiver method in-editor.
+All of these children have their ConversationEntryNodes connected to the matching TextMessengerAppSlate receiver method in-editor, and TextMesengerAppSlate's GameStoryBeatAdvanced signal is connected to the matching ConversationEntryNode receivers in-editor.
 
 ## signal GameStoryBeatAdvanced(old_story_beat, old_frequency, new_story_beat, new_frequency)
 story_beats are GameStoryBeats, frequencies are ints.
