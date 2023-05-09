@@ -75,7 +75,7 @@ _display_condition_ is actually a DisplayCondition enum.
 
 Takes the incoming display condition and adds it to _do_next_convo_ as 'True'. If that makes both conditions of _do_next_convo_ true, then the following things occur:
 	1. The ConversationEntry will emit the signal in _story_beat_signal_name_ with **convo_slate.get_current_convo_dict_send_story_beat()** as the argument. This informs the rest of the game of the GSB that just occured from this conversation chunk completing.
-	2. _do_next_convo_ and _game_story_beat_requirements_ are reset to their defaults with **reset_default_dicts()**
+	2. _do_next_convo_ and _game_story_beat_requirements_ are reset to their defaults with **reset_conditional_dicts()**
 	3. Tell the _convo_slate_ to **handle_next_convo_dict()**, which will take care of displaying the actual conversation.
 	4. Sends a notification with **send_notification_to_phone()**.
 
@@ -93,7 +93,7 @@ _story_beat_ is a GameStoryBeat.
 
 Checks the incoming _story_beat_ and _story_beat_frequency_ against the GSB and frequency held in _game_story_beat_requirements_. If both match, calls **handle_display_appslate(DisplayCondition.STORYBEAT)** to inform the ConversationEntry that the StoryBeat part of the display requirements is fulfilled.
 
-## func reset_default_dicts():
+## func reset_conditional_dicts():
 Restores _do_next_convo_ and _game_story_beat_requirements_ to their default states so they can do conditions for a new conversation chunk. These defaults are a duplicate of _default_display_conditions_ and _default_gsb_requirements_.
 
 ## func create_first_push_timer(timer_index : int, wait_time : float):

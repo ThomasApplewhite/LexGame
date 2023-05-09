@@ -85,7 +85,7 @@ func handle_display_appslate(display_condition : int):
 	emit_signal(story_beat_signal_name, triggered_story_beat)
 	
 	# And reset the display conditions
-	reset_default_dicts()
+	reset_conditional_dicts()
 	
 	# if the convo slate isn't active, just advance the current convo index and don't display anything
 	if(!_get_convo_slate_is_active()):
@@ -125,7 +125,7 @@ func evaluate_game_story_beat_requirements(story_beat, story_beat_frequency : in
 	if(beat_match & freq_match):
 		handle_display_appslate(DisplayCondition.STORYBEAT)
 		
-func reset_default_dicts():
+func reset_conditional_dicts():
 	# We want fresh versions of the default dicts, so they must all be duplicated
 	do_next_convo = default_display_conditions.duplicate()
 	game_story_beat_requirements = default_gsb_requirements.duplicate()
