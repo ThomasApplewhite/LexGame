@@ -41,7 +41,13 @@ Also lay out that mf node order! TIME FOR ANOTHER TODO!
 		5. Change ConversationEntryNode to support multiple required GSBs (OPTIONAL)
 		6. Change ConversationEntryNode to send the update GSB signal.
 8. Make it so that conversations actually trigger story beats lol.
+	- DONE
 8. TEST!
+Make sure everything is still working
+Add GSB syncing
+Pray?
+Document
+Idk just figure it out.
 9. TextMessageAppSlate might actually be done!
 
 
