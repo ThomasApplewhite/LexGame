@@ -56,7 +56,8 @@ config/icon="res://icon.png"
 
 [display]
 
-window/size/width=800
+window/size/width=720
+window/size/height=480
 window/size/resizable=false
 window/vsync/use_vsync=false
 

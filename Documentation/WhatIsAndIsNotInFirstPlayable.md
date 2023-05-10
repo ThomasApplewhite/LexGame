@@ -14,3 +14,4 @@ Buying Plane Tickets
 Notifications
 Distraction Apps
 Hints
+Home Screen
