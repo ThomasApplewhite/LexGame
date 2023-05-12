@@ -17,6 +17,8 @@ const default_display_conditions = {
 
 const default_gsb_requirements = {}
 
+export(String) var message_button_initial
+
 # needs to hold convo asset and convo slate type and convo slate itself
 export var conversation_resource : Resource
 var convo_slate_scene = preload("res://Scripts_Scenes/PhoneScenes/AppSlates/GameplayAppSlates/TextMessenger/ConversationAppSlate.tscn")

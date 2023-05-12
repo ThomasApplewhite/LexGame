@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scripts_Scenes/PhoneScenes/AppSlates/GameplayAppSlates/TextMessenger/TextMessengerAppSlate.gd" type="Script" id=1]
 [ext_resource path="res://Scripts_Scenes/PhoneScenes/AppSlates/GameplayAppSlates/TextMessenger/ConversationEntryNode.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scripts_Scenes/PhoneScenes/AppSlates/GameplayAppSlates/TextMessenger/TextMessengerEntryItemButton/TextMessengerEntryItemButton.tscn" type="PackedScene" id=3]
+[ext_resource path="res://TestAssets/TestConversationDatas/TestJSONResource_0.tres" type="Resource" id=4]
 
 [node name="TextMessengerAppSlateControl" type="Control"]
 anchor_left = 0.5
@@ -13,17 +15,27 @@ margin_top = -180.0
 margin_right = 81.0
 margin_bottom = 180.0
 script = ExtResource( 1 )
-
-[node name="DadConversationEntryNode" parent="." instance=ExtResource( 2 )]
-
-[node name="MomConversationEntryNode" parent="." instance=ExtResource( 2 )]
-
-[node name="TommyConversationEntryNode" parent="." instance=ExtResource( 2 )]
+convo_entry_node_paths = [ NodePath("DadConversationEntryNode"), NodePath("MomConversationEntryNode"), NodePath("TommyConversationEntryNode") ]
+convo_entry_button_scene = ExtResource( 3 )
 
 [node name="DebugBorderColorRect" type="ColorRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
 color = Color( 0, 0, 0, 1 )
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DebugBorderColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="DadConversationEntryNode" parent="." instance=ExtResource( 2 )]
+message_button_initial = "D"
+conversation_resource = ExtResource( 4 )
+
+[node name="MomConversationEntryNode" parent="." instance=ExtResource( 2 )]
+message_button_initial = "M"
+
+[node name="TommyConversationEntryNode" parent="." instance=ExtResource( 2 )]
+message_button_initial = "T"
 
 [connection signal="GameStoryBeatAdvanced" from="." to="DadConversationEntryNode" method="_on_game_story_beat_advanced"]
 [connection signal="GameStoryBeatAdvanced" from="." to="MomConversationEntryNode" method="_on_game_story_beat_advanced"]

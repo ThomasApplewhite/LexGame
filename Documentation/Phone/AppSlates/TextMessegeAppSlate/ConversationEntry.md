@@ -16,6 +16,8 @@ const default_display_conditions: A dict to hold what the "waiting for everythin
 
 const default_gsb_requirements: A dict to hold what the "we have no requirements right now" state of game_story_beat_requirements is, see below.
 
+export message_button_initial: The text to print in the 'initials' section of a coressponding TextMessengerEntryItemButton.
+
 export conversation_resource: Resource file of the ConversationJSONData this conversation uses. This is where the final JSONDatas are set; other Nodes (like the ConversationAppSlate) get the JSONData from here.
 
 convo_slate_scene: Resource path for the ConversationAppSlate
