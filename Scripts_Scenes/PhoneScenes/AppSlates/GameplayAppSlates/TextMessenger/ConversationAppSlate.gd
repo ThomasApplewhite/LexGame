@@ -5,8 +5,8 @@ var convo_type = preload("res://Scripts_Scenes/PhoneScenes/ConversationParsing/C
 
 var prompt_completed_receiver_name = "_on_PromptControl_completed"
 
-onready var text_parent_control = $VBoxContainer/TextControl/TextVBoxContainer/ScrollContainer/MessageVBoxContainer
-onready var prompt_parent_control = $VBoxContainer/TextControl/TextVBoxContainer/PromptControl
+onready var text_parent_control = $ContentControl/TextControl/TextVBoxContainer/ScrollContainer/MessageVBoxContainer
+onready var prompt_parent_control = $ContentControl/TextControl/TextVBoxContainer/PromptControl
 
 var convoJSON_resource : Resource
 var convo_parser #ConversationParser
@@ -52,7 +52,7 @@ func start_convo_slate():
 	
 func display_pregenerated_data():
 	# for right now, just update the Mock Partner Label
-	$VBoxContainer/HeaderControl/Panel/MockPartnerLabel.text = convo_parser.conversation_partner
+	$ContentControl/HeaderControl/Panel/MockPartnerLabel.text = convo_parser.conversation_partner
 	
 	# If the starting_convo_index is invalid, don't display anything
 	if(starting_convo_index < 0):
