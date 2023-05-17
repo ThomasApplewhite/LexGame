@@ -46,6 +46,11 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 8.0
 
+[node name="TextBackgroundColorRect" type="ColorRect" parent="VBoxContainer/TextControl"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.105882, 0.117647, 0.12549, 1 )
+
 [node name="TextVBoxContainer" type="VBoxContainer" parent="VBoxContainer/TextControl"]
 anchor_right = 1.0
 anchor_bottom = 1.0
