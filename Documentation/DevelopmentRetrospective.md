@@ -12,3 +12,5 @@
 - Don't put scenes and their respective scripts in the same folder. Mixing them together is lowkey really annoying.
 - Use a more intelligent editor for documentation. Markdown is cool because it's git compatible, but not being able to automate this process is really annoying.
 - Figure out some way to do code-enforced mass signal connection with editor-connected signals. Maybe use groups? Is that a thing?
+- Do not rely on UI for flat gameplay elements. If you need actual screen-space UI stuff, that's one thing. But Godot's UI system doesn't provide enough flexibility to support 100% of gameplay. It's there for visual ease, not gameplay ease.
+	- Maybe. Idk it just frustrates me sometimes for reasons I don't fully understand.
