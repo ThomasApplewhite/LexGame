@@ -18,6 +18,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
+custom_constants/separation = 0
 
 [node name="HeaderControl" type="Control" parent="VBoxContainer"]
 margin_right = 162.0
@@ -39,9 +40,9 @@ size_flags_vertical = 7
 text = "TEXT TEXT TEXT TEXT TEXT TEXT TEXT"
 
 [node name="TextControl" type="Control" parent="VBoxContainer"]
-margin_top = 41.0
+margin_top = 37.0
 margin_right = 162.0
-margin_bottom = 337.0
+margin_bottom = 341.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 8.0
@@ -59,21 +60,21 @@ size_flags_vertical = 3
 
 [node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer/TextControl/TextVBoxContainer"]
 margin_right = 162.0
-margin_bottom = 212.0
+margin_bottom = 218.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 8.0
 
 [node name="MessageVBoxContainer" type="VBoxContainer" parent="VBoxContainer/TextControl/TextVBoxContainer/ScrollContainer"]
 margin_right = 162.0
-margin_bottom = 212.0
+margin_bottom = 218.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="PromptControl" type="Control" parent="VBoxContainer/TextControl/TextVBoxContainer"]
-margin_top = 216.0
+margin_top = 222.0
 margin_right = 162.0
-margin_bottom = 296.0
+margin_bottom = 304.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 3.0
