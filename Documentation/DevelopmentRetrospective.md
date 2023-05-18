@@ -14,3 +14,4 @@
 - Figure out some way to do code-enforced mass signal connection with editor-connected signals. Maybe use groups? Is that a thing?
 - Do not rely on UI for flat gameplay elements. If you need actual screen-space UI stuff, that's one thing. But Godot's UI system doesn't provide enough flexibility to support 100% of gameplay. It's there for visual ease, not gameplay ease.
 	- Maybe. Idk it just frustrates me sometimes for reasons I don't fully understand.
+- Figure out when exactly to use inheritance in Godot. Obviously Script inheritance is a thing, but node inheritance is not? I'm not sure. What's the best way to make a base scene/node/script/whatever to control the properties of a derived scene/node/script/whatever?
