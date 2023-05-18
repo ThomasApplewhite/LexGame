@@ -5,7 +5,7 @@ Represents apps on Lex's phone, specifically by being extended for each kind of 
 
 An AppSlate's primary purpose is to interface with the PhoneControl by sending signals (GameStoryBeats occuring, notifications, requests to change appslates) and receiving signals (home button presses, back button presses, option button presses).
 
-To fit Lex's 9:20 GalaxyS20 in the game's 4:3 720 x 480 Screen, Appslates should be 162 x 360 pixels.
+To fit Lex's 9:20 GalaxyS20 in the game's 4:3 720 x 480 Screen, Appslates should be 207 x 420 pixels. That's not quite 9:20 but it fits on the screen well.
 
 btw, _fields_ and _child nodes_ are _italics_, while **functions** and **signals** are **bold**.
 
