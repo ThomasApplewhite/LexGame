@@ -4,56 +4,21 @@
 [ext_resource path="res://Scripts_Scenes/PhoneScenes/AppSlates/DebugAppSlates/TestSlate/TestSlate.tscn" type="PackedScene" id=2]
 
 [node name="PhoneControl" type="Control"]
-anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -108.0
+margin_top = -240.0
+margin_right = 108.0
+margin_bottom = 240.0
 script = ExtResource( 1 )
+active_app_control_nodepath = NodePath("VisualAssetControl/PhoneBackgroundColorRect/ScreenColorRect/ActiveAppSlateControl")
+inactive_app_control_nodepath = NodePath("InactiveAppSlateControl")
 appslate_path_dict = {
 0: NodePath("InactiveAppSlateControl/TestSlateControl"),
 1: NodePath("InactiveAppSlateControl/TestSlateControl2")
 }
-
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
-margin_left = 302.0
-margin_top = 493.0
-margin_right = 512.0
-margin_bottom = 525.0
-
-[node name="BackButton" type="Button" parent="HBoxContainer"]
-margin_right = 67.0
-margin_bottom = 32.0
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="HBoxContainer/BackButton"]
-margin_right = 40.0
-margin_bottom = 14.0
-text = "Back
-"
-
-[node name="HomeButton" type="Button" parent="HBoxContainer"]
-margin_left = 71.0
-margin_right = 138.0
-margin_bottom = 32.0
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="HBoxContainer/HomeButton"]
-margin_right = 40.0
-margin_bottom = 14.0
-text = "Home
-"
-
-[node name="OptsButton" type="Button" parent="HBoxContainer"]
-margin_left = 142.0
-margin_right = 210.0
-margin_bottom = 32.0
-size_flags_horizontal = 3
-
-[node name="Label" type="Label" parent="HBoxContainer/OptsButton"]
-margin_right = 40.0
-margin_bottom = 14.0
-text = "Opts
-"
-
-[node name="ActiveAppSlateControl" type="Control" parent="."]
 
 [node name="InactiveAppSlateControl" type="Control" parent="."]
 anchor_left = -5.0
@@ -68,6 +33,80 @@ appslate_type_to_change_to = 1
 [node name="TestSlateControl2" parent="InactiveAppSlateControl" instance=ExtResource( 2 )]
 label_name = "SLATE 1"
 
-[connection signal="pressed" from="HBoxContainer/BackButton" to="." method="_on_BackButton_pressed"]
-[connection signal="pressed" from="HBoxContainer/HomeButton" to="." method="_on_HomeButton_pressed"]
-[connection signal="pressed" from="HBoxContainer/OptsButton" to="." method="_on_OptsButton_pressed"]
+[node name="VisualAssetControl" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="PhoneBackgroundColorRect" type="ColorRect" parent="VisualAssetControl"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="ScreenColorRect" type="ColorRect" parent="VisualAssetControl/PhoneBackgroundColorRect"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -103.5
+margin_top = -230.0
+margin_right = 103.5
+margin_bottom = 190.0
+color = Color( 0.262745, 0.262745, 0.262745, 1 )
+
+[node name="ActiveAppSlateControl" type="Control" parent="VisualAssetControl/PhoneBackgroundColorRect/ScreenColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ButtonColorRect" type="ColorRect" parent="VisualAssetControl/PhoneBackgroundColorRect"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -103.5
+margin_top = -46.0
+margin_right = 103.5
+margin_bottom = -6.0
+color = Color( 0.262745, 0.262745, 0.262745, 1 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VisualAssetControl/PhoneBackgroundColorRect/ButtonColorRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="BackButton" type="Button" parent="VisualAssetControl/PhoneBackgroundColorRect/ButtonColorRect/HBoxContainer"]
+margin_right = 66.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="VisualAssetControl/PhoneBackgroundColorRect/ButtonColorRect/HBoxContainer/BackButton"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Back
+"
+
+[node name="HomeButton" type="Button" parent="VisualAssetControl/PhoneBackgroundColorRect/ButtonColorRect/HBoxContainer"]
+margin_left = 70.0
+margin_right = 136.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="VisualAssetControl/PhoneBackgroundColorRect/ButtonColorRect/HBoxContainer/HomeButton"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Home
+"
+
+[node name="OptsButton" type="Button" parent="VisualAssetControl/PhoneBackgroundColorRect/ButtonColorRect/HBoxContainer"]
+margin_left = 140.0
+margin_right = 207.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="VisualAssetControl/PhoneBackgroundColorRect/ButtonColorRect/HBoxContainer/OptsButton"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "Opts
+"
+
+[connection signal="pressed" from="VisualAssetControl/PhoneBackgroundColorRect/ButtonColorRect/HBoxContainer/BackButton" to="." method="_on_BackButton_pressed"]
+[connection signal="pressed" from="VisualAssetControl/PhoneBackgroundColorRect/ButtonColorRect/HBoxContainer/HomeButton" to="." method="_on_HomeButton_pressed"]
+[connection signal="pressed" from="VisualAssetControl/PhoneBackgroundColorRect/ButtonColorRect/HBoxContainer/OptsButton" to="." method="_on_OptsButton_pressed"]

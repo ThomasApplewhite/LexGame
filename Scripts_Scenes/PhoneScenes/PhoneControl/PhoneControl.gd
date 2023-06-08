@@ -1,5 +1,10 @@
 extends Control
 
+export(NodePath) var active_app_control_nodepath
+export(NodePath) var inactive_app_control_nodepath
+var active_app_control
+var inactive_app_control
+
 # This is that dict
 export var appslate_path_dict = {}
 export(GameEnums.GameStoryBeat) var starting_appslate_type = GameEnums.GameStoryBeat.DEBUG
@@ -21,6 +26,9 @@ var notification_handler_name = "_on_phone_notification_triggered"
 var storybeat_handler_name = "_on_game_story_beat_triggered"
 
 func _ready():
+	active_app_control = get_node(active_app_control_nodepath)
+	inactive_app_control = get_node(inactive_app_control_nodepath)
+	
 	initialize_appslates()
 	
 func initialize_appslates():
@@ -40,8 +48,8 @@ func initialize_appslates():
 	# steps regarding the old current
 	var starting_appslate = appslate_dict[starting_appslate_type]
 	connect_appslate_signals(starting_appslate, false)
-	$InactiveAppSlateControl.remove_child(starting_appslate)
-	$ActiveAppSlateControl.add_child(starting_appslate)
+	inactive_app_control.remove_child(starting_appslate)
+	active_app_control.add_child(starting_appslate)
 	starting_appslate.rect_position = Vector2.ZERO
 	current_appslate = starting_appslate
 
@@ -51,13 +59,13 @@ func change_active_appslate(new_appslate : Node):
 	disconnect_appslate_signals(old_appslate, false)
 	connect_appslate_signals(new_appslate, false)
 	
-	$InactiveAppSlateControl.remove_child(new_appslate)
-	$ActiveAppSlateControl.remove_child(old_appslate)
+	inactive_app_control.remove_child(new_appslate)
+	active_app_control.remove_child(old_appslate)
 	
 	# parent old to inactive
-	$InactiveAppSlateControl.add_child(old_appslate)
+	inactive_app_control.add_child(old_appslate)
 	# parent new to active
-	$ActiveAppSlateControl.add_child(new_appslate)
+	active_app_control.add_child(new_appslate)
 	
 	# center new_appslate on its parent
 	# If I understand it correctly, rect_position (0, 0) places the appslate's

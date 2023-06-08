@@ -10,6 +10,14 @@ The PhoneControl's primary purpose is to send navigation signals to AppSlates (h
 btw, _fields_ and _child nodes_ are _italics_, while **functions** and **signals** are **bold**.
 
 ### Fields
+export active_app_control_nodepath: A nodepath pointing to the Control that the active AppSlate should parent to.
+
+export inactive_app_control_nodepath: A nodepath pointing to the Control that inactive AppSlates should parent to.
+
+var active_app_control: The Control that the active AppSlate should parent to.
+
+var inactive_app_control: The Control that inactive AppSlates should parent to.
+
 export appslate_path_dict:  An int->NodePath dict that associates an int (which represents a GameEnums.AppSlateType) with a path to a prexisting AppSlate node.
 
 export starting_appslate_type: An int (which represents a GameEnums.AppSlateType) that indicates which type of AppSlate the game should start.
@@ -34,25 +42,33 @@ storybeat_handler_name: The name of the method to call when the phone receives a
 
 
 ### Child Nodes
-HBoxController: Visually organizes the PhoneControl's 3 non-AppSlate buttons.
-
-HBoxController/BackButton: The UI button used to navigate 'back' on the phone. What that means is AppSlate-dependent.
-
-HBoxController/BackButton/Label: The text of the _BackButton_.
-
-HBoxController/HomeButton: The UI button used to navigate 'home' on the phone. Technically AppSlate-dependent, but should always change the _current_appslate_ to the Home AppSlate, if that isn't what it already is. If the Home AppSlate is the _current_appslate_, nothing will happen.
-
-HBoxController/HomeButton/Label: The text of the _HomeButton_.
-
-HBoxController/OptsButton: The UI button used to use options on the phone's current AppSlate. What that means is AppSlate-dependent, and I haven't decided on what it will be used for.
-
-HBoxController/OptsButton/Label: The text of the _OptsButton_.
-
-ActiveAppSlateControl: The anchoring parent Control for the _current_appslate_. Used to keep the _current_appslate_ centered and in the middle of the Phone's frame.
-
 InactiveAppSlateControl: The anchoring parent Control for any inactive AppSlates. Only needs to make sure the AppSlates stay offscreen, no other arranging is necessary.
 
-There will also be several more child nodes: A TextureRect for the phone's frame sprite, and one node for each AppSlate. But those haven't been made yet, so don't worry about it for now.
+VisualAssetControl: Parent controller for visual assets and position-sensitive parts of the Phone.
+
+VisualAssetControl/PhoneBackgroundColor: Background/frame visual for the whole phone. Right now just a color rect.
+
+VisualAssetControl/PhoneBackgroundColor: Background visual for the phone screen. Right now just a color rect.
+
+VisualAssetControl/PhoneBackgroundColor/ActiveAppSlateControl: The anchoring parent Control for the _current_appslate_. Used to keep the _current_appslate_ centered and in the middle of the Phone's frame.
+
+VisualAssetControl/ButtonColorRect: Background visual for the phone's buttons. Right now just a color rect.
+
+VisualAssetControl/ButtonColorRect/HBoxController: Visually organizes the PhoneControl's 3 non-AppSlate buttons.
+
+VisualAssetControl/ButtonColorRect/HBoxController/BackButton: The UI button used to navigate 'back' on the phone. What that means is AppSlate-dependent.
+
+VisualAssetControl/ButtonColorRect/HBoxController/BackButton/Label: The text of the _BackButton_.
+
+VisualAssetControl/ButtonColorRect/HBoxController/HomeButton: The UI button used to navigate 'home' on the phone. Technically AppSlate-dependent, but should always change the _current_appslate_ to the Home AppSlate, if that isn't what it already is. If the Home AppSlate is the _current_appslate_, nothing will happen.
+
+VisualAssetControl/ButtonColorRect/HBoxController/HomeButton/Label: The text of the _HomeButton_.
+
+VisualAssetControl/ButtonColorRect/HBoxController/OptsButton: The UI button used to use options on the phone's current AppSlate. What that means is AppSlate-dependent, and I haven't decided on what it will be used for.
+
+VisualAssetControl/ButtonColorRect/HBoxController/OptsButton/Label: The text of the _OptsButton_.
+
+There will also be several more child nodes: one node for each AppSlate. But those haven't been made yet, so don't worry about it for now.
 
 ## signal BackButtonPressed()
 Emitted when the _HBoxController/BackButton_ **_on_BackButton_pressed()** signal is received. Emitted to communicate button presses to AppSlates.
@@ -67,7 +83,7 @@ Emitted when the _HBoxController/OptsButton_ **_on_OptsButton_pressed()** signal
 Emitted when a child AppSlate sends an **_on_game_story_beat_triggered(story_beat)** signal to the phone. Emitted to pass the _story_beat_ along to the GameDaemon (or any other listener, for that matter.
 
 ## func _ready()
-Calls **initialize_appslates()**
+Sets _active_app_control_ and _inactive_app_control_ to the nodes held in _active_app_control_nodepath_ and _inactive_app_control_nodepath_ respectively. Then calls **initialize_appslates()**.
 
 ## func initialize_appslates():
 Connects basic signals to each AppSlate (from all the paths in _appslate_path_dict_) and sets its internal my_appslate_type (using the AppSlate's respective _appslate_path_dict_ key). This is how all of the AppSlate nodes get placed into _appslate_dict_.
@@ -79,7 +95,7 @@ new_appslate_type is type GameEnums.AppSlateType, but can't be typed that way. S
 
 Switches out the _current_appslate_ (which is re-saved as _old_appslate_) for _appslate_dict[_new_appslate_type_]_. This is done by diconnecting _old_appslate_ signals (using **disconnect_appslate_signals(old_appslate, false)**) and connecting _new_appslate_ signals (using **connect_appslate_signals(new_appslate, false)**). Both of these method are called with 'false' to keep their notification and storybeat signals connected and untouched, which is currently desired.
 
-Then, the _old_appslate_ is reparented to the _InactiveAppSlateControl_ and the _new_appslate_ is reparented to the _ActiveAppSlateControl_ and moved to the same _global_rect_position_ as the _ActiveAppSlateControl_ by setting the _new_appslate_ _rect_position_ to 0, 0.
+Then, the _old_appslate_ is reparented to the _inactive_app_control_ and the _new_appslate_ is reparented to the _active_app_control_ and moved to the same _global_rect_position_ as the _active_app_control_ by setting the _new_appslate_ _rect_position_ to 0, 0.
 
 Once all the transfering is complete, _new_appslate_ is saved as the _current_appslate_.
 
