@@ -44,6 +44,10 @@ storybeat_handler_name: The name of the method to call when the phone receives a
 ### Child Nodes
 InactiveAppSlateControl: The anchoring parent Control for any inactive AppSlates. Only needs to make sure the AppSlates stay offscreen, no other arranging is necessary.
 
+InactiveAppSlateControl/HomeScreenAppSlate: The phone's Home Screen.
+
+InactiveAppSlateControl/TextMessengerAppSlateControl: Confusing, right? The phone's Messenging App.
+
 VisualAssetControl: Parent controller for visual assets and position-sensitive parts of the Phone.
 
 VisualAssetControl/PhoneBackgroundColor: Background/frame visual for the whole phone. Right now just a color rect.

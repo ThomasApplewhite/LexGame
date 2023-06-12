@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://Scripts_Scenes/PhoneScenes/PhoneControl/PhoneControl.gd" type="Script" id=1]
 [ext_resource path="res://Scripts_Scenes/PhoneScenes/AppSlates/DebugAppSlates/TestSlate/TestSlate.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scripts_Scenes/PhoneScenes/AppSlates/GameplayAppSlates/TextMessenger/TextMessengerAppSlate.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scripts_Scenes/PhoneScenes/AppSlates/GameplayAppSlates/HomeScreen/HomeScreenAppSlate.tscn" type="PackedScene" id=4]
 
 [node name="PhoneControl" type="Control"]
 anchor_left = 0.5
@@ -16,8 +18,8 @@ script = ExtResource( 1 )
 active_app_control_nodepath = NodePath("VisualAssetControl/PhoneBackgroundColorRect/ScreenColorRect/ActiveAppSlateControl")
 inactive_app_control_nodepath = NodePath("InactiveAppSlateControl")
 appslate_path_dict = {
-0: NodePath("InactiveAppSlateControl/TestSlateControl"),
-1: NodePath("InactiveAppSlateControl/TestSlateControl2")
+0: NodePath("InactiveAppSlateControl/HomeScreenAppSlate"),
+1: NodePath("InactiveAppSlateControl/TextMessengerAppSlateControl")
 }
 
 [node name="InactiveAppSlateControl" type="Control" parent="."]
@@ -32,6 +34,10 @@ appslate_type_to_change_to = 1
 
 [node name="TestSlateControl2" parent="InactiveAppSlateControl" instance=ExtResource( 2 )]
 label_name = "SLATE 1"
+
+[node name="TextMessengerAppSlateControl" parent="InactiveAppSlateControl" instance=ExtResource( 3 )]
+
+[node name="HomeScreenAppSlate" parent="InactiveAppSlateControl" instance=ExtResource( 4 )]
 
 [node name="VisualAssetControl" type="Control" parent="."]
 anchor_right = 1.0
