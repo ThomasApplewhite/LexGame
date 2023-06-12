@@ -54,6 +54,9 @@ func initialize_appslates():
 	current_appslate = starting_appslate
 
 func change_active_appslate(new_appslate : Node):
+	if(new_appslate == current_appslate):
+		return
+	
 	var old_appslate = current_appslate
 	
 	disconnect_appslate_signals(old_appslate, false)
