@@ -7,7 +7,7 @@ var inactive_app_control
 
 # This is that dict
 export var appslate_path_dict = {}
-export(GameEnums.GameStoryBeat) var starting_appslate_type = GameEnums.GameStoryBeat.DEBUG
+export(GameEnums.AppSlateType) var starting_appslate_type = GameEnums.AppSlateType.HOME
 var appslate_dict = {}
 var current_appslate
 
