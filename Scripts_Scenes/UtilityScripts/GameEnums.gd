@@ -5,6 +5,7 @@ enum AppSlateType {
 	TEXT,
 	BANKING,
 	FLIGHTS, 
+	DEBUG
 }
 
 # I haven't decided what these will be yet so for now it's just none
