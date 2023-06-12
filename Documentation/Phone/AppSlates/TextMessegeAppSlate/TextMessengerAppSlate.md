@@ -99,6 +99,11 @@ _story_beat_ is a GameStoryBeat
 Emits the inherited AppSlate _story_beat_signal_name_ with _story_beat_ as the argument, to pass the GameStoryBeat up to the phone.
 
 ## func _on_back_button_pressed():
+Override from AppSlate.
+
 Implementation of **AppSlate_on_back_button_pressed()**. If there is an _active_convo_entry_, deactivate it with **deactivate_current_conversation()**.
 
-In the future, this method will return to the Home AppSlate if there is no _active_convo_entry_.
+If there is an _active_convo_entry_, emits the signal in **AppSlate._get_slate_change_signal_name()** with AppSlateType.HOME to transition back to the Home AppSlate.
+
+## func _on_home_button_pressed():
+Emits the signal in **AppSlate._get_slate_change_signal_name()** with AppSlateType.HOME to transition back to the Home AppSlate.

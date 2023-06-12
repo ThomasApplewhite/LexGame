@@ -75,3 +75,8 @@ func _on_game_story_beat_triggered(story_beat : int):
 func _on_back_button_pressed():
 	if(active_convo_entry):
 		deactivate_current_conversation()
+	else:
+		emit_signal(_get_slate_change_signal_name(), GameEnums.AppSlateType.HOME)
+		
+func _on_home_button_pressed():
+	emit_signal(_get_slate_change_signal_name(), GameEnums.AppSlateType.HOME)
