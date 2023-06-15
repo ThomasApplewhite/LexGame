@@ -34,9 +34,11 @@ conversation_resource = ExtResource( 4 )
 
 [node name="MomConversationEntryNode" parent="." instance=ExtResource( 2 )]
 message_button_initial = "M"
+conversation_resource = ExtResource( 4 )
 
 [node name="TommyConversationEntryNode" parent="." instance=ExtResource( 2 )]
 message_button_initial = "T"
+conversation_resource = ExtResource( 4 )
 
 [connection signal="GameStoryBeatAdvanced" from="." to="DadConversationEntryNode" method="_on_game_story_beat_advanced"]
 [connection signal="GameStoryBeatAdvanced" from="." to="MomConversationEntryNode" method="_on_game_story_beat_advanced"]

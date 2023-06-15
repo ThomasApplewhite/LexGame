@@ -77,6 +77,7 @@ _display_condition_ is actually a DisplayCondition enum.
 
 Takes the incoming display condition and adds it to _do_next_convo_ as 'True'. If that makes both conditions of _do_next_convo_ true, then the following things occur:
 	1. The ConversationEntry will emit the signal in _story_beat_signal_name_ with **convo_slate.get_current_convo_dict_send_story_beat()** as the argument. This informs the rest of the game of the GSB that just occured from this conversation chunk completing.
+	- THIS STEP HAS BEEN COMMENTED OUT FOR RIGHT NOW
 	2. _do_next_convo_ and _game_story_beat_requirements_ are reset to their defaults with **reset_conditional_dicts()**
 	3. Tell the _convo_slate_ to **handle_next_convo_dict()**, which will take care of displaying the actual conversation.
 	4. Sends a notification with **send_notification_to_phone()**.

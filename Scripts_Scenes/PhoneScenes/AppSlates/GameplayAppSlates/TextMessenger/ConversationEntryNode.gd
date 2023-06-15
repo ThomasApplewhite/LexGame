@@ -83,8 +83,9 @@ func handle_display_appslate(display_condition : int):
 	# if it is time, do everything in the rest of the function!
 	
 	# Regardless of slate activity, send the relevant sent GameStoryBeat to the TextMessangerAppSlate
-	var triggered_story_beat = convo_slate.get_current_convo_dict_send_story_beat()
-	emit_signal(story_beat_signal_name, triggered_story_beat)
+	# Stubbed out while I figure out how GSBs are gonna work.
+	# var triggered_story_beat = convo_slate.get_current_convo_dict_send_story_beat()
+	# emit_signal(story_beat_signal_name, triggered_story_beat)
 	
 	# And reset the display conditions
 	reset_conditional_dicts()
