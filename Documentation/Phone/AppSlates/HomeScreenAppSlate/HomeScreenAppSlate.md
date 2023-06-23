@@ -3,7 +3,7 @@ extends AppSlate
 
 HomeScreenAppSlate is the default AppSlate that leads back to all the others. It is the phone's default state. There's no functionality on the HomeScreen, other than buttons that lead back to other AppSlates.
 
-Doesn't do much for right now, mostly a stub. However, this class will probably use a custom button class and setup method to provide an easy press-button passage to all appslates.
+Doesn't do much for right now, mostly a stub. Because types of AppSlates won't be dynamically added to the game, HomeScreenAppSlate will use child buttons and auto-generated signal receiver methods to move to each AppSlate.
 
 btw, _fields_ and _child nodes_ are _italics_, while **functions** and **signals** are **bold**.
 
