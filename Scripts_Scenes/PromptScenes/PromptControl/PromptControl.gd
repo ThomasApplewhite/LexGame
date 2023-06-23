@@ -6,7 +6,7 @@ extends Control
 # var b = "text"
 var phrase_scene = preload("res://Scripts_Scenes/PromptScenes/PromptButtonsManager/PromptButtonsManager.tscn")
 var current_phrase
-onready var life_tracker = $VBoxContainer/PromptLivesTrackerHBoxContainer
+onready var life_tracker = $VBoxContainer/PromptLivesControl/PromptLivesTrackerHBoxContainer
 
 var prompt_settings : PromptSettings
 var prompt_index : int = 0
