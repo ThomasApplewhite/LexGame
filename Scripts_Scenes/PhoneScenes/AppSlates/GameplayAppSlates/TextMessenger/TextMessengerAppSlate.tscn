@@ -35,10 +35,12 @@ conversation_resource = ExtResource( 4 )
 
 [node name="MomConversationEntryNode" parent="." instance=ExtResource( 2 )]
 message_button_initial = "M"
+conversation_appslate_anchor_path = NodePath("../ConvoAppslateControl")
 conversation_resource = ExtResource( 4 )
 
 [node name="TommyConversationEntryNode" parent="." instance=ExtResource( 2 )]
 message_button_initial = "T"
+conversation_appslate_anchor_path = NodePath("../ConvoAppslateControl")
 conversation_resource = ExtResource( 4 )
 
 [node name="ConvoAppslateControl" type="Control" parent="."]
