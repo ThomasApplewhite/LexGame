@@ -36,7 +36,9 @@ MomConversatonEntry: ConversationEntryNode that handles texts with Mom.
 
 TommyConversatonEntry: ConversationEntryNode that handles texts with Tommy. Hey, that's me!
 
-All of these children have their ConversationEntryNodes connected to the matching TextMessengerAppSlate receiver method in-editor, and TextMesengerAppSlate's GameStoryBeatAdvanced signal is connected to the matching ConversationEntryNode receivers in-editor. Additionally, the path to each of these nodes is held in _convo_entry_node_paths_.
+ConvoAppslateControl: Control node that ConversationAppSlates will be parented to.
+
+All of these children have their ConversationEntryNodes connected to the matching TextMessengerAppSlate receiver method in-editor and use ConvoAppslateCont, and TextMesengerAppSlate's GameStoryBeatAdvanced signal is connected to the matching ConversationEntryNode receivers in-editor. Additionally, the path to each of the ConversationEntryNodes is held in _convo_entry_node_paths_, and each one uses ConvoAppslateControl as its _conversation_appslate_anchor_.
 
 ## signal GameStoryBeatAdvanced(old_story_beat, old_frequency, new_story_beat, new_frequency)
 story_beats are GameStoryBeats, frequencies are ints.

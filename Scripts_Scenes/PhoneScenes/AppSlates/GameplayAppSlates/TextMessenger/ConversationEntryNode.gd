@@ -18,6 +18,8 @@ const default_display_conditions = {
 const default_gsb_requirements = {}
 
 export(String) var message_button_initial
+export(NodePath) var conversation_appslate_anchor_path
+var conversation_appslate_anchor
 
 # needs to hold convo asset and convo slate type and convo slate itself
 export var conversation_resource : Resource
@@ -41,10 +43,13 @@ var convo_slate_is_active : bool setget , _get_convo_slate_is_active
 var last_displayed_chunk_text : String = ""
 var last_displayed_chunk_index : int = -1
 
+func _ready():
+	conversation_appslate_anchor = get_node(conversation_appslate_anchor_path)
+
 func create_conversation_slate():
 	convo_slate = convo_slate_scene.instance()
 	convo_slate.initialize_convo_slate(conversation_resource, self, last_displayed_chunk_index)
-	add_child(convo_slate)
+	conversation_appslate_anchor.add_child(convo_slate)
 	convo_slate.start_convo_slate()
 	
 func remove_conversation_slate():

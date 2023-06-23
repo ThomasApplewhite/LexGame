@@ -18,6 +18,10 @@ const default_gsb_requirements: A dict to hold what the "we have no requirements
 
 export message_button_initial: The text to print in the 'initials' section of a coressponding TextMessengerEntryItemButton.
 
+export conversation_appslate_anchor_path: Path to the node that ConversationAppSlates should be parented to.
+
+conversation_appslate_anchor: The node that ConversationAppSlates should be parented to. A specific node is used for ConversationAppSlates (as opposed to the normal ActiveAppSlateControl in PhoneControl) to make it easier to parent things quickly from within the ConversationEntry.
+
 export conversation_resource: Resource file of the ConversationJSONData this conversation uses. This is where the final JSONDatas are set; other Nodes (like the ConversationAppSlate) get the JSONData from here.
 
 convo_slate_scene: Resource path for the ConversationAppSlate
@@ -57,8 +61,13 @@ _requesting_convo_entry_ is a Node, _story_beat_ is a GameStoryBeat.
 
 Emitted whenever a new required GameStoryBeat is set and the ConversationEntry needs to know how many times it has already happened. The reciever (which will be a TextMessageAppSlate) will call **evaluate_game_story_beat_requirements(story_beat, [whatever the frequency is])** to inform the ConversationEntry of what the frequency is.
 
+## func _ready():
+Automatically called when the scene starts.
+
+Sets _conversation_appslate_anchor_ to the node on the path saved in _conversation_appslate_anchor_path_.
+
 ## func create_conversation_slate():
-Instances the ConversationAppSlate into _convo_slate_, adds it to the node tree, and starts it. Other setup that needs to happen with the _convo_slate_ should be done here. Oh, and this is the method to call when the _convo_slate_ should be shown. Keep in mind that _convo_slate_ needs to be added to the tree first, before its initialized, to make sure all of its subnodes initialize
+Instances the ConversationAppSlate into _convo_slate_, adds it to the node tree as a child of _conversation_appslate_anchor_, and starts it. Other setup that needs to happen with the _convo_slate_ should be done here. Oh, and this is the method to call when the _convo_slate_ should be shown. Keep in mind that _convo_slate_ needs to be added to the tree first, before its initialized, to make sure all of its subnodes initialize.
  	
 ## func remove_conversation_slate():
 Calls **convo_slate.end_convo_slate()** to get the index of the most recent conversation dict and save it to _last_displayed_chunk_index_. **end_convo_slate()** also does _convo_slate_'s internal shutdown/teardown logic. Once that's done, the _convo_slate_ is freed and set to null.

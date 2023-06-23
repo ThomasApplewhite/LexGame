@@ -90,7 +90,7 @@ size_flags_vertical = 3
 [node name="PromptControl" type="Control" parent="ContentControl/TextControl/TextVBoxContainer"]
 margin_top = 262.0
 margin_right = 207.0
-margin_bottom = 360.0
+margin_bottom = 359.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 3.0

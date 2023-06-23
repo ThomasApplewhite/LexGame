@@ -30,6 +30,7 @@ size_flags_vertical = 3
 
 [node name="DadConversationEntryNode" parent="." instance=ExtResource( 2 )]
 message_button_initial = "D"
+conversation_appslate_anchor_path = NodePath("../ConvoAppslateControl")
 conversation_resource = ExtResource( 4 )
 
 [node name="MomConversationEntryNode" parent="." instance=ExtResource( 2 )]
@@ -39,6 +40,17 @@ conversation_resource = ExtResource( 4 )
 [node name="TommyConversationEntryNode" parent="." instance=ExtResource( 2 )]
 message_button_initial = "T"
 conversation_resource = ExtResource( 4 )
+
+[node name="ConvoAppslateControl" type="Control" parent="."]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -103.5
+margin_top = -210.0
+margin_right = 103.5
+margin_bottom = 210.0
+mouse_filter = 2
 
 [connection signal="GameStoryBeatAdvanced" from="." to="DadConversationEntryNode" method="_on_game_story_beat_advanced"]
 [connection signal="GameStoryBeatAdvanced" from="." to="MomConversationEntryNode" method="_on_game_story_beat_advanced"]
