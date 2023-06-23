@@ -101,9 +101,13 @@ Emits the inherited AppSlate _story_beat_signal_name_ with _story_beat_ as the a
 ## func _on_back_button_pressed():
 Override from AppSlate.
 
-Implementation of **AppSlate_on_back_button_pressed()**. If there is an _active_convo_entry_, deactivate it with **deactivate_current_conversation()**.
+Implementation of **AppSlate._on_back_button_pressed()**. If there is an _active_convo_entry_, deactivate it with **deactivate_current_conversation()**.
 
-If there is an _active_convo_entry_, emits the signal in **AppSlate._get_slate_change_signal_name()** with AppSlateType.HOME to transition back to the Home AppSlate.
+If there isn't an _active_convo_entry_, emits the signal in **AppSlate._get_slate_change_signal_name()** with AppSlateType.HOME to transition back to the Home AppSlate.
 
 ## func _on_home_button_pressed():
-Emits the signal in **AppSlate._get_slate_change_signal_name()** with AppSlateType.HOME to transition back to the Home AppSlate.
+Override from AppSlate.
+
+Implementation of **AppSlate._on_home_button_pressed()**. If there is an _active_convo_entry_, deactivate it with **deactivate_current_conversation()**.
+
+Then emits the signal in **AppSlate._get_slate_change_signal_name()** with AppSlateType.HOME to transition back to the Home AppSlate.
