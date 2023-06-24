@@ -5,27 +5,21 @@
 
 [node name="PromptControl" type="Control"]
 margin_right = 207.0
-margin_bottom = 180.0
+margin_bottom = 140.0
 script = ExtResource( 2 )
 __meta__ = {
 "_editor_description_": "Controls an entire prompt. Creates the text and markers, and creates a ButtonsManager to manages actually selecting the buttons. When all the phrase markers are complete, returns a complete signal."
 }
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-margin_left = -103.5
-margin_top = -90.0
-margin_right = 103.5
-margin_bottom = 90.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="RichTextLabel" type="RichTextLabel" parent="VBoxContainer"]
 margin_right = 207.0
-margin_bottom = 37.0
+margin_bottom = 23.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 17.5
@@ -37,12 +31,12 @@ anchor_bottom = 1.0
 color = Color( 0, 0, 0, 0.0509804 )
 
 [node name="ButtonsControl" type="Control" parent="VBoxContainer"]
-margin_top = 41.0
+margin_top = 27.0
 margin_right = 207.0
-margin_bottom = 149.0
+margin_bottom = 119.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-size_flags_stretch_ratio = 50.0
+size_flags_stretch_ratio = 70.0
 
 [node name="ColorRect" type="ColorRect" parent="VBoxContainer/ButtonsControl"]
 anchor_right = 1.0
@@ -50,9 +44,9 @@ anchor_bottom = 1.0
 color = Color( 0.980392, 0.792157, 0.870588, 0.513726 )
 
 [node name="PromptLivesControl" type="Control" parent="VBoxContainer"]
-margin_top = 153.0
+margin_top = 123.0
 margin_right = 207.0
-margin_bottom = 180.0
+margin_bottom = 140.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 12.5

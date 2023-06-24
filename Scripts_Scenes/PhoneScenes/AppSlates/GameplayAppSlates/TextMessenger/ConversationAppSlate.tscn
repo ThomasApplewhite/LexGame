@@ -76,21 +76,21 @@ size_flags_vertical = 3
 
 [node name="ScrollContainer" type="ScrollContainer" parent="ContentControl/TextControl/TextVBoxContainer"]
 margin_right = 207.0
-margin_bottom = 258.0
+margin_bottom = 189.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 8.0
 
 [node name="MessageVBoxContainer" type="VBoxContainer" parent="ContentControl/TextControl/TextVBoxContainer/ScrollContainer"]
 margin_right = 207.0
-margin_bottom = 258.0
+margin_bottom = 189.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="PromptControl" type="Control" parent="ContentControl/TextControl/TextVBoxContainer"]
-margin_top = 262.0
+margin_top = 193.0
 margin_right = 207.0
 margin_bottom = 359.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
-size_flags_stretch_ratio = 3.0
+size_flags_stretch_ratio = 7.0

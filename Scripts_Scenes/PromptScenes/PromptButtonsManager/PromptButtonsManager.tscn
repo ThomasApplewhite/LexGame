@@ -5,6 +5,8 @@
 [node name="PromptButtonsManagerControl" type="Control"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_right = -513.0
+margin_bottom = -380.0
 size_flags_horizontal = 3
 script = ExtResource( 1 )
 __meta__ = {
@@ -14,21 +16,21 @@ __meta__ = {
 [node name="Timer" type="Timer" parent="."]
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
-margin_right = 251.0
-margin_bottom = 122.0
+margin_right = 207.0
+margin_bottom = 100.0
 size_flags_horizontal = 3
 
 [node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
-margin_right = 251.0
-margin_bottom = 113.0
+margin_right = 207.0
+margin_bottom = 92.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 70.0
 
 [node name="ProgressBar" type="ProgressBar" parent="VBoxContainer"]
-margin_top = 117.0
-margin_right = 251.0
-margin_bottom = 122.0
+margin_top = 96.0
+margin_right = 207.0
+margin_bottom = 100.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.5
