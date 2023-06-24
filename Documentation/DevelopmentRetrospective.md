@@ -19,3 +19,4 @@
 - You need to keep a well defined Gameplay Outline or somehing. A document that details how the game and all its systems is supposed to work before you put everything in. Make ssure to check it VERY regularly to make sure you systems actually make sense and work properly.
 - Move to a graphical version control. Your long file paths are annoying to do in terminals
 - Figure out how to get your file paths to be shorter.
+- When doing Gameplay-centric UI, the outermost control controls the actual size. Set that for pixel size, set interiors for scaling if they don't need custom internal positioning. Again, avoid using UI and Controls for gameplay.
