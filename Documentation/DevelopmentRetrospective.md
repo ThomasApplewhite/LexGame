@@ -20,3 +20,5 @@
 - Move to a graphical version control. Your long file paths are annoying to do in terminals
 - Figure out how to get your file paths to be shorter.
 - When doing Gameplay-centric UI, the outermost control controls the actual size. Set that for pixel size, set interiors for scaling if they don't need custom internal positioning. Again, avoid using UI and Controls for gameplay.
+- Be much more clear about what functions do in their function names, ESPECIALLY if they're signal receivers or senders. And a repeat of the earlier not of "try not to have weird information dependencies between nodes".
+- If a signal is designed to go only to a single parent only, make that clear.
