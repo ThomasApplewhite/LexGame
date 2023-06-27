@@ -16,12 +16,14 @@ var active_convo_dict : Dictionary
 var active_convo_index : int setget , _get_active_convo_index
 var active_prompt_control #PromptControl
 var starting_convo_index : int
+var display_starting_index : bool
 
 # should save new convo resource and probably also starting index for parse-ahead
-func initialize_convo_slate(new_convoJSON_resource : Resource, new_entry_node : Node, new_starting_index : int = 0):
+func initialize_convo_slate(new_convoJSON_resource : Resource, new_entry_node : Node, new_starting_index : int = 0, new_display_starting_index : bool = false):
 	convoJSON_resource = new_convoJSON_resource
 	entry_parent = new_entry_node
 	starting_convo_index = new_starting_index
+	display_starting_index  = new_display_starting_index
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -48,7 +50,7 @@ func start_convo_slate():
 	display_pregenerated_data()
 
 	# Step 3: Start popping and parsing convo pieces!
-	pop_process_convo_dict()
+	process_convo_dict(convo_parser.get_next_conversation_chunck(), display_starting_index)
 	
 func display_pregenerated_data():
 	# for right now, just update the Mock Partner Label
@@ -67,9 +69,9 @@ func display_pregenerated_data():
 		create_static_message_text(pre_dict)
 	
 func pop_process_convo_dict():
-	process_convo_dict(convo_parser.get_next_conversation_chunck())
+	process_convo_dict(convo_parser.get_next_conversation_chunck(), false)
 
-func process_convo_dict(convo_dict):
+func process_convo_dict(convo_dict, skip_display_conditions):
 	# do we have a chunk to even send?
 	if(convo_dict[convo_type.JSONFields.TRIGGERSTORYBEAT] == GameEnums.GameStoryBeat.EOF):
 		print("We're out of conversations!")
@@ -83,7 +85,10 @@ func process_convo_dict(convo_dict):
 	# ---- DEGUG ----
 	
 	# Tell entry node that the convo slate is ready
-	init_entry_node_display_conditions()
+	if(not skip_display_conditions):
+		init_entry_node_display_conditions()
+	else: 
+		entry_parent.force_next_convo_dict()
 
 func display_next_convo_dict():
 	create_static_message_text(active_convo_dict)

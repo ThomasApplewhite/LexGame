@@ -42,13 +42,15 @@ var game_story_beat_requirements = default_gsb_requirements.duplicate()
 var convo_slate_is_active : bool setget , _get_convo_slate_is_active
 var last_displayed_chunk_text : String = ""
 var last_displayed_chunk_index : int = -1
+var display_next_chunk_index : bool = false
 
 func _ready():
 	conversation_appslate_anchor = get_node(conversation_appslate_anchor_path)
 
 func create_conversation_slate():
 	convo_slate = convo_slate_scene.instance()
-	convo_slate.initialize_convo_slate(conversation_resource, self, last_displayed_chunk_index)
+	convo_slate.initialize_convo_slate(conversation_resource, self, last_displayed_chunk_index, display_next_chunk_index)
+	display_next_chunk_index = false;
 	conversation_appslate_anchor.add_child(convo_slate)
 	convo_slate.start_convo_slate()
 	
@@ -86,7 +88,11 @@ func handle_display_appslate(display_condition : int):
 		return
 		
 	# if it is time, do everything in the rest of the function!
+	force_next_convo_dict()
+
 	
+func force_next_convo_dict():
+		
 	# Regardless of slate activity, send the relevant sent GameStoryBeat to the TextMessangerAppSlate
 	# Stubbed out while I figure out how GSBs are gonna work.
 	# var triggered_story_beat = convo_slate.get_current_convo_dict_send_story_beat()
@@ -95,16 +101,17 @@ func handle_display_appslate(display_condition : int):
 	# And reset the display conditions
 	reset_conditional_dicts()
 	
-	# if the convo slate isn't active, just advance the current convo index and don't display anything
+	# if the convo slate isn't active, mark that the next message is ready to display
 	if(!_get_convo_slate_is_active()):
 		print("Advancing Undisplayed Dict Index: {0}".format({0: last_displayed_chunk_index}))
-		last_displayed_chunk_index += 1
+		display_next_chunk_index = true
 	else:
 		# If we are ready, display the text (or prompt),
 		last_displayed_chunk_text = convo_slate.handle_next_convo_dict()
 	
 	# And send a notif to the phone
 	send_notification_to_phone()
+	
 
 func create_game_story_beat_requirements(required_gsb, required_frequency : int):
 	# No GSB required? Just update the display conditions and move on!

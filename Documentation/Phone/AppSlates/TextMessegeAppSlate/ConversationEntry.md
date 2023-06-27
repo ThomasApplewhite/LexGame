@@ -46,6 +46,8 @@ last_displayed_chunk_text: The most recent conversation partner message from thi
 
 last_displayed_chunk_index: The index of most recent conversation partner message from this conversation. This is used to 'fast forward' the ConversationAppSlate to the last displayed conversation piece whenever it gets opened.
 
+display_next_chunk_index: Whether or not the index after _last_displayed_chunk_index_ should be displayed along with the chunk that _last_displayed_chunk_index_ represents. This covers the case where the FirstPush timer for a convo_chunk occurs while the conversation is inactive.
+
 ### Child Nodes
 FirstPushTimer: Pre-generated one-shot timer for the first notification a conversation piece always sends.
 
@@ -84,14 +86,16 @@ If _convo_slate_is_active_ is false, emits the signal held in var _notif_with_te
 ## func handle_display_appslate(display_condition : int):
 _display_condition_ is actually a DisplayCondition enum.
 
-Takes the incoming display condition and adds it to _do_next_convo_ as 'True'. If that makes both conditions of _do_next_convo_ true, then the following things occur:
+Takes the incoming display condition and adds it to _do_next_convo_ as 'True'. If that makes both conditions of _do_next_convo_ true, then call **force_next_convo_dict()**.
+
+## func force_next_convo_dict()
+Does the following to display the next convo chunk:
 	1. The ConversationEntry will emit the signal in _story_beat_signal_name_ with **convo_slate.get_current_convo_dict_send_story_beat()** as the argument. This informs the rest of the game of the GSB that just occured from this conversation chunk completing.
 	- THIS STEP HAS BEEN COMMENTED OUT FOR RIGHT NOW
 	2. _do_next_convo_ and _game_story_beat_requirements_ are reset to their defaults with **reset_conditional_dicts()**
 	3. Tell the _convo_slate_ to **handle_next_convo_dict()**, which will take care of displaying the actual conversation.
+	- If both conditions of _do_next_convo_ are true, but the _convo_slate_ isn't active, this method will set _display_next_chunk_index_ to true instead.
 	4. Sends a notification with **send_notification_to_phone()**.
-
-If both conditions of _do_next_convo_ are true, but the _convo_slate_ isn't active, this method will increment _last_displayed_chunk_index_ by 1 instead of doing step 3.
 
 ## func create_game_story_beat_requirements(required_gsb, required_frequency : int):
 _required_gsb_ is a GameStoryBeat.

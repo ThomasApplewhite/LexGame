@@ -36,6 +36,8 @@ active_prompt_control: If the conversation has generated a Prompt, it gets store
 
 starting_convo_index: The index of the convo_dict the ConversationAppSlate should started at when told to start for the first time in its lifetime.
 
+display_startng_index: A bool that controls whether or not the convo_dict aat _starting_convo_index_ should be displayed without creating or waiting for display requirements.
+
 ### Child Nodes
 BackgroundColorRect: Provides a background and a mouse blocker.
 
@@ -61,11 +63,12 @@ ContentControl/FooterControl: UI Control for any footer UI elements. So far, tha
 
 ContentControl/FooterControl/Panel: Visual Aid to show size of FooterControl.
 
-## func initialize_convo_slate(new_convoJSON_resource : Resource, new_entry_node : Node, new_starting_index : int = 0):
+## func initialize_convo_slate(new_convoJSON_resource : Resource, new_entry_node : Node, new_starting_index : int = 0, new_display_starting_index : bool = false):
 Constructor. Saves the arguments to their corresponding field:
 - convoJSON_resource = new_convoJSON_resource
 - entry_parent = new_entry_node
 - starting_convo_index = new_starting_index
+- display_starting_index = new_display_starting_index
 	
 ## func _ready():
 Called when the node enters the scene tree. So far, does nothing. But I might want it to do something down the line, so it's still here for right now.
@@ -80,7 +83,7 @@ Starts up the convo_slate with the following algorithm:
 2. Creates a new ConversationParser around _convoJSON_resource_
 3. Parses the JSON resource into conversation chunks using _convo_parser_
 4. Calls **display_pregenerated_data()** to display any info that should be part of the conversation before the conversation continues normally.
-5. Pops the next convo_dict with **pop_process_convo_dict()**. This is the point at which conversation chunks start being processed automatically.
+5. Calls **process_convo_dict(convo_parser.get_next_conversation_chunck(), display_starting_index)**. This is the point at which conversation chunks start being processed automatically.
 
 ## func display_pregenerated_data():
 For right now, sets up the _MockPartnerLabel_ with _conversation_parser.conversation_partner_.
@@ -88,12 +91,14 @@ For right now, sets up the _MockPartnerLabel_ with _conversation_parser.conversa
 Also fasts forward the conversation to the last active conversation by calling **create_static_message_text()** on every conversation chunk before the _starting_convo_index_ (unless _starting_convo_index_ is 0, then this step is skipped).
 
 ## func pop_process_convo_dict():
-Calls **process_convo_dict(convo_parser.get_next_conversation_chunck())**. Just a convenient way to process whatever the next conversation chunk is.
+Calls **process_convo_dict(convo_parser.get_next_conversation_chunck(), false)**. Just a convenient way to process whatever the next conversation chunk is.
 
-## func process_convo_dict(convo_dict):
+## func process_convo_dict(convo_dict, skip_display_conditions):
 Takes the incoming convo_dict and decides what to do with it.
 
-This method primarly just checks to make sure this convo_dict isn't EOF. If it isn't, it is saved as the _active_convo_dict_ and its index as the _active_convo_index_. The display requirement information need to show the conversation is then passed to _entry_parent_ by calling **init_entry_node_display_conditions()**.
+This method primarly just checks to make sure this convo_dict isn't EOF. If it isn't, it is saved as the _active_convo_dict_ and its index as the _active_convo_index_. 
+
+If _skip_display_conditions_ is false, the display requirement information need to show the conversation is then passed to _entry_parent_ by calling **init_entry_node_display_conditions()**. If _skip_display_conditions_ is true, **entry_parent.force_next_convo_dict()** is called instead to immediately display the text of the convo_dict.
 
 ## func display_next_convo_dict():
 Calls **create_static_message_text(active_convo_dict)** (which displays the actual text of the _active_convo_dict_), then **pop_process_convo_dict()** to generate the next one.
