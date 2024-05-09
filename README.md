@@ -1,7 +1,3 @@
-Readme for git repo. I'll get here later.
+LexGame is a discontinued game project about trying to buy tickets for a same-day redeye flight and trying to talk to your friends while you're drunk.
 
-If you're reading this, the git push worked!
-
-And now we're gonna send it back!
-
-One last time!
+All commits from "Game King" are from me, Thomas. I was in my 'don't upload to github' era, you know how it is.
